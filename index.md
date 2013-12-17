@@ -13,7 +13,7 @@
 
 ### TA(s)
 
-* Shaun Jackman, *email address here*
+* [Shaun Jackman](http://sjackman.ca), sjackman@gmail.com
 
 * Luolan (Gloria) Li, *email address here*
 
