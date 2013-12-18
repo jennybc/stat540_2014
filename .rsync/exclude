@@ -1,0 +1,4 @@
+_fileherd/*
+*.Rproj
+Makefile
+bake.R
