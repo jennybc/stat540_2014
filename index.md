@@ -31,7 +31,7 @@ Cross-listed as
 
 * [Shaun Jackman](http://sjackman.ca), sjackman@gmail.com
 
-* Luolan (Gloria) Li, glorialuolanli@gmail.com
+* [Luolan (Gloria) Li](http://www.msl.ubc.ca/users/gloriali), glorialuolanli@gmail.com
 
 ### Google Group for Q & A (TAs will add students to group in due course)
 
