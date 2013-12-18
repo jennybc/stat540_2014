@@ -15,7 +15,7 @@
 
 * [Shaun Jackman](http://sjackman.ca), sjackman@gmail.com
 
-* Luolan (Gloria) Li, *email address here*
+* Luolan (Gloria) Li, glorialuolanli@gmail.com
 
 ### Google Group for Q & A (TAs will add students to group in due course)
 
