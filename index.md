@@ -57,15 +57,15 @@ Officially none BUT here in reality ...
 
 ### Week 1
 
-seminar 00 | [R, RStudio Set Up & Basics](seminars/seminar_00.r_rstudio_setup.html) (SJ,LL), students complete/attempt on their own in advance. Bring any difficulties to first seminar.
+seminar 00 | [R, RStudio Set Up & Basics](seminars/seminar_00.r_rstudio_setup.html), students complete/attempt on their own in advance. Bring any difficulties to first seminar.
 
 lecture 01 | Introduction to high dimensional biology and the course (PP) | Mon Jan 06
 
 lecture 02 | Overview / review of probability and statistical inference, 1 of 2 (JB) | Wed Jan 08
 
-seminar 01 | [Basic Data Analysis in R](seminars/seminar_01.basic_data_analysis.html) (??), support available 11am - 1pm | Wed Jan 08
+seminar 01 | [Basic Data Analysis in R](seminars/seminar_01.basic_data_analysis.html) (a TA), support available 11am - 1pm | Wed Jan 08
 
-seminar 01 bonus material! | [Molecular biology/genetics 101](lectures/biology_intro.pdf) (??), 12pm - 1pm | Wed Jan 08
+seminar 01 bonus material! | [Molecular biology/genetics 101](lectures/biology_intro.pdf) (LL), 12pm - 1pm | Wed Jan 08
 
 ### Week 2
 
@@ -111,7 +111,7 @@ Mon Feb 10 is Family Day; no class
 
 lecture 11 | Large scale inference: multiple testing (JB) | Wed Feb 12
 
-seminar 06 | Fitting and interpretting linear models (high volume), limma package | Wed Feb 12
+seminar 06 | Fitting and interpretting linear models (high volume), limma package (JB) | Wed Feb 12
 
 Fri Feb 14: feedback to groups re: initial project proposals. Each group will be assigned an instructor or TA + instructor pair for extra support.
 
@@ -163,7 +163,7 @@ seminar 10 | Supervised learning, cross validation, variable selection | Wed Mar
 
 lecture 20 | Enrichment analysis, gene networks, 2 of 2 (PP) | Mon Mar 24
 
-lecture 21 | Resampling (JB) (e.g. the bootstrap) | Wed Mar 26
+lecture 21 | Resampling and the bootstrap (JB) | Wed Mar 26
 
 seminar 11 | TA office hours during seminar time ... group project work | Wed Mar 26
 
