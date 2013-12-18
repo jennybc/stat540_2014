@@ -1,6 +1,22 @@
-% STAT540 Statistical methods for high dimensional biology (3 credits)
+---
+css.file: _fileherd/markdown7.css
+dirs.to.publish:
+  - .
+---
+
+# STAT540 Statistical methods for high dimensional biology
 
 ## Course Information
+
+### Credits and cross-listing
+
+STAT 540 is a 3 credit course with a mandatory computing seminar.
+
+Cross-listed as
+
+  * STAT 540
+  * BIOF 540
+  * GSAT 540
 
 ### Instructors
 
