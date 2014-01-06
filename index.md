@@ -49,7 +49,7 @@ Location : [ESB 4192](http://www.students.ubc.ca/classroomservices/buildings-and
 #### Seminar / computing lab (S2A) -- REGISTRATION IS REQUIRED!
 Time: *officially* runs Wed 12pm - 1pm; *unofficially* students are welcome to come after class around 11am and begin a ~1 hour guided analysis with TA support; TA will remain in the lab until 1pm to help those who start as 12pm and for general office hours.
 
-Location: ESB 1042
+Location: ESB 1042 __and 1046__
 
 ### Prerequisites.
 
@@ -73,7 +73,7 @@ Officially none BUT here in reality ...
 
 ### Week 1
 
-seminar 00 | [R, RStudio Set Up & Basics](seminars/seminar_00.r_rstudio_setup.html), students complete/attempt on their own in advance. Bring any difficulties to first seminar.
+seminar 00 | [R, RStudio Set Up & Basics](http://www.stat.ubc.ca/~jenny/STAT545A/block00_setup.html), borrowed from STAT 545A. Students complete/attempt on their own in advance. Bring any difficulties to first seminar.
 
 lecture 01 | Introduction to high dimensional biology and the course (PP) | Mon Jan 06
 
@@ -103,9 +103,9 @@ Fri Jan 24: Project groups should be formed.
 
 ### Week 4
 
-lecture 07 | Statistical inference: more than two groups --> linear models (JB out of town, needs sub) | Mon Jan 27
+lecture 07 | Statistical inference: more than two groups --> linear models (JB prep, GCF deliver) | Mon Jan 27
 
-lecture 08 | Statistical inference: linear models with 2 categorical covariates, greatest hits of linear models inference (JB out of town, needs sub) | Wed Jan 29
+lecture 08 | Statistical inference: linear models with 2 categorical covariates, greatest hits of linear models inference (JB prep, GCF deliver) | Wed Jan 29
 
 seminar 04 | Data aggregation and two group testing | Wed Jan 29
 
@@ -145,41 +145,41 @@ Tues Feb 25: Homework #1 due
 
 lecture 13 | Analysis of RNA-Seq data (PP), 2 of 2 | Wed Feb 26
 
-seminar 07 | RNA-Seq data, 1 of 2 | Wed Feb 26
+seminar 07 | RNA-Seq analysis | Wed Feb 26
 
 Fri Feb 28: final project proposals due.
 
 ### Week 9
 
-lecture 14 | Principal component analysis (PP) | Mon Mar 03
+lecture 14 | Analysis of epigenetic data, focus on methylation (PP or designate) | Mon Mar 03
+ 
+lecture 15 | Principal component analysis (PP) | Wed Mar 05
 
-lecture 15 | Cluster analysis (GC-F) | Wed Mar 05
-
-seminar 08 | RNA-Seq data, 2 of 2 | Wed Mar 05
+seminar 08 | Methylation analysis | Wed Mar 05
 
 Fri Mar 07: Homework #2 assigned 
 
 ### Week 10
 
-lecture 16 | Classification (GC-F) | Mon Mar 10
+lecture 16 | Cluster analysis (GC-F) | Mon Mar 10
 
-lecture 17 | Model and variable selection: cross validation and regularization (GC-F) | Wed Mar 12
+lecture 17 | Classification (GC-F) | Wed Mar 12
 
 seminar 09 | Clustering and PCA | Wed Mar 12
 
 ### Week 11
 
-lecture 18 | Regularization cont'd, Proteomics and missingness (GC-F) | Mon Mar 17
+lecture 18 | Model and variable selection: cross validation and regularization (GC-F) | Mon Mar 17
 
-lecture 19 | Enrichment analysis, gene networks, 1 of 2 (PP) | Wed Mar 19
+lecture 19 | Regularization cont'd, Proteomics and missingness (GC-F) | Wed Mar 19
 
 seminar 10 | Supervised learning, cross validation, variable selection | Wed Mar 19
 
 ### Week 12
 
-lecture 20 | Enrichment analysis, gene networks, 2 of 2 (PP) | Mon Mar 24
+lecture 20 | Enrichment analysis, gene networks, 1 of 2 (PP) | Mon Mar 24
 
-lecture 21 | Resampling and the bootstrap (JB) | Wed Mar 26
+lecture 21 | Enrichment analysis, gene networks, 2 of 2 (PP) | Wed Mar 26
 
 seminar 11 | TA office hours during seminar time ... group project work | Wed Mar 26
 
@@ -187,9 +187,9 @@ Fi Mar 28: Homework #2 due.
 
 ### Week 13
 
-lecture 22 | Possible guest lecture (STAT540 alum [Dr. Sohrab Shah](http://compbio.bccrc.ca/people/dr-sohrab-shah/) has done in past)| Mon Mar 31
+lecture 22 | Resampling and the bootstrap (JB)| Mon Mar 31
 
-lecture 23 | TBA | Wed Apr 02
+lecture 23 | Possible guest lecture (STAT540 alum [Dr. Sohrab Shah](http://compbio.bccrc.ca/people/dr-sohrab-shah/) has done in past) | Wed Apr 02
 
 seminar 12 | TA office hours during seminar time ... group project work | Wed Apr 02
 
