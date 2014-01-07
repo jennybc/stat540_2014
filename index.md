@@ -79,10 +79,9 @@ lecture 01 | Introduction to high dimensional biology and the course (PP) | Mon 
 
 lecture 02 | Overview / review of probability and statistical inference, 1 of 2 (JB) | Wed Jan 08
 
-seminar 01 | Wed Jan 08
+seminar 01 | [R basics and exploring a small gene expression dataset](#seminar01) | Wed Jan 08
 
-  * [Basics of R/RStudio, workspaces, and projects](http://www.stat.ubc.ca/~jenny/STAT545A/block01_basicsWorkspaceWorkingDirProject.html), borrowed from STAT 545A.
-  * [Explore a small gene expression dataset](seminars/seminar01_basic-data-analysis.html) <-- NOT POSTED YET!
+  * R stuff 11am - 12pm (or later, if necessary)
   * Molecular biology/genetics 101 (LL), 12pm - 1pm
 
 ### Week 2
@@ -203,12 +202,12 @@ lecture 24 | Poster session 9:30am - 1:00pm | Mon Apr 07
 We will borrow some material from [STAT 545A Exploratory Analysis](http://www.stat.ubc.ca/~jenny/STAT545A/quick-index.html), in addition to using content specific to STAT 540.
 
   * seminar 00 | [R, RStudio Set Up & Basics](http://www.stat.ubc.ca/~jenny/STAT545A/block00_setup.html), borrowed from STAT 545A.
-  * seminar 01 Wed Jan 08
+  * seminar 01 Wed Jan 08 <a id="seminar01"></a>
     - [Basics of R/RStudio, workspaces, and projects](http://www.stat.ubc.ca/~jenny/STAT545A/block01_basicsWorkspaceWorkingDirProject.html), borrowed from STAT 545A.
-    - [Explore a small gene expression dataset](seminars/seminar01_basic-data-analysis.html) <-- NOT HERE YET!
-  * seminar 02 Wed Jan 15
     - [Basic care and feeding of data in R](http://www.stat.ubc.ca/~jenny/STAT545A/block02_careFeedingData.html), borrowed from STAT 545A.
     - [R objects (beyond data.frames) and indexing](http://www.stat.ubc.ca/~jenny/STAT545A/block03_basicObjects.html), borrowed from STAT 545A.
+    - [Explore a small gene expression dataset](seminars/seminar01_basic-data-exploration.html)
+  * seminar 02 Wed Jan 15
     - [Probability and Simulation in R](seminars/seminar02_probability-simulation.html) <-- NOT HERE YET!
   * seminar 03 Wed Jan 22
     - Introduction to R graphics
