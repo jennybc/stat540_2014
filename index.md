@@ -80,6 +80,7 @@ lecture 01 | Introduction to high dimensional biology and the course (PP) | Mon 
 lecture 02 | Overview / review of probability and statistical inference, 1 of 2 (JB) | Wed Jan 08
 
 seminar 01 | Wed Jan 08
+
   * [Basics of R/RStudio, workspaces, and projects](http://www.stat.ubc.ca/~jenny/STAT545A/block01_basicsWorkspaceWorkingDirProject.html), borrowed from STAT 545A.
   * [Explore a small gene expression dataset](seminars/seminar01_basic-data-analysis.html) <-- NOT POSTED YET!
   * Molecular biology/genetics 101 (LL), 12pm - 1pm
