@@ -29,7 +29,7 @@ The excerpt we work with here contains gene expression data for 3 genes. Their a
 
 We load the mini gene expression dataset into a `data.frame`, which is the preferred way to handle tabular data in R.
 
-If you have not already done so, now is a good time to work through [Basic care and feeding of data in R](http://www.stat.ubc.ca/~jenny/STAT545A/block02_careFeedingDatData.html). The exercises below will test whether your basic understanding of `data.frames` is developed enough to explore the mini gene expression data we work with here.
+If you have not already done so, now is a good time to work through [Basic care and feeding of data in R](http://www.stat.ubc.ca/~jenny/STAT545A/block02_careFeedingData.html). The exercises below will test whether your basic understanding of `data.frames` is developed enough to explore the mini gene expression data we work with here.
 
 If you are new to R, you'll want to work through [R objects (beyond data.frames) and indexing](http://www.stat.ubc.ca/~jenny/STAT545A/block03_basicObjects.html) at some in the near future as well.
 
