@@ -75,13 +75,14 @@ Officially none BUT here in reality ...
 
 seminar 00 | [R, RStudio Set Up & Basics](http://www.stat.ubc.ca/~jenny/STAT545A/block00_setup.html), borrowed from STAT 545A. Students complete/attempt on their own in advance. Bring any difficulties to first seminar.
 
-lecture 01 | Introduction to high dimensional biology and the course (PP) | Mon Jan 06
+lecture 01 | Introduction to high dimensional biology and the course (PP) | Mon Jan 06 | [slides as PDF](pvt/lect01_course-intro.pdf)
 
 lecture 02 | Overview / review of probability and statistical inference, 1 of 2 (JB) | Wed Jan 08
 
-seminar 01 | [Basic Data Analysis in R](seminars/seminar_01.basic_data_analysis.html) (a TA), support available 11am - 1pm | Wed Jan 08
-
-seminar 01 bonus material! | [Molecular biology/genetics 101](lectures/biology_intro.pdf) (LL), 12pm - 1pm | Wed Jan 08
+seminar 01 | Wed Jan 08
+  * [Basics of R/RStudio, workspaces, and projects](http://www.stat.ubc.ca/~jenny/STAT545A/block01_basicsWorkspaceWorkingDirProject.html), borrowed from STAT 545A.
+  * [Explore a small gene expression dataset](seminars/seminar01_basic-data-analysis.html) <-- NOT POSTED YET!
+  * Molecular biology/genetics 101 (LL), 12pm - 1pm
 
 ### Week 2
 
@@ -89,7 +90,7 @@ lecture 03 | Overview / review of probability and statistical inference, 2 of 2 
 
 lecture 04 | Exploratory analysis (PP) | Wed Jan 15
 
-seminar 02 | [Introduction To Simulation](seminars/seminar_02.probability_simulation.html) (AR) | Wed Jan 15
+seminar 02 | Introduction To Simulation (LL) | Wed Jan 15
 
 ### Week 3
 
@@ -198,24 +199,29 @@ lecture 24 | Poster session 9:30am - 1:00pm | Mon Apr 07
 
 ## Seminars (guided analyses)
 
-* [Seminar 0: R, RStudio Set Up & Basics](seminars/seminar_00.r_rstudio_setup.html)
-* [Seminar 1: Basic Data Analysis in R](seminars/seminar_01.basic_data_analysis.html)
-* [Seminar 2: Probability and Simulation in R](seminars/seminar_02.probability_simulation.html)
-* Seminar 3: Introduction to R graphics
-* Seminar 4: Data aggregation and two group testing
-* Seminar 5: Fitting and interpretting linear models (low volume)
-* Seminar 6: Fitting and interpretting linear models (high volume), limma package
-* Seminar 7: RNA-Seq data part 1
-* Seminar 8: RNA-Seq data part 2
-* Seminar 9: Clustering and PCA
-* Seminar 10: Supervised learning, cross validation, variable selection
+We will borrow some material from [STAT 545A Exploratory Analysis](http://www.stat.ubc.ca/~jenny/STAT545A/quick-index.html), in addition to using content specific to STAT 540.
 
-## Modules (individual topics)
-
-To be populated ...
-
-## Other resources
-
-  * STAT545A Exploratory Data Analysis. Jenny teaches this half-semester 1.5 credit course Sept - mid October. This offers general material on using R for data manipulation, analysis, and visualization.
-    - [Index](http://www.stat.ubc.ca/~jenny/STAT545A/quick-index.html) into course material on the web
-    - [github repository](https://github.com/jennybc/STAT545A) with source for the above  
+  * seminar 00 | [R, RStudio Set Up & Basics](http://www.stat.ubc.ca/~jenny/STAT545A/block00_setup.html), borrowed from STAT 545A.
+  * seminar 01 Wed Jan 08
+    - [Basics of R/RStudio, workspaces, and projects](http://www.stat.ubc.ca/~jenny/STAT545A/block01_basicsWorkspaceWorkingDirProject.html), borrowed from STAT 545A.
+    - [Explore a small gene expression dataset](seminars/seminar01_basic-data-analysis.html) <-- NOT HERE YET!
+  * seminar 02 Wed Jan 15
+    - [Basic care and feeding of data in R](http://www.stat.ubc.ca/~jenny/STAT545A/block02_careFeedingData.html), borrowed from STAT 545A.
+    - [R objects (beyond data.frames) and indexing](http://www.stat.ubc.ca/~jenny/STAT545A/block03_basicObjects.html), borrowed from STAT 545A.
+    - [Probability and Simulation in R](seminars/seminar02_probability-simulation.html) <-- NOT HERE YET!
+  * seminar 03 Wed Jan 22
+    - Introduction to R graphics
+  * seminar 04 Wed Jan 29
+    - Data aggregation and two group testing
+  * seminar 05 Wed Feb 05
+    - Fitting and interpretting linear models (low volume)
+  * seminar 06 Wed Feb 12
+    - Fitting and interpretting linear models (high volume), limma package
+  * seminar 07 Wed Feb 26
+    - RNA-Seq data
+  * seminar 08 Wed Mar 05
+    - Methylation analysis
+  * seminar 09 Wed Mar 12
+    - Clustering and PCA
+  * seminar 10 Wed Mar 19
+    - Supervised learning, cross validation, variable selection
