@@ -207,6 +207,7 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - [Basic care and feeding of data in R](http://www.stat.ubc.ca/~jenny/STAT545A/block02_careFeedingData.html), borrowed from STAT 545A.
     - [R objects (beyond data.frames) and indexing](http://www.stat.ubc.ca/~jenny/STAT545A/block03_basicObjects.html), borrowed from STAT 545A.
     - [Explore a small gene expression dataset](seminars/seminar01_basic-data-exploration.html)
+    - [Prep work for later use of Git, GitHub, Rpubs, etc.](seminars/seminar90_getting-started.html)
   * seminar 02 Wed Jan 15
     - [Probability and Simulation in R](seminars/seminar02_probability-simulation.html) <-- NOT HERE YET!
   * seminar 03 Wed Jan 22
