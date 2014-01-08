@@ -77,12 +77,12 @@ seminar 00 | [R, RStudio Set Up & Basics](http://www.stat.ubc.ca/~jenny/STAT545A
 
 lecture 01 | Introduction to high dimensional biology and the course (PP) | Mon Jan 06 | [slides as PDF](pvt/lect01_course-intro.pdf)
 
-lecture 02 | Overview / review of probability and statistical inference, 1 of 2 (JB) | Wed Jan 08
+lecture 02 | Overview / review of probability and statistical inference, 1 of 2 (JB) | Wed Jan 08 | [slides as PDF](pvt/lect02_introToStatInf-probBasics.pdf)
 
 seminar 01 | [R basics and exploring a small gene expression dataset](#seminar01) | Wed Jan 08
 
-  * R stuff 11am - 12pm (or later, if necessary)
-  * Molecular biology/genetics 101 (LL), 12pm - 1pm
+  * [R stuff](#seminar01) 11am - 12pm (or later, if necessary)
+  * Molecular biology/genetics 101 (LL), 12pm - 1pm | [slides as PDF](pvt/lect00_biology-intro.pdf)
 
 ### Week 2
 
@@ -98,7 +98,7 @@ lecture 05 | Data QC and preprocessing (GC-F) | Mon Jan 20
 
 lecture 06 | Statistical inference: two group comparisons, e.g. differential expression analysis (JB) | Wed Jan 22
 
-seminar 03 | Introduction to R graphics | Wed Jan 22
+seminar 03 | Introduction to R graphics (SJ) | Wed Jan 22
 
 Fri Jan 24: Project groups should be formed. 
 
@@ -108,7 +108,7 @@ lecture 07 | Statistical inference: more than two groups --> linear models (JB p
 
 lecture 08 | Statistical inference: linear models with 2 categorical covariates, greatest hits of linear models inference (JB prep, GCF deliver) | Wed Jan 29
 
-seminar 04 | Data aggregation and two group testing | Wed Jan 29
+seminar 04 | Data aggregation and two group testing (LL) | Wed Jan 29
 
 Fri Jan 31: Initial project proposals due.
 
@@ -118,7 +118,7 @@ lecture 09 | Statistical inference: linear models including a quantitative covar
 
 lecture 10 | Large scale inference: Empirical Bayes, limma (JB) | Wed Feb 05
 
-seminar 05 | Fitting and interpretting linear models (low volume) | Wed Feb 05
+seminar 05 | Fitting and interpretting linear models (low volume) (SJ) | Wed Feb 05
 
 Fri Feb 07: Homework #1 will be assigned.
 
@@ -128,7 +128,7 @@ Mon Feb 10 is Family Day; no class
 
 lecture 11 | Large scale inference: multiple testing (JB) | Wed Feb 12
 
-seminar 06 | Fitting and interpretting linear models (high volume), limma package (JB) | Wed Feb 12
+seminar 06 | Fitting and interpretting linear models (high volume) (SJ), limma package (JB) | Wed Feb 12
 
 Fri Feb 14: feedback to groups re: initial project proposals. Each group will be assigned an instructor or TA + instructor pair for extra support.
 
@@ -146,7 +146,7 @@ Tues Feb 25: Homework #1 due
 
 lecture 13 | Analysis of RNA-Seq data (PP), 2 of 2 | Wed Feb 26
 
-seminar 07 | RNA-Seq analysis | Wed Feb 26
+seminar 07 | RNA-Seq analysis (LL) | Wed Feb 26
 
 Fri Feb 28: final project proposals due.
 
@@ -156,7 +156,7 @@ lecture 14 | Analysis of epigenetic data, focus on methylation (PP or designate)
  
 lecture 15 | Principal component analysis (PP) | Wed Mar 05
 
-seminar 08 | Methylation analysis | Wed Mar 05
+seminar 08 | Methylation analysis (LL) | Wed Mar 05
 
 Fri Mar 07: Homework #2 assigned 
 
@@ -166,7 +166,7 @@ lecture 16 | Cluster analysis (GC-F) | Mon Mar 10
 
 lecture 17 | Classification (GC-F) | Wed Mar 12
 
-seminar 09 | Clustering and PCA | Wed Mar 12
+seminar 09 | Clustering and PCA (LL) | Wed Mar 12
 
 ### Week 11
 
@@ -174,7 +174,7 @@ lecture 18 | Model and variable selection: cross validation and regularization (
 
 lecture 19 | Regularization cont'd, Proteomics and missingness (GC-F) | Wed Mar 19
 
-seminar 10 | Supervised learning, cross validation, variable selection | Wed Mar 19
+seminar 10 | Supervised learning, cross validation, variable selection (SJ) | Wed Mar 19
 
 ### Week 12
 
@@ -190,7 +190,7 @@ Fi Mar 28: Homework #2 due.
 
 lecture 22 | Resampling and the bootstrap (JB)| Mon Mar 31
 
-lecture 23 | Possible guest lecture (STAT540 alum [Dr. Sohrab Shah](http://compbio.bccrc.ca/people/dr-sohrab-shah/) has done in past) | Wed Apr 02
+lecture 23 | Guest lecture by STAT540 alum [Dr. Sohrab Shah](http://compbio.bccrc.ca/people/dr-sohrab-shah/) | Wed Apr 02
 
 seminar 12 | TA office hours during seminar time ... group project work | Wed Apr 02
 
