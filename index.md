@@ -195,7 +195,8 @@ lecture 23 | Guest lecture by STAT540 alum [Dr. Sohrab Shah](http://compbio.bccr
 seminar 12 | TA office hours during seminar time ... group project work | Wed Apr 02
 
 ### Week 14
-lecture 24 | Poster session 9:30am - 1:00pm | Mon Apr 07
+
+lecture 24 | Poster session 9:30am - 12:00pm | Wed Apr 09 __<-- NOTE THIS IS ON WEDNESDAY__, instead of Monday. Location: Room 101, aka the multi-purpose room, on ground floor of the [Michael Smith Building](http://www.maps.ubc.ca/PROD/index_detail.php?locat1=083).
 
 ## Seminars (guided analyses)
 
