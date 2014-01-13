@@ -40,7 +40,7 @@ prDat <- read.table("GSE4051_MINI.txt", header = TRUE, row.names = 1)
 str(prDat)
 ```
 
-Does the `read.table()` command fail for you? If so, have you taken control of your working directory? Have you placed `GSE4051_MINI.txt` in that directory or edited the `read.table()` command to reflect its location. Mastering the working directory and filepaths is a surprisingly important part of the learning curve. Submit commands like these to do some troubleshooting:
+Does the `read.table()` command fail for you? If so, have you taken control of your working directory? Have you placed `GSE4051_MINI.txt` in that directory or edited the `read.table()` command to reflect its location? Mastering the working directory and filepaths is a surprisingly important part of the learning curve. Submit commands like these to do some troubleshooting:
 
 ```{r eval = FALSE}
 getwd()      # is working directory what you think it should be?
