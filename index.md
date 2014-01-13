@@ -86,7 +86,7 @@ seminar 01 | [R basics and exploring a small gene expression dataset](#seminar01
 
 ### Week 2
 
-lecture 03 | Overview / review of probability and statistical inference, 2 of 2 (JB) | Mon Jan 13
+lecture 03 | Overview / review of probability and statistical inference, 2 of 2 (JB) | Mon Jan 13  | [slides as PDF](pvt/lect03_introToStatInf-endProbBasics-genInfReview.pdf)
 
 lecture 04 | Exploratory analysis (PP) | Wed Jan 15
 
