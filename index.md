@@ -37,6 +37,12 @@ Cross-listed as
 
 [STAT540_2014](https://groups.google.com/forum/#!forum/stat540_2014)
 
+### GitHub repository
+
+Vast majority of course content, including source for this webiste, can be found here:
+
+<https://github.com/jennybc/stat540_2014>
+
 ### Time and Location
 
 06 January 2014 - 07 April 2014
