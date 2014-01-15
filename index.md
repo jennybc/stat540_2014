@@ -90,7 +90,7 @@ lecture 03 | Overview / review of probability and statistical inference, 2 of 2 
 
 lecture 04 | Exploratory analysis (PP) | Wed Jan 15  | [slides as PDF](pvt/lect04_explore.pdf)
 
-seminar 02 | Introduction To Simulation (LL) | Wed Jan 15
+seminar 02 | [Learn more R while reviewing probability](#seminar02) (LL) | Wed Jan 15
 
 ### Week 3
 
@@ -209,8 +209,10 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - [R objects (beyond data.frames) and indexing](http://www.stat.ubc.ca/~jenny/STAT545A/block03_basicObjects.html), borrowed from STAT 545A.
     - [Explore a small gene expression dataset](seminars/seminar01_basic-data-exploration.html)
     - [Prep work for later use of Git, GitHub, Rpubs, etc.](seminars/seminar90_getting-started.html)
-  * seminar 02 Wed Jan 15
-    - [Probability and Simulation in R](seminars/seminar02_probability-simulation.html) <-- NOT HERE YET!
+  * seminar 02 Wed Jan 15 Pick (at least) one tutorial to work through. The latter two options get into control flow, writing functions, and base R graphics, which might be overwhelming for novices. <a id="seminar02"></a>
+    - Gentlest, written by Jenny: [Play with probability distributions and simulations](seminars/seminar02_playing-with-probability.html)
+    - More advanced, revision by Gloria: [Introduction To Simulation](seminars/seminar02_probability-simulation-gloria.html)
+    - More advanced, original 2013 version by Andy: [Introduction To Simulation](seminars/seminar02_probability-simulation-andy.html)
   * seminar 03 Wed Jan 22
     - Introduction to R graphics
   * seminar 04 Wed Jan 29

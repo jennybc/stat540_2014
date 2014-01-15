@@ -1,0 +1,901 @@
+% Seminar 2: Introduction To Simulation
+% Andrew Roth, Jenny Bryan
+% 15/12/12
+
+## Overview
+
+In this seminar we will explore some basic results from probability theory such as the central limit theorem (CLT) and law of large numbers (LLN). This will give us the opportunity to learn how to use R to simulate data and do some basic plotting.
+
+## Before You Start
+
+Make sure you have gone through and understood [seminar 0][seminar_0] and [seminar 1][seminar_1] before you start.
+
+The following modules may also be helpful to review.
+
+* [Functions][functions]
+* [Random Seed][random_seed]
+* [Probability Functions In R][probability_functions]
+* [Flow Control - `if`, `for`, and `while`][flow_control]
+* [Vectorization][vectorization]
+
+## Notation
+
+To simplify the following exposition we will define some notation and terminology.
+
+* Independent identically distributed (IID) random variables are any sequence of $(Y_{i})_{i=1}^{n}$ such that each $Y_{i}$ is sampled from the same distribution independently.
+
+* We will denote the probability density or mass function of random variable $Y$ as $f(y)$.
+
+* The expected value or mean of a random variable $Y$ will be denoted $\mathbb{E}(Y)$, and we will sometimes use $\mu$ to denote $\mathbb{E}(Y)$. Recall for continuous random variables $\mathbb{E}(Y)=\int_{-\infty}^{\infty} y f(y) dy$ and for a discrete random variable $\mathbb{E}(Y)=\sum y f(y)$.
+
+* The variance of a random variable $Y$ will be denoted $\mathbb{V}(Y)$, and we will use $\sigma^{2}$ to denote $\mathbb{V}$. Recall for continuous random variables $\mathbb{V}(Y) = \mathbb{E}(Y - \mu)^2 = \int_{-\infty}^{\infty} (y - \mu)^{2} f(y) dy$ and for a discrete random variable $\mathbb{V}(Y)=\sum (y - \mu)^{2} f(y)$.
+
+## Reproducing Results (Using Random Seed)
+
+In this tutorial when we simulate data in a code block we will first set the random seed to 1. This ensures anyone running the code will get exactly the same output, even though we are drawing *random* numbers. There is nothing special about setting the seed to 1; we could have used another number just as well. See the module on [random seeds][random_seed] for more details.
+
+## Weak Law Of Large Numbers
+
+The are various Laws Of Large Numbers which essentially provide a guarantee that sample means will get close to the true mean as the sample size gets larger. In classical statistics this result is especially important as it guarantees point estimators will converge to the true parameter of interest.
+
+We will focus on the Weak Law Of Large Numbers (WLLN). The formal statement of the WLLN is as follows: let $Y_{1}, Y_{2}, \ldots, Y_{n}$ be a sequence of IID random variables with $\mathbb{E}(Y_{i})=\mu$. The sample mean, $\overline{Y}_{n}$, is defined as $\overline{Y}_{n}=\frac{1}{n}\sum_{i=1}^{n}Y_{i}$.
+
+The WLLN formally states
+
+$$
+  \begin{aligned}
+    \overline{Y}_{n} & \overset{P}{\rightarrow} \mu
+  \end{aligned}
+$$
+
+where $\overset{P}{\rightarrow}$ means converges in probability.
+
+Intuitively this means that if we draw samples of size $n$ a large number of times and compute sample means $\overline{Y}_{n}$, then as $n$ gets bigger the resulting distribution will become more tightly peaked around $\mu$.
+
+### Example
+
+To explore the WLLN we will work with the Gamma distribution. Gamma random variables are continuous and only take on positive values.  The density function for the gamma distribution is given by
+
+$$
+  \begin{aligned}
+    f(x) & = \frac{1}{\Gamma(k) \theta^{k}} x^{k-1} e ^ {-x / \theta}
+  \end{aligned}
+$$
+
+where $k$ is called the *shape* parameter and $\theta$ is called the *scale* parameter. The mean and variance for the distribution are
+
+$$
+  \begin{aligned}
+    \mu & = k \theta \\
+    \sigma^{2} & = k \theta^{2}
+  \end{aligned}
+$$
+
+> There are alternative parametrisations of the Gamma distribution using a *rate* parameter instead of a scale parameter. We will work with the above paramterisation, though the R functions for the Gamma distribution can use either. Be wary as it is a common mistake to assume the wrong paramterisation for a function. A common example is passing a function for the normal distribution the standard deviation when it expects the variance or vice-versa.
+
+In the next code block we will plot the Gamma distribution density function for some different parameters. Before plotting the densities we will create a vector of 1000 values for `y` from 0 to 20 using the `seq` command. We will then evaluate the gamma density function using different parameters at each of these values. This will give us to sets of vectors which will form the $x$ and $y$ components of a 2D line plot.
+
+```{r}
+min.y <- 0
+
+max.y <- 20
+
+num.samples <- 1000
+
+y <- seq(min.y, max.y, length=num.samples)
+```
+
+
+To avoid plotting multiple sets of axes over each other we will initialize a blank plot. The code then uses the `lines` function to plot the densities for the Gamma distribution with different parameters. This can be done in many ways, but in the next block we will add each density plot one at a time.
+
+```{r}
+# Open new plot with x limits from 0 to 20, and y limits from 0 to 0.5
+plot(c(0, 20), c(0, 0.5), xlab='y', ylab='f(y)', main="Gamma probability density function", type="n")
+
+lines(y, dgamma(y, shape=1, scale=2), col="red")
+
+lines(y, dgamma(y, shape=2, scale=2), col="green")
+
+lines(y, dgamma(y, shape=3, scale=2), col="blue")
+
+lines(y, dgamma(y, shape=5, scale=1), col="magenta")
+
+lines(y, dgamma(y, shape=9, scale=0.5), col="black")
+```
+
+A more elegant approach to adding the lines is to use a `for` loop to go through and add each density to the plot. We will define some variables to loop over first.
+
+```{r}
+gamma.shape <- c(1, 2, 3, 5, 9)
+
+gamma.scale <- c(2, 2, 2, 1, 0.5)
+
+colors <- c("red", "green", "blue", "magenta", "black")
+```
+
+Now we can use the `for` loop to repeatedly call the `line` function with different arguments.
+
+```{r}
+# Open new plot with x limits from 0 to 20, and y limits from 0 to 0.5
+plot(c(0, 20), c(0, 0.5), xlab='y', ylab='f(y)', main="Gamma probability density function", type="n")
+
+for(i in 1:length(gamma.shape)){
+  lines(y, dgamma(y, shape=gamma.shape[i], scale=gamma.scale[i]), col=colors[i])
+}
+```
+
+If you are used to programming in other languages the last code block will seem intuitive. This what is called *procedural programming*, which basically means we define an explicit procedure for the computer to follow step by step.
+
+For various reasons, speed and readability being the primary ones, the last approach is not the preferred one in R. The next code block shows a more idiomatic way to do the same thing in R using the `mapply` function. This style of programming is called *functional programming*. Essentially the concept is that we have variables and we *apply* a function to those variables.
+
+```{r}
+# Open new plot with x limits from 0 to 20, and y limits from 0 to 0.5
+plot(c(0, 20), c(0, 0.5), xlab='y', ylab='f(y)', main="Gamma probability density function", type="n")
+
+f <- function(col, ...){
+  lines(y, dgamma(y, ...), col=col)
+}
+
+plot.status <- mapply(f, shape=gamma.shape, scale=gamma.scale, col=colors)
+```
+
+> In a pinch if you cannot figure out how to use functions like `apply` and `mapply` to solve a problem but the solution is obvious using a `for` loop, use the `for` loop. If the `for` loop is to hard just use the simple solution of having multiple lines. Always get the code working first, and then go back try to make it more *elegant* or idiomatic if it runs slowly or becomes a burden to work with.
+
+<!-- Jenny: Ideally this figure would have a legend but leave that for -->
+<!-- now.-->
+
+### Simulating Data
+
+To explore the WLLN the first thing we need to do is simulate random numbers. The following code draws 5 values from the gamma distribution with shape=10 and scale=0.1
+
+> Note the first line sets the random seed so your results should match.
+
+```{r}
+set.seed(1)
+
+gamma.shape <- 10
+gamma.scale <- 0.1
+
+rgamma(n = 5, shape = gamma.shape, scale = gamma.scale)
+```
+
+Now lets try a bigger sample of 1000 and see how it compares to the true distribution. We will compute a kernel density estimator of a random sample taken from the Gamma distribution and plot it in blue. We will also plot the true density in red.
+
+```{r}
+set.seed(1)
+
+y <- rgamma(n=1000, shape = gamma.shape, scale = gamma.scale)
+
+estimated.density <- density(y)
+
+# This plots the estimated density
+plot(estimated.density, col="blue")
+
+# This adds the data points under the density plot and colors them organge
+rug(y, col="orange")
+
+x <- seq(0, 3, length=1000)
+
+true.density <- dgamma(x, shape=gamma.shape, scale=gamma.scale)
+
+# This plots the true density lines
+lines(x, true.density, col="red")
+```
+
+### Computing Descriptive Statistics
+
+According to the WLLN if we draw a large number of observations and compute the sample mean, this value should be close to the true mean. We can check this by simulating a large sample and then comparing the sample mean to the true mean.
+
+First we will set the random seed, and parameters for the Gamma distribution.
+
+```{r}
+set.seed(1)
+
+gamma.shape <- 10
+gamma.scale <- 0.1
+```
+
+Now we can compute the true mean and we will save it for later use.
+
+```{r}
+(true.mean <- gamma.shape * gamma.scale)
+```
+
+> In the last line we surronded the variable assigment by brackets. This is a short form way to assign the a value to the variable and have R print the variable. The following code shows a more explicit way to do the same thing.
+
+```{r}
+true.mean <- gamma.shape * gamma.scale
+print(true.mean)
+```
+
+We can do the same thing with the true variance.
+
+```{r}
+(true.variance <- gamma.shape * gamma.scale^2)
+```
+
+Now we will draw 100 observations from the distribution and compare the sample mean to the true mean.
+
+```{r}
+n <- 100
+
+y <- rgamma(n, shape = gamma.shape, scale = gamma.scale)
+
+y.mean <- mean(y)
+
+true.mean - y.mean
+```
+
+<!-- Jenny: why not view the sample mean while we're at it?.-->
+
+> Exercise 1: Try computing the sample mean and variance using the built in functions `mean` and `var`. Compare these to the values you would get by manually implementing the functions
+
+<!-- Jenny: what's your plan for hiding the solution?.-->
+
+In theory the sample mean should converge to the true mean as we increase the sample size. We can explore this by simulating from a range of sample sizes and plotting the difference between the true mean and sample means.
+
+First we will generate 100 different samples each of size 10. We will store this data in a matrix where each row represents a single sample.
+
+```{r}
+set.seed(1)
+
+# Number of samples
+num.samp <- 100
+
+# Size of each sample
+samp.size <- 10
+
+# Generate the samples in a matrix with num.samp rows and samp.size columns
+y <- matrix(rgamma(n = num.samp * samp.size, shape = gamma.shape, scale = gamma.scale),
+            nrow = num.samp, ncol=samp.size)
+```
+
+Now we can compute the mean for each sample. One approach is to use the apply function to take the mean of each row.
+
+```{r}
+y.mean <- apply(y, 1, mean)
+```
+
+> Exercise 2: What would the following code do `y.means <- apply(y, 2, mean)`?
+
+We can check we computed the correct number, 100, of sample means by looking at the length of the `y.mean` variable.
+
+```{r}
+length(y.mean)
+```
+
+We can also look at the first few values of `y.mean` using `head`.
+
+```{r}
+head(y.mean)
+```
+
+Taking the mean of the rows is so common there is a built in function called `rowMeans`. This will do the same thing as `apply` but has two benefits. First, it is easier to read the code as the intent is more explicit. Second, the resulting code will run faster because the function is optimized.
+
+> R is an interpreted language, and code written in R can be slow. To side step this issue many functions in R are written in C, which is faster but harder to program in. Functions like `rowMeans` pass the entire data matrix into C and the computation is done in C. In contrast using `apply` will pass each row individually into C, which results in more work being done in R, hence the code is slower.
+
+> Do not get bogged down in trying to write fast code, focus on writing readable code. Its far better to write code which is easy to understand but runs a little slower. In the case of `rowMeans` readability and speed are both benefits, so it is an optimal choice.
+
+```{r}
+y.mean <- rowMeans(y)
+```
+
+As you can see we get the same result.
+
+```{r}
+length(y.mean)
+```
+
+```{r}
+head(y.mean)
+```
+
+We can now compute the difference between the sample mean and the true mean.
+
+```{r}
+mean.diff <- y.mean - true.mean
+```
+
+And we can look at the first few values again
+
+```{r}
+head(mean.diff)
+```
+
+We can make a boxplot of the mean differences.
+
+```{r}
+boxplot(mean.diff)
+```
+
+To explore the WLLN we need to try a few different sample sizes. At this point it will be beneficial to put the code we just executed into a function for reuse.
+
+```{r}
+gammaSampleMean <- function(gamma.shape, gamma.scale, num.samp, samp.size){
+  y <- matrix(rgamma(n = num.samp * samp.size, shape = gamma.shape, scale = gamma.scale),
+              nrow = num.samp, ncol=samp.size)
+
+  y.mean <- rowMeans(y)
+
+  return(y.mean)
+}
+```
+
+We can now use this function to compute the mean difference across a range of sample sizes. First we will set a range of sample sizes to use from 10 to 10,000. We will also give the entries some human readable names, which will make life easier when we make plots.
+
+```{r}
+samp.sizes <- c(10, 100, 1000, 1e4)
+
+names(samp.sizes) <- paste0("n=", samp.sizes)
+
+samp.sizes
+```
+
+> Note we can use scientific notation to save typing i.e. we could put 1e4 instead of writing 10,000. For example we could set samp.sizes using `samp.sizes <- c(10, 1e2, 1e3, 1e4)` to save typing some zeros.
+
+Now we can use `sapply` to call the function `gammaSampleMean` for the different sample sizes.
+
+```{r}
+set.seed(1)
+
+num.samp <- 100
+
+y.mean <- sapply(samp.sizes, gammaSampleMean, num.samp=num.samp, gamma.shape=gamma.shape, gamma.scale=gamma.scale)
+```
+
+<!-- Jenny: link to not-yet-existing module about using sapply and -->
+<!-- friend for loop avoidance. This is a bit advanced so expect to do -->
+<!-- some explaining in the seminar. People are always baffled by this.-->
+
+Finally we can make a boxplot of the results. Setting the names for the `sample.sizes` variable is useful as `boxplot` can use these to label to plot.
+
+```{r}
+boxplot(y.mean - true.mean, xlab="Sample size (n)", ylab=expression(bar(Y)[n]-mu))
+```
+
+From the boxplot we see two phenomena related to the WLLN. First, the mean of the boxplots gets closer to 0 as we increase the number of samples. This shows the sample mean is converging to the population mean as predicted by the WLLN. Second, the variance (spread) of the boxplots is decreasing as the number of samples increases.
+
+## Central Limit Theorem
+
+One of the most useful results in probability for statisticians is the Central Limit Theorem (CLT). Intuitively the CLT says the sum of any set of independent identically distributed (IID) random variables is approximately normally distributed.
+
+More formally, let $Y_{1}, Y_{2}, \ldots, Y_{n}$ be a sequence of IID random variables with $\mathbb{E}(Y_{i})=\mu$ and $\mathbb{V}(Y_{i})=\sigma^{2}$ and define $\overline{Y}_{n}=\frac{1}{n}\sum_{i=1}^{n}Y_{i}$. The CLT states that
+
+$$
+  \begin{aligned}
+    Z_{n} & = \frac{\overline{Y}_{n} - \mu}{\sqrt{\mathbb{V}(\overline{Y})}} \\
+          & = \frac{\sqrt{n}(\overline{Y}_{n} - \mu)}{\sigma} \\
+          & \overset{d}{\rightarrow} Z
+  \end{aligned}
+$$
+
+where $\overset{d}{\rightarrow}$ means converges in distribution and
+
+$$
+  \begin{aligned}
+    Z & \sim N(0, 1)
+  \end{aligned}
+$$
+
+That is
+
+$$
+  \begin{aligned}
+    \lim_{n\rightarrow\infty} \mathbb{P}(Z_{n} \le z) & = \mathbf{\Phi}(z) \\
+                                                      & = \int_{-\infty}^{z} \frac{1}{2 \pi} e ^{x^{2}/2} dx
+  \end{aligned}
+$$
+
+The most surprising thing about the CLT is that it only assumes $Y_{i}$ have finite mean and variance. This is what makes the CLT such a generally useful result.
+
+> There are some common distributions which don't satisfy the conditions of the CLT. The most famous is the Cauchy distribution which does not have a finite mean or variance.
+
+### Example
+
+Following the previous example we will work with a gamma distribution with scale=10 and shape=0.1. The first thing we will do is figure out how to simulate variables and compute $Z_{n}$.
+
+```{r}
+set.seed(1)
+
+gamma.scale <- 10
+
+gamma.shape <- 0.1
+
+samp.size <- 10
+
+num.samp <- 1000
+
+# Compute the true values
+true.mean <- gamma.shape * gamma.scale
+
+true.variance <- gamma.shape * gamma.scale^2
+
+# Draw a sample
+y <- matrix(rgamma(n = num.samp * samp.size, shape = gamma.shape, scale = gamma.scale),
+               nrow = num.samp, ncol=samp.size)
+
+y.mean <- rowMeans(y)
+
+# Compute normalised values
+z.n <- (sqrt(samp.size) * (y.mean - true.mean)) / sqrt(true.variance)
+
+# Plot a histogram
+hist(z.n, probability=TRUE, xlab=expression(Z[n]))
+
+# Compute the normal density and overlay it on the plot in red
+y <- seq(min(z.n), max(z.n), length=1000)
+
+dens <- dnorm(y, mean=0, sd=1)
+
+lines(y, dens, col="red")
+```
+
+This doesn't look particularly bell shaped, like we would expect if $Z_{n}$ followed a normal distribution. This is because we are using a low value of 10 for $n$, called `samp.size` in the code. The CLT only holds asymptotically, so that we need larger values of $n$ before the distribution will start to look normally distributed.
+
+Before we try larger values of $n$ it will be useful to extract the code for computing $Z_{n}$ into a function.
+
+```{r}
+gammaNormalisedMean <- function(gamma.shape, gamma.scale, num.samp, samp.size){
+  # Compute the true values
+  true.mean <- gamma.shape * gamma.scale
+
+  true.variance <- gamma.shape * gamma.scale^2
+
+  # Draw a sample
+  y <- matrix(rgamma(n = num.samp * samp.size, shape = gamma.shape, scale = gamma.scale),
+                 nrow = num.samp, ncol=samp.size)
+
+  y.mean <- rowMeans(y)
+
+  # Compute normalised values
+  z.n <- (sqrt(samp.size) * (y.mean - true.mean)) / sqrt(true.variance)
+
+  return(z.n)
+}
+```
+
+To save some typing we will also put the plotting code into a function.
+
+```{r}
+plotNormalComparison <- function(gamma.shape, gamma.scale, num.samp, n){
+  z.n <- gammaNormalisedMean(gamma.shape, gamma.scale, num.samp, n)
+
+  # It will be nice to have a title
+  fig.title <- paste0("n=", n)
+
+  # Plot a histogram
+  hist(z.n, probability=TRUE, main=fig.title, xlab=expression(Z[n]))
+
+  # Compute the normal density and overlay it on the plot in red
+  y <- seq(min(z.n), max(z.n), length=1000)
+
+  dens <- dnorm(y, mean=0, sd=1)
+
+  lines(y, dens, col="red")
+}
+```
+
+Now we can try some different values of $n$ and see how things look.
+
+With $n=10$
+
+```{r}
+n <- 10
+
+plotNormalComparison(gamma.shape, gamma.scale, num.samp, n)
+```
+
+With $n=100$
+
+```{r}
+n <- 100
+
+plotNormalComparison(gamma.shape, gamma.scale, num.samp, n)
+```
+
+With $n=1000$
+
+```{r}
+n <- 1000
+
+plotNormalComparison(gamma.shape, gamma.scale, num.samp, n)
+```
+
+As you can see the distribution of $Z_{n}$ looks more and more like the normal distribution when we increase $n$.
+
+We can formally check this idea using the [Kolmogorov-Smirnov (KS) test][ks_test]. Informally, the KS test compares a random sample to a theoretical distribution to see how similar they are.
+
+The function `ks.test` allows us to perform the KS test. The function requires two arguments, `x` and `y`. The first argument , `x`, is a vector of random samples. The second argument, `y`, can be either another vector of random samples, a string indicating the cumulative distribution function, or an actual cumulative distribution function. Since we want to check whether our samples are normally distributed we will pass in the `pnorm` function which is the cumulative normal function. We will also pass in some additional arguments `mean` and `sd` which `ks.test` ignores and instead pass to the `pnorm` function.
+
+By default the `ks.test` function checks the null hypothesis the two distributions are equal. Thus low p-values for the test would indicate the distributions are different.
+
+Let's try a simple example with $n=10$.
+
+```{r}
+n <- 10
+
+z.n <- gammaNormalisedMean(gamma.shape, gamma.scale, num.samp, n)
+
+ks.test(z.n, pnorm, mean=0, sd=1)
+```
+
+Based on the p-value we would reject the hypothesis that $Z_{n}$ is sampled from the standard normal distribution at any reasonable significance level. On the other hand if we try the same thing with $n=10000$ we will see that we cannot reject the null hypothesis $Z_{n}$ comes from a standard normal.
+
+```{r}
+n <- 10000
+
+z.n <- gammaNormalisedMean(gamma.shape, gamma.scale, num.samp, n)
+
+ks.test(z.n, pnorm, mean=0, sd=1)
+```
+
+## Appendix : Using lattice
+
+In the previous section we used the basic plotting capabilities provided by R. Though the built-in functions can do a lot, many R programmers prefer to use additional plotting libraries such as lattice and ggplot2. Both these libraries provide replacement functions for standard plots such as histograms and boxplots. The benefit of these libraries is that it can be easier to produce nice looking plots.
+
+In this section we will use the lattice library to redo some examples. This section is optional but will be a nice prelude to seminar 3 which goes into more detail about plotting.
+
+### Weak Law Of Large Numbers Revisited
+
+#### Boxplot
+
+We originally used the following code to generate a boxplot, I've put everything into one block to make things easier to follow.
+
+```{r}
+gammaSampleMean <- function(gamma.shape, gamma.scale, num.samp, samp.size){
+  y <- matrix(rgamma(n = num.samp * samp.size, shape = gamma.shape, scale = gamma.scale),
+                 nrow = num.samp, ncol=samp.size)
+
+  y.mean <- rowMeans(y)
+
+  return(y.mean)
+}
+
+set.seed(1)
+
+samp.sizes <- c(10, 100, 1000, 1e4)
+
+num.samp <- 100
+
+gamma.shape <- 10
+
+gamma.scale <- 0.1
+
+true.mean <- gamma.shape * gamma.scale
+
+names(samp.sizes) <- paste0("n=", samp.sizes)
+
+y.mean <- sapply(samp.sizes, gammaSampleMean, num.samp=num.samp, gamma.shape=gamma.shape, gamma.scale=gamma.scale)
+
+boxplot(y.mean - true.mean, xlab="Sample size (n)", ylab=expression(bar(Y)[n]-mu))
+```
+
+Instead of using the built in boxplot command we will now use lattice. To do this we first need to load the lattice library which ships with R by default.
+
+```{r}
+library(lattice)
+```
+
+Now we will put our data in a data frame which will allow us to exploit the power of lattice. We will create a two column data frame. In the first column will be the labels of the sample size i.e. n=10. In the second column will be the sample mean associated with that value. We will label these columns as n and x (imagine a header in an excel file if that helps).
+
+```{r}
+y.mean.tall <- data.frame(n = rep(names(samp.sizes), each = num.samp), x = as.vector(y.mean))
+```
+
+We can look at the first few rows of the data frame using the `head` function.
+
+```{r}
+head(y.mean.tall)
+```
+
+Similarly, we can look at the last few rows using the `tail` function.
+
+```{r}
+tail(y.mean.tall)
+```
+
+Finally we can call the lattice boxplot function `bwplot`. The syntax for this function looks a bit intimidating at first, but we will brake it down.
+
+* The first argument `x - true.mean ~ as.factor(n)` tells `bwplot` to make a boxplot of the x column of the data frame y.mean.tall minus the variable `true.mean`. The `~as.factor(n)` part tells `bwplot` to group all rows where the column n is the same. So for example all rows with n=10 will be grouped together and plotted in a single box.
+
+* The second argument `y.mean.tall` is just supplying the data frame we created.
+
+* The third argument `xlab="Sample size (n)"` sets the label on the x-axis.
+
+* The fourth argument `ylab=expression(bar(Y)[n]-mu)` sets the label on the y-axis.
+
+```{r}
+bwplot(x - true.mean ~ as.factor(n), y.mean.tall, xlab="Sample size (n)", ylab=expression(bar(Y)[n]-mu))
+```
+
+As you can see the plot looks similar to before, but has some nice colors. Additionally the label on the y-axis is draw correctly with a bar over $Y_{n}$.
+
+#### Density plot
+
+Another way to visualize the previous data with lattice is to create density plots for the different sample sizes. Assuming you executed the code from the previous section, we can draw these plots using the following code.
+
+```{r}
+densityplot(~ x - true.mean, y.mean.tall, groups = n, auto.key = TRUE, xlab=expression(bar(Y)[n]-mu))
+```
+
+You'll notice that `densityplot` colors each line nicely, adds a legend and also puts a *rug* of data points below the density plots. This requires significantly less code than doing the same thing using the basic plotting functions in R.
+
+## Take-home problem
+
+This problem is inpsired by problem 2.20 from "All Of Statistics" by
+Wasserman which Jenny mentioned in lecture 2. You don't have to do
+every last suggestion here. Just start and see how it goes.
+
+The goal will be to simulate flipping a coin $n$ times, where the coin
+comes up heads with probability $p$. As the value of $n$ gets large
+the relative frequency of flips which are heads (that is, the fraction
+of tosses which are heads) should tend to $p$.
+
+Pick the probability $p$. Pick a sample size $n$. Simulate the $n$
+coin flips experiment and count the number of heads. Convert that to a
+proportion.
+
+Now do the same for many values of $n$. Plot those proportions against
+$n$. Add the true $p$ for reference if you can. What do you see? Is it
+what you expected?
+
+For kicks, you could draw several samples for each value of $n$. If
+you do that, then you can compute means, variances, MAD, IQR, etc. of
+the observed proportions for various sample sizes. You could plot them
+in various ways.
+
+Consider a different value of $p$. Or a different number of samples
+taken for each sample size. How painful is it to change your code? How
+would you do things differently next time?
+
+Feel free to post questions on the Google group if you get
+stuck. Or post a success story, a plot, some code, etc.
+
+> Hints :
+> * In lecture 2 you'll see some code for simulating coin flips with
+> `runif()`. There are ways to use `rbinom()` as well.
+
+## Exercise Solutions
+
+Below are some solutions to the small exercises from the seminar.
+
+### Exercise 1
+First we will generate the sampled values.
+
+```{r}
+n <- 100
+
+y <- rgamma(n, shape = gamma.shape, scale = gamma.scale)
+```
+
+Now we can compute the mean and variances both ways.
+
+```{r}
+# Mean using built in function
+mean(y)
+```
+
+```{r}
+# Mean computed manually
+sum(y) / length(y)
+```
+
+```{r}
+# Sample variance computed using built in function
+var(y)
+```
+
+```{r}
+# Sample variance computed manually
+sum((y - mean(y))^2) / (length(y) - 1)
+```
+
+### Exercise 2
+
+The code `y.means <- apply(y, 2, mean)` will take the mean of the columns instead of the rows. The second argument of `apply` indicates which dimension to *apply* the function over. For a matrix 1 indicates the rows while 2 indicates the columns.
+
+<!--
+Jenny is adding this code here. Hopefully it will prove inspirational and useful for some revision and additions above.
+
+```{r}
+## links to further material on data aggregation would be good in this
+## seminar
+
+library(lattice)
+
+## plotting a true gamma density to kick things off
+gamma.shape <- 10
+gamma.scale <- 0.1
+
+(y <- seq(from = 0, to = 3, length = 200)) # nice demo of seq
+(dens <- dgamma(y, shape = gamma.shape, scale = gamma.scale))
+
+xyplot(dens ~ y, type = "l")            # early use of xyplot
+
+## simulating a larger sample
+set.seed(1)
+y <- rgamma(n = 200, shape = gamma.shape, scale = gamma.scale)
+
+## look at the observed distribution
+bwplot(~ y)
+histogram(~ y)
+densityplot(~ y)
+
+## add the true data-generating distribution
+densityplot(~ y,
+            panel = function(x, ...) {
+                panel.mathdensity(dmath = dgamma,
+                                  args = list(shape = gamma.shape,
+                                  scale = gamma.scale))
+                                panel.densityplot(x, ...)
+            })
+## y axis limits not ideal but I'd rather keep the code clean
+## shows some advanced lattice stuff but might pique their interest in
+## learning such things later
+
+## will be useful below
+(trueMean <- gamma.shape * gamma.scale)
+(trueVar <- gamma.shape * gamma.scale^2)
+
+## simulating many samples, but holding n scale shape constant
+## I am not a big fan of replicate ... here's another approach
+## good for future simulation and bootstrapping: realize you can
+## generate all the data at once!
+B <- 15                                 # no of samples
+n <- 7                                  # size of each sample
+
+set.seed(1)
+y <- matrix(rgamma(n = n * B, shape = gamma.shape, scale = gamma.scale),
+            ncol = n)
+
+str(y)
+nrow(y)                                 # one row per sample
+ncol(y)                                 # size of each sample
+
+head(y)                                 # first 6 samples
+
+## take mean of many samples
+
+## most basic data aggregation function in R: apply
+apply(y, 1, mean)
+
+## taking means of rows (and columns) so common, there's a built-in
+## function for that
+(yBar <- rowMeans(y))
+## *MUCH* faster for large matrices as it drops down to C much earlier
+
+## exercise?
+## verify for at least one sample
+## good practice with indexing
+yBar[11]
+y[11, ]
+mean(y[11, ])
+
+## Jenny's substitute for generating the sample means
+## compatible with the R convention of rnorm, rgamma, etc.
+## I would do the "scale up" to many samples HERE not with the
+## shifting
+## also shows workflow for writing a function
+## my body is exactly what we did above
+## I never store shifted or normalized sample means; why not store the
+## real good, ie the sample means themselves?
+rGammaSampleMean <- function(B, n, gamma.shape, gamma.scale){
+  # Generate samples from a gamma distribution and return their means
+  #
+  # Args:
+  #   B: Number of samples to generate
+  #   n: Number of observations in each sample
+  #   gamma.shape: Shape parameter of the data-generating gamma distribution
+  #   gamma.scale: Scale parameter of the data-generating gamma distribution
+    y <- matrix(rgamma(n = n * B, shape = gamma.shape, scale = gamma.scale),
+                ncol = n)
+    yBar <- rowMeans(y)
+    return(yBar)
+}
+
+## using Jenny's function ... should get same result as before and we do
+set.seed(1)
+(yBar <- rGammaSampleMean(B = 15, n = 7, gamma.shape, gamma.scale))
+
+## using sapply to do for many sample sizes
+sampleSizes <- c(10, 100, 1000, 1e4)
+names(sampleSizes) <- paste0("n", sampleSizes)
+sampleSizes                             # good names pay off ... wait
+                                        # for it
+B <- 100
+
+set.seed(1)
+yBar <- sapply(sampleSizes, function(n) {
+    rGammaSampleMean(B = B, n = n, gamma.shape, gamma.scale)
+})
+str(yBar)
+head(yBar)                              # look at those column names!
+
+boxplot(yBar - trueMean, xlab="Sample size (n)", ylab=expression(bar(Y)[n]-mu))
+
+## reshape the data ... a constant task if you like nice plots
+yBarTall <- data.frame(n = rep(sampleSizes, each = B),
+                       yBar = as.vector(yBar))
+
+## now we can use lattice's boxplot function
+bwplot(yBar - trueMean ~ as.factor(n), yBarTall,
+       xlab="Sample size (n)", ylab=expression(bar(Y)[n]-mu))
+
+## another nice demo of the power of increasing sample size
+densityplot(~ yBar - trueMean, yBarTall,
+            groups = n, auto.key = TRUE,
+            xlab=expression(bar(Y)[n]-mu))
+
+## for CLT demo, just reuse the sample means we've already got!
+yBar[ , "n10"]
+
+densityplot(~ yBar | n, yBarTall,
+            subset = n < 500,
+            panel = function(x, ...) {
+                panel.mathdensity(dmath = dnorm,
+                                  args = list(mean = trueMean,
+                                  sd = sqrt(trueVar/sampleSizes[packet.number()])))
+                panel.densityplot(x, ...)
+            })
+
+## hey we can formally test whether this looks normal
+ks.test(x = yBar[ , "n10"], y = "pnorm",
+        mean = trueMean, sd = sqrt(trueVar/10))
+
+## for all sample sizes
+sapply(sampleSizes, function(n) {
+    foo <- which(sampleSizes == n)
+    ks.test(x = yBar[ , foo], y = "pnorm",
+            mean = trueMean, sd = sqrt(trueVar/n))
+})
+
+## honing in on just p-values
+(ksRes <- lapply(sampleSizes, function(n) {
+    foo <- which(sampleSizes == n)
+    ks.test(x = yBar[ , foo], y = "pnorm",
+            mean = trueMean, sd = sqrt(trueVar/n))
+}))
+
+sapply(ksRes, function(testRes) testRes$p.value)
+```
+-->
+
+
+
+<!-- Jenny adding this as a suggested exercise for them to tackle  -->
+<!-- on their own. Here's a solution; you'll have to write a couple -->
+<!-- sentences posing the challenge. -->
+
+<!--
+## inspired by Wasserman problem 2.20
+## coin comes up heads w/ prob p
+## toss it n times and count rel freq of heads
+## show this tends p as n grows
+
+p <- 0.35
+nN <- 5
+n <- floor(10^seq(from = 0, to = 4, length = 100))
+foo <- lapply(n, function(thisN) rbinom(n = nN, size = thisN, p = p)/thisN)
+hDat <- data.frame(n = rep(n, each = nN),
+                   obsRelFreq = unlist(foo))
+
+xyplot(obsRelFreq ~ n, hDat,
+       scales = list(x = list(log = 10)),
+       xlab = "Number of coin tosses",
+       ylab = "Obs rel freq of heads",
+       panel = function(x, y, ...) {
+         panel.abline(h = p)
+         panel.xyplot(x, y, ...)
+         })
+-->
+
+[seminar_0]: seminar_00.r_rstudio_setup.html
+[seminar_1]: seminar_01.basic_data_analysis.html
+
+[functions]: ../modules/functions.html
+[random_seed]: ../modules/random_seed.html
+[probability_functions]: ../modules/probability_functions.html
+[flow_control]: ../modules/flow_control.html
+[vectorization]: ../modules/vectorization.html
+
+[ks_test]: http://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test
