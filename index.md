@@ -39,7 +39,7 @@ Cross-listed as
 
 ### GitHub repository
 
-Vast majority of course content, including source for this webiste, can be found here:
+Vast majority of course content, including source for this website, can be found here:
 
 <https://github.com/jennybc/stat540_2014>
 
