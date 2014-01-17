@@ -100,11 +100,11 @@ seminar 02 | [Learn more R while reviewing probability](#seminar02) (LL) | Wed J
 
 ### Week 3
 
-lecture 05 | Data QC and preprocessing (GC-F) | Mon Jan 20
+lecture 05 | Data QC and preprocessing (JB for GC-F) | Mon Jan 20
 
 lecture 06 | Statistical inference: two group comparisons, e.g. differential expression analysis (JB) | Wed Jan 22
 
-seminar 03 | Introduction to R graphics (SJ) | Wed Jan 22
+seminar 03 | [R graphics AND `knitr`, R markdown, and git(hub)](#seminar03) | Wed Jan 22
 
 Fri Jan 24: Project groups should be formed. 
 
@@ -219,8 +219,9 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - Gentlest, written by Jenny: [Play with probability distributions and simulations](seminars/seminar02_playing-with-probability.html)
     - More advanced, revision by Gloria: [Introduction To Simulation](seminars/seminar02_probability-simulation-gloria.html)
     - More advanced, original 2013 version by Andy: [Introduction To Simulation](seminars/seminar02_probability-simulation-andy.html)
-  * seminar 03 Wed Jan 22
-    - Introduction to R graphics
+  * seminar 03 Wed Jan 22 <a id="seminar03"></a>
+    - Introduction to R graphics (LL)
+    - Introduction to `knitr`, R markdown, and git(hub) (SJ)
   * seminar 04 Wed Jan 29
     - Data aggregation and two group testing
   * seminar 05 Wed Feb 05
