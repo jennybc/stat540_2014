@@ -1,6 +1,15 @@
 Explore a small gene expression dataset
 ========================================================
 
+```{r include = FALSE}
+## I format my code intentionally!
+## do not re-format it for me!
+opts_chunk$set(tidy = FALSE)
+
+## toggle to turn solution chunks on/off
+##opts_chunk$set(eval = FALSE, echo = FALSE)
+```
+
 ### Optional getting started advice
 
 *Ignore if you don't need this bit of support.*
@@ -15,40 +24,19 @@ See [R basics, workspace and working directory, RStudio projects](http://www.sta
 
 We will work with a small data excerpt. Please save this file locally, for example, in the directory associated with your RStudio Project:
 
-  * <http://www.ugrad.stat.ubc.ca/~stat540/data/photoRec/GSE4051_MINI.txt>
+  * <http://www.ugrad.stat.ubc.ca/~stat540/examples/photoRec/data/GSE4051_MINI.txt>
   
 ### The `photoRec` data
 
 *to be polished*
+
+See the [`photoRec` README](https://github.com/jennybc/stat540_2014/tree/master/examples/photoRec).
 
 Gene expression data from photo receptor cells in mice. Various developmental stages, two genotypes.
 
 The excerpt we work with here contains gene expression data for 3 genes. Their arcane names have been replaced with 3 randomly selected Pokemon attacks: crabHammer, eggBomb, and poisonFang.
 
 ### Load `GSE4051_MINI.txt`
-
-We load the mini gene expression dataset into a `data.frame`, which is the preferred way to handle tabular data in R.
-
-If you have not already done so, now is a good time to work through [Basic care and feeding of data in R](http://www.stat.ubc.ca/~jenny/STAT545A/block02_careFeedingData.html). The exercises below will test whether your basic understanding of `data.frames` is developed enough to explore the mini gene expression data we work with here.
-
-If you are new to R, you'll want to work through [R objects (beyond data.frames) and indexing](http://www.stat.ubc.ca/~jenny/STAT545A/block03_basicObjects.html) at some in the near future as well.
-
-Read the data from a local file in the current working directory and use `str()` to get a basic overview of the resulting `prDat` object:
-
-```{r eval = FALSE}
-prDat <- read.table("GSE4051_MINI.txt", header = TRUE, row.names = 1)
-str(prDat)
-```
-
-Does the `read.table()` command fail for you? If so, have you taken control of your working directory? Have you placed `GSE4051_MINI.txt` in that directory or edited the `read.table()` command to reflect its location? Mastering the working directory and filepaths is a surprisingly important part of the learning curve. Submit commands like these to do some troubleshooting:
-
-```{r eval = FALSE}
-getwd()      # is working directory what you think it should be?
-list.files() # do see GSE4051_MINI.txt sitting there?!?
-setwd()      # use with moderation
-```
-
-Exercise: Why do we use the `header =` and `row.names =` arguments above upon import? Submit the command *without* these arguments and note any difference in the result. Form the habit of reading error messages *carefully* and working the problem. Mastering the arguments of `read.table()` and friends is time well spent.
 
 ```{r include = FALSE}
 ## here is how we actually load the data
@@ -60,20 +48,48 @@ if(basename(pwd) %in% c("seminars_2014", "seminars")) {
   } else {
     prefix <- ""
     }
-prDat <- read.table(file.path(prefix, "data/photoRec/GSE4051_MINI.txt"),
+prDat <- read.table(file.path(prefix, "examples/photoRec/data/GSE4051_MINI.txt"),
                               header = TRUE, row.names = 1)
 ```
+
+We load the mini gene expression dataset into a `data.frame`, which is the preferred way to handle tabular data in R.
+
+If you have not already done so, now is a good time to work through [Basic care and feeding of data in R](http://www.stat.ubc.ca/~jenny/STAT545A/block02_careFeedingData.html). The exercises below will test whether your basic understanding of `data.frames` is developed enough to explore the mini gene expression data we work with here.
+
+If you are new to R, you'll want to work through [R objects (beyond data.frames) and indexing](http://www.stat.ubc.ca/~jenny/STAT545A/block03_basicObjects.html) at some in the near future as well.
+
+Read the data from a local file in the current working directory and use `str()` to get a basic overview of the resulting `prDat` object:
+
+```{r eval = FALSE}
+prDat <- read.table("GSE4051_MINI.txt", header = TRUE, row.names = 1)
+```
+
+Does the `read.table()` command fail for you? If so, have you taken control of your working directory? Have you placed `GSE4051_MINI.txt` in that directory or edited the `read.table()` command to reflect its location? Mastering the working directory and filepaths is a surprisingly important part of the learning curve. Submit commands like these to do some troubleshooting:
+
+```{r eval = FALSE}
+getwd()      # is working directory what you think it should be?
+list.files() # do see GSE4051_MINI.txt sitting there?!?
+setwd()      # use with moderation
+```
+
+Upon successful import, `str()` the object as a sanity check:
+```{r}
+str(prDat)
+```
+
+Exercise: Why do we use the `header =` and `row.names =` arguments above upon import? Submit the command *without* these arguments and note any difference in the result. Form the habit of reading error messages *carefully* and working the problem. Mastering the arguments of `read.table()` and friends is time well spent.
+
 
 ```{r eval = FALSE, include = FALSE}
 ## currently deactivated but shows reading straight from github
 library(RCurl)
-x <- getURL("https://raw.github.com/jennybc/stat540_2014/master/data/photoRec/GSE4051_MINI.txt")
+x <- getURL("https://raw.github.com/jennybc/stat540_2014/master/examples/photoRec/data/GSE4051_MINI.txt")
 prDat <- read.table(text = x, header = TRUE, row.names = 1)
 ```
 
 ```{r eval = FALSE, include = FALSE}
 ## currently deactivated but shows reading straight from course website
-prURL <- "http://www.ugrad.stat.ubc.ca/~stat540/data/photoRec/GSE4051_MINI.txt"
+prURL <- "http://www.ugrad.stat.ubc.ca/~stat540/examples/photoRec/data/GSE4051_MINI.txt"
 prDat <- read.table(file = prURL, header = TRUE, row.names = 1)
 ```
 
@@ -105,7 +121,7 @@ If you had to take a wild guess, what do you think the *intended* experimental d
 
 For each quantitative variable, what are the extremes? How about average or median? Hint: `min()`, `max()`, `range()`, `summary()`, `fivenum()`, `mean()`, `median()`, `quantile()`.
 
-```{r include = FALSE}
+```{r}
 str(prDat)
 dim(prDat)
 nrow(prDat)
@@ -146,7 +162,7 @@ Create a new data.frame called `weeDat` only containing observations for which e
 
 For how many observations poisonFang > 7.5? How do they break down by genotype and developmental stage? 
 
-```{r include = FALSE}
+```{r}
 weeDat <- subset(prDat, poisonFang > 7.5)
 nrow(weeDat)
 table(weeDat$gType)
@@ -158,11 +174,11 @@ Print the observations with row names "Sample_16" and "Sample_38" to screen, sho
 
 Which samples have expression of eggBomb less than the 0.10 quantile?
 
-```{r include = FALSE}
+```{r}
 prDat[c("Sample_16", "Sample_38"), c("crabHammer", "eggBomb", "poisonFang")]
 rownames(prDat[prDat$eggBomb < quantile(prDat$eggBomb, 0.1), ])
 ```
 
 ### Answers!
 
-Code for the exercises is shown in the source document that makes this page, but is hidden here. Go read [the R Markdown source](https://github.com/jennybc/stat540_2014/blob/master/seminars/seminar01_basic-data-exploration.rmd) if you want to see it.
+Code for the exercises is shown in the source document that makes this page, ~~but is hidden here~~. Go read [the R Markdown source](https://github.com/jennybc/stat540_2014/blob/master/seminars/seminar01_basic-data-exploration.rmd) if you want to see it.

@@ -1,3 +1,6 @@
+The `photoRec` dataset
+=================================================================
+
 The aim of the study was to "generate gene expression profiles of purified photoreceptors at distinct developmental stages and from different genetic backgrounds". The experimental units were mice and the microarray platform was Affymetrix mouse genomic expression array 430 2.0.
 
 For more information on this study, please refer to the 2006 publication:
