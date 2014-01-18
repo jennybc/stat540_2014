@@ -25,6 +25,10 @@ summary(prDes)
 ## give variables shorter names
 names(prDes) <- c("devStage", "gType")
 
+## convert rownames = sample labels to proper variable
+prDes$sidChar <- as.character(rownames(prDes))
+rownames(prDes) <- NULL
+
 ## both factors need their levels set more rationally!
 
 ## for gType, the first level -- the reference level, by convention --
@@ -93,25 +97,20 @@ jExtract <- function(charVec, split, whichElem = 1) {
                 function(x) return(x[whichElem])))
 }
 
-prDes$sample <- as.numeric(jExtract(rownames(prDes), split = "_",
-                                    whichElem = 2))
-
-## let's suppress the explicit rownames
-## SUPPRESSING FOR NOW, SINCE THESE ROWNAMES MATCH VARIABLE NAMES IN
-## GENE EXPRESSION DATA FILE
-## rownames(prDes) <- NULL
+prDes$sidNum <- as.numeric(jExtract(prDes$sidChar, split = "_", whichElem = 2))
 
 ## reorder the variables
-prDes <- prDes[c("sample", "devStage", "gType")]
+prDes <- prDes[c("sidChar", "sidNum", "devStage", "gType")]
 
 ## reorder the rows
 prDes <- prDes[with(prDes, order(devStage, gType)), ]
 
 str(prDes)
-## 'data.frame':	39 obs. of  3 variables:
-##  $ sample  : num  20 21 22 23 16 17 6 24 25 26 ...
-##  $ devStage: Factor w/ 5 levels "E16","P2","P6",..: 1 1 1 1 1 1 1 2 2 2 ...
-##  $ gType   : Factor w/ 2 levels "wt","NrlKO": 1 1 1 1 2 2 2 1 1 1 ...
+# 'data.frame':  39 obs. of  4 variables:
+# $ sidChar : chr  "Sample_20" "Sample_21" "Sample_22" "Sample_23" ...
+# $ sidNum  : num  20 21 22 23 16 17 6 24 25 26 ...
+# $ devStage: Factor w/ 5 levels "E16","P2","P6",..: 1 1 1 1 1 1 1 2 2 2 ...
+# $ gType   : Factor w/ 2 levels "wt","NrlKO": 1 1 1 1 2 2 2 1 1 1 ...
 
 ## JB private function
 ## peek(prDes)
@@ -130,7 +129,8 @@ str(prDes)
 ## good news: writes a plain text version of prDes to file, easy to read
 ## by both humans and machines (e.g. Excel)
 ## bad news: all our work on factor levels is not captured
-write.table(prDes, file = "data/GSE4051_design.tsv", sep = "\t", quote = FALSE)
+write.table(prDes, file = "data/GSE4051_design.tsv", sep = "\t",
+            quote = FALSE, row.names = FALSE)
 
 ## good news: writes a plain text representation of prDes that *does*
 ## capture our hard-won factor levels

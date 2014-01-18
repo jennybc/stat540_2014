@@ -1,5 +1,7 @@
 library(fileherd)
 
+setwd("~/teaching/STAT540/2014_STAT540")
+
 findPreview()
 
 ## be careful! do not want to delete photoRec/README.md!

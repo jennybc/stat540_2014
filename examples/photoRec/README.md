@@ -27,8 +27,7 @@ TO DO: discuss differential expression analysis
 
 TO DO: use diff exp analysis to pick 3 more interesting probesets for a new mini dataset
 
-HOW TO READ DATA/DESIGN
-------------------------
+### Reading the raw data and design
 
 WARNING: It is your responsibility to make sure the working directory is set to where these files live or to edit paths accordingly below!
 
@@ -76,6 +75,9 @@ head(cbind(names(prDat), rownames(prDes)))
 
 Heck, no! That would be too easy and transparent. Watch out for such things!
 
+
+### Reading the cleaned data and design
+
 __Cleaned__ data and design (saved in various formats):
 
 
@@ -89,19 +91,20 @@ str(prDat, max.level = 0)
 ```
 
 ```r
-prDes <- read.table("data/GSE4051_design.tsv")
+prDes <- read.table("data/GSE4051_design.tsv", header = TRUE, as.is = 1)
 str(prDes)
 ```
 
 ```
-## 'data.frame':	39 obs. of  3 variables:
-##  $ sample  : int  20 21 22 23 16 17 6 24 25 26 ...
+## 'data.frame':	39 obs. of  4 variables:
+##  $ sidChar : chr  "Sample_20" "Sample_21" "Sample_22" "Sample_23" ...
+##  $ sidNum  : int  20 21 22 23 16 17 6 24 25 26 ...
 ##  $ devStage: Factor w/ 5 levels "4_weeks","E16",..: 2 2 2 2 2 2 2 4 4 4 ...
 ##  $ gType   : Factor w/ 2 levels "NrlKO","wt": 2 2 2 2 1 1 1 2 2 2 ...
 ```
 
 ```r
-head(cbind(names(prDat), rownames(prDes)))
+head(cbind(names(prDat), prDes$sidChar))
 ```
 
 ```
@@ -115,7 +118,7 @@ head(cbind(names(prDat), rownames(prDes)))
 ```
 
 ```r
-identical(names(prDat), rownames(prDes))
+identical(names(prDat), prDes$sidChar)
 ```
 
 ```
@@ -125,6 +128,8 @@ identical(names(prDat), rownames(prDes))
 
 In the above case, note that the factor levels for `devStage` and `gType` may not be as you want. Wild type ('wt') is not the reference level and the developmental stages are not in chronological order. Set explicitly or import the design from a format that preserves factor levels, i.e. from a cleaned design written to file via `dput()` or `saveRDS()`.
 
+### Reading the design with sane factor levels
+
 
 ```r
 prDes <- dget("data/GSE4051_design_DPUT.txt")
@@ -132,8 +137,9 @@ str(prDes)
 ```
 
 ```
-## 'data.frame':	39 obs. of  3 variables:
-##  $ sample  : num  20 21 22 23 16 17 6 24 25 26 ...
+## 'data.frame':	39 obs. of  4 variables:
+##  $ sidChar : chr  "Sample_20" "Sample_21" "Sample_22" "Sample_23" ...
+##  $ sidNum  : num  20 21 22 23 16 17 6 24 25 26 ...
 ##  $ devStage: Factor w/ 5 levels "E16","P2","P6",..: 1 1 1 1 1 1 1 2 2 2 ...
 ##  $ gType   : Factor w/ 2 levels "wt","NrlKO": 1 1 1 1 2 2 2 1 1 1 ...
 ```
@@ -144,37 +150,68 @@ str(prDes)
 ```
 
 ```
-## 'data.frame':	39 obs. of  3 variables:
-##  $ sample  : num  20 21 22 23 16 17 6 24 25 26 ...
+## 'data.frame':	39 obs. of  4 variables:
+##  $ sidChar : chr  "Sample_20" "Sample_21" "Sample_22" "Sample_23" ...
+##  $ sidNum  : num  20 21 22 23 16 17 6 24 25 26 ...
 ##  $ devStage: Factor w/ 5 levels "E16","P2","P6",..: 1 1 1 1 1 1 1 2 2 2 ...
 ##  $ gType   : Factor w/ 2 levels "wt","NrlKO": 1 1 1 1 2 2 2 1 1 1 ...
 ```
 
 
-TO DO: Come back to bit below here once I've tidied the relevant script!
-
-Mini dataset:
+### Loading and getting to know the mini dataset:
 
 The usual problem with factor level order occurs here:
-> read.table("GSE4051_MINI.txt")
-> str(kDat)
-'data.frame':	39 obs. of  6 variables:
- $ sample    : int  20 21 22 23 16 17 6 24 25 26 ...
- $ devStage  : Factor w/ 5 levels "4_weeks","E16",..: 2 2 2 2 2 2 2 4 4 4 ...
- $ gType     : Factor w/ 2 levels "NrlKO","wt": 2 2 2 2 1 1 1 2 2 2 ...
- $ crabHammer: num  10.22 10.02 9.64 9.65 8.58 ...
- $ eggBomb   : num  7.46 6.89 6.72 6.53 6.47 ...
- $ poisonFang: num  7.37 7.18 7.35 7.04 7.49 ...
+
+
+```r
+kDat <- read.delim("data/GSE4051_MINI.tsv")
+str(kDat)
+```
+
+```
+## 'data.frame':	39 obs. of  7 variables:
+##  $ sidChar   : Factor w/ 39 levels "Sample_1","Sample_10",..: 13 14 15 16 8 9 36 17 18 19 ...
+##  $ sidNum    : int  20 21 22 23 16 17 6 24 25 26 ...
+##  $ devStage  : Factor w/ 5 levels "4_weeks","E16",..: 2 2 2 2 2 2 2 4 4 4 ...
+##  $ gType     : Factor w/ 2 levels "NrlKO","wt": 2 2 2 2 1 1 1 2 2 2 ...
+##  $ crabHammer: num  10.22 10.02 9.64 9.65 8.58 ...
+##  $ eggBomb   : num  7.46 6.89 6.72 6.53 6.47 ...
+##  $ poisonFang: num  7.37 7.18 7.35 7.04 7.49 ...
+```
+
 
 Importing from these R-specific formats preserves factor levels:
-dget("GSE4051_MINI_DPUT.txt")
-load("GSE4051_MINI.robj")
+
+
+```r
+kDat <- dget("data/GSE4051_MINI_DPUT.txt")
 str(kDat)
-'data.frame':	39 obs. of  6 variables:
- $ sample    : num  20 21 22 23 16 17 6 24 25 26 ...
- $ devStage  : Factor w/ 5 levels "E16","P2","P6",..: 1 1 1 1 1 1 1 2 2 2 ...
- $ gType     : Factor w/ 2 levels "wt","NrlKO": 1 1 1 1 2 2 2 1 1 1 ...
- $ crabHammer: num  10.22 10.02 9.64 9.65 8.58 ...
- $ eggBomb   : num  7.46 6.89 6.72 6.53 6.47 ...
- $ poisonFang: num  7.37 7.18 7.35 7.04 7.49 ...
+```
+
+```
+## 'data.frame':	39 obs. of  7 variables:
+##  $ sidChar   : chr  "Sample_20" "Sample_21" "Sample_22" "Sample_23" ...
+##  $ sidNum    : num  20 21 22 23 16 17 6 24 25 26 ...
+##  $ devStage  : Factor w/ 5 levels "E16","P2","P6",..: 1 1 1 1 1 1 1 2 2 2 ...
+##  $ gType     : Factor w/ 2 levels "wt","NrlKO": 1 1 1 1 2 2 2 1 1 1 ...
+##  $ crabHammer: num  10.22 10.02 9.64 9.65 8.58 ...
+##  $ eggBomb   : num  7.46 6.89 6.72 6.53 6.47 ...
+##  $ poisonFang: num  7.37 7.18 7.35 7.04 7.49 ...
+```
+
+```r
+kDat <- readRDS("data/GSE4051_MINI.rds")
+str(kDat)
+```
+
+```
+## 'data.frame':	39 obs. of  7 variables:
+##  $ sidChar   : chr  "Sample_20" "Sample_21" "Sample_22" "Sample_23" ...
+##  $ sidNum    : num  20 21 22 23 16 17 6 24 25 26 ...
+##  $ devStage  : Factor w/ 5 levels "E16","P2","P6",..: 1 1 1 1 1 1 1 2 2 2 ...
+##  $ gType     : Factor w/ 2 levels "wt","NrlKO": 1 1 1 1 2 2 2 1 1 1 ...
+##  $ crabHammer: num  10.22 10.02 9.64 9.65 8.58 ...
+##  $ eggBomb   : num  7.46 6.89 6.72 6.53 6.47 ...
+##  $ poisonFang: num  7.37 7.18 7.35 7.04 7.49 ...
+```
 
