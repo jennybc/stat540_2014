@@ -130,22 +130,15 @@ str(prDes)
 ## good news: writes a plain text version of prDes to file, easy to read
 ## by both humans and machines (e.g. Excel)
 ## bad news: all our work on factor levels is not captured
-write.table(prDes,
-            file = file.path(whereAmI,
-            "rmd/data/photoRec/GSE4051_design.txt"),
-            quote = FALSE)
+write.table(prDes, file = "data/GSE4051_design.tsv", quote = FALSE)
 
 ## good news: writes a plain text representation of prDes that *does*
 ## capture our hard-won factor levels
 ## bad news: the file itself is ugly and R specific
-dput(prDes,
-     file = file.path(whereAmI,
-     "rmd/data/photoRec/GSE4051_design_DPUT.txt"))
+dput(prDes, file = "data/GSE4051_design_DPUT.txt")
 
 ## good news: writes an easy-to-reload-in-R version of prDes that
 ## captures our hard-won factor levels
 ## bad news: the file is binary and totally specific to R
-save(prDes,
-     file = file.path(whereAmI,
-     "rmd/data/photoRec/GSE4051_design.robj"))
+saveRDS(prDes, file = "data/GSE4051_design.rds")
 
