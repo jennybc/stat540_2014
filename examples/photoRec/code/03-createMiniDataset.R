@@ -1,0 +1,127 @@
+whereAmI <- "/Users/jenny/teaching/2012-2013/STAT540"
+
+## design data.frame
+load(file = file.path(whereAmI,
+     "rmd/data/photoRec/GSE4051_design.robj"))
+str(prDes)
+## 'data.frame':	39 obs. of  3 variables:
+##  $ sample  : num  20 21 22 23 16 17 6 24 25 26 ...
+##  $ devStage: Factor w/ 5 levels "E16","P2","P6",..: 1 1 1 1 1 1 1 2 2 2 ...
+##  $ gType   : Factor w/ 2 levels "wt","NrlKO": 1 1 1 1 2 2 2 1 1 1 ...
+
+## gene expression data.frame
+prDat <- read.table(file.path(whereAmI,
+                              "rmd/data/photoRec/GSE4051_data.txt"))
+str(prDat)
+## 'data.frame':	29949 obs. of  39 variables:
+##  $ Sample_20: num  7.24 9.48 10.01 8.36 8.59 ...
+##  $ Sample_21: num  7.41 10.02 10.04 8.37 8.62 ...
+## ...
+##  $ Sample_2 : num  7.35 9.66 9.91 8.4 8.37 ...
+##  $ Sample_9 : num  7.32 9.8 9.85 8.4 8.46 ...
+
+## pick a small number of probesets to bring over into a mini-dataset
+
+## set.seed() is how to make something random repeatable
+set.seed(5782)
+(getMe <- sample(1:nrow(prDat), size = 3))
+## [1]  2668 20534 17554
+
+## I really wanted to demonstrate the use of subset() but the subset
+## argument expects a logical, which is awkward for me here ...
+jDat <- prDat[getMe, ]
+str(jDat)
+## 'data.frame':	3 obs. of  39 variables:
+##  $ Sample_20: num  10.22 7.46 7.37
+##  $ Sample_21: num  10.02 6.89 7.18
+
+## transpose this data so that expression data for each probeset /
+## gene will ultimately be a variable in our data.frame
+
+## renaming the probesets from the Pokemon move list to make them more
+## catchy!
+## http://pokemondb.net/move/all
+
+jDat <- data.frame(t(jDat))
+names(jDat) <- c("crabHammer", "eggBomb", "poisonFang")
+str(jDat)
+## 'data.frame':	39 obs. of  3 variables:
+##  $ crabHammer: num  10.22 10.02 9.64 9.65 8.58 ...
+##  $ eggBomb   : num  7.46 6.89 6.72 6.53 6.47 ...
+##  $ poisonFang: num  7.37 7.18 7.35 7.04 7.49 ...
+
+## reconfirm that the row order of prDes and the column order of prDat
+## and, therefore, jDat are SAME
+
+## visual check .... looks good
+cbind(rownames(prDes), rownames(jDat))
+
+## automated check .... YES
+identical(rownames(prDes), rownames(jDat))
+## [1] TRUE
+
+## merge the info on samples from prDes and on gene expression from
+## jDat
+
+kDat <- data.frame(prDes, jDat)
+str(kDat)
+## 'data.frame':	39 obs. of  6 variables:
+##  $ sample    : num  20 21 22 23 16 17 6 24 25 26 ...
+##  $ devStage  : Factor w/ 5 levels "E16","P2","P6",..: 1 1 1 1 1 1 1 2 2 2 ...
+##  $ gType     : Factor w/ 2 levels "wt","NrlKO": 1 1 1 1 2 2 2 1 1 1 ...
+##  $ crabHammer: num  10.22 10.02 9.64 9.65 8.58 ...
+##  $ eggBomb   : num  7.46 6.89 6.72 6.53 6.47 ...
+##  $ poisonFang: num  7.37 7.18 7.35 7.04 7.49 ...
+
+peek(kDat)
+##           sample devStage gType crabHammer eggBomb poisonFang
+## Sample_21     21      E16    wt     10.020   6.890      7.177
+## Sample_16     16      E16 NrlKO      8.583   6.470      7.494
+## Sample_24     24       P2    wt      8.869   6.587      7.508
+## Sample_32     32      P10    wt     10.250   8.173      7.005
+## Sample_34     34      P10    wt      8.519   6.757      8.584
+## Sample_13     13      P10 NrlKO      9.838   7.228      7.459
+## Sample_39     39  4_weeks    wt     10.200   7.003      7.320
+
+## let's write this minidataset to file for future use
+
+## good news: writes a plain text version of prDes to file, easy read
+## by both humans and machines (e.g. Excel)
+## bad news: all our work on factor levels is not captured
+write.table(kDat,
+            file = file.path(whereAmI,
+            "rmd/data/photoRec/GSE4051_MINI.txt"),
+            quote = FALSE)
+
+## good news: writes a plain text representation of prDes that *does*
+## capture our hard-won factor levels
+## bad news: the file itself is ugly and R specific
+dput(kDat,
+     file = file.path(whereAmI,
+     "rmd/data/photoRec/GSE4051_MINI_DPUT.txt"))
+
+## good news: writes an easy-to-reload-in-R version of prDes that
+## captures our hard-won factor levels
+## bad news: the file is binary and totally specific to R
+save(kDat,
+     file = file.path(whereAmI,
+     "rmd/data/photoRec/GSE4051_MINI.robj"))
+
+## STUFF BELOW HERE SHOULD BE ELIMINATED ONCE FURTHER SCRIPTS EXIST TO
+## COVER THIS GROUND
+
+## this would require re-ordering factor levels
+## kDat <- read.table(file.path(whereAmI, "rmd/data/photoRec/GSE4051_MINI.txt"))
+
+load(file = file.path(whereAmI,
+     "rmd/data/photoRec/GSE4051_MINI.robj"))
+
+stripplot(~ crabHammer, kDat)
+
+stripplot(~ crabHammer, kDat,
+          groups = devStage, auto.key = TRUE)
+
+stripplot(devStage ~ crabHammer, kDat,
+          groups = gType, auto.key = TRUE)
+
+
