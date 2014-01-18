@@ -95,4 +95,4 @@ head(prDat)
 
 ## there is no compelling reason to use any strategy other than
 ## write.table here (e.g. no factor levels to preserve)
-write.table(prDat, file = "data/GSE4051_data.tsv", quote = FALSE)
+write.table(prDat, file = "data/GSE4051_data.tsv", sep = "\t", quote = FALSE)

@@ -87,7 +87,7 @@ str(kDat)
 ## good news: writes a plain text version of prDes to file, easy read
 ## by both humans and machines (e.g. Excel)
 ## bad news: all our work on factor levels is not captured
-write.table(kDat, file = "data/GSE4051_MINI.tsv", quote = FALSE)
+write.table(kDat, file = "data/GSE4051_MINI.tsv", quote = FALSE, sep = "\t")
 
 ## I AM HERE!
 

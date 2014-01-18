@@ -130,7 +130,7 @@ str(prDes)
 ## good news: writes a plain text version of prDes to file, easy to read
 ## by both humans and machines (e.g. Excel)
 ## bad news: all our work on factor levels is not captured
-write.table(prDes, file = "data/GSE4051_design.tsv", quote = FALSE)
+write.table(prDes, file = "data/GSE4051_design.tsv", sep = "\t", quote = FALSE)
 
 ## good news: writes a plain text representation of prDes that *does*
 ## capture our hard-won factor levels
