@@ -5,11 +5,11 @@ The aim of the study was to "generate gene expression profiles of purified photo
 
 For more information on this study, please refer to the 2006 publication:
 
-http://www.ncbi.nlm.nih.gov/pubmed/16505381
+<http://www.ncbi.nlm.nih.gov/pubmed/16505381>
 
 The data is also directly accessible from GEO:
 
-http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE4051
+<http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE4051>
 
 TO DO: can we track down provenance of the files we start with? And/or can we start over with data from a link above and preserve the entire process?
 
