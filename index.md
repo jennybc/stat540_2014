@@ -106,6 +106,9 @@ lecture 06 | Statistical inference: two group comparisons, e.g. differential exp
 
 seminar 03 | [R graphics AND `knitr`, R markdown, and git(hub)](#seminar03) | Wed Jan 22
 
+  * Introduction to `knitr`, R markdown, and git(hub) 11:15am - 12pm SJ will run a guided, hands-on tutorial in one of the labs
+  * R graphics (LL) content will be ready to work through in the other lab, from 12 - 1pm, or on your own
+
 Fri Jan 24: Project groups should be formed. 
 
 ### Week 4
@@ -220,7 +223,7 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - More advanced, revision by Gloria: [Introduction To Simulation](seminars/seminar02_probability-simulation-gloria.html)
     - More advanced, original 2013 version by Andy: [Introduction To Simulation](seminars/seminar02_probability-simulation-andy.html)
   * seminar 03 Wed Jan 22 <a id="seminar03"></a>
-    - Introduction to R graphics (LL)
+    - [Introduction to R graphics](seminars/seminar03_graphics-lattice.html) (LL)
     - Introduction to `knitr`, R markdown, and git(hub) (SJ)
   * seminar 04 Wed Jan 29
     - Data aggregation and two group testing
