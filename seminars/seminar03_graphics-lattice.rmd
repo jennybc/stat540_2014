@@ -1,18 +1,31 @@
-% Jenny Bryan & Katayoon Kasaian - Gloria revision
-% 2014-01-18
-# Seminar 3: Introduction to R graphics - "Lattice" package
+Introduction to R graphics - 'lattice' version
+======================================================================
+
+Contributors: Jenny Bryan, Katayoon Kasaian, Gloria Li
+
+```{r include = FALSE}
+## once I upgrade knitr, "no tidy" will be the default and I can delete this
+opts_chunk$set(tidy = FALSE)
+```
+
+
+### `lattice` and the R graphics landscape
 
 See [R graphics: base vs. lattice vs. ggplot2][base_lattice_ggplot2] for an overview of the R graphics landscape and links to good reference material. 
 
-This seminar will primarily draw on functions in the add-on package `lattice`, which is included in all binary distributions of R. For more detailed information on `lattice`, see links to this book: _Lattice: Multivariate Data Visualization with R_ by Deepayan Sarkar on Jenny's [resource](http://www.stat.ubc.ca/~jenny/resources.html) page. 
+This seminar will primarily draw on functions in the add-on package `lattice`, which is included in all binary distributions of R. For more detailed information on `lattice`, see links to this book: _Lattice: Multivariate Data Visualization with R_ by Deepayan Sarkar on Jenny's [resource](http://www.stat.ubc.ca/~jenny/resources.html) page.
 
-If you have not loaded this package already, do it now:
+The `ggplot2` package is another highly recommended graphics system, but we do not (yet) have a version of this tutorial using `ggplot2` commands. If you already know `ggplot2` (or wish to learn!), an interim solution is to challenge yourself to make the plots you see below using `ggplot2`.
+
+If you have not loaded `lattice` already, do it now:
 
 ```{r}
 library(lattice)
 ```
 
 > Remember you may need to edit the file paths below, to reflect your working directory and local file storage choices.
+
+### `photoRec` dataset
 
 We will work with a mouse dataset, containing "gene expression profiles of purified photoreceptors at distinct developmental stages and from different genetic backgrounds". The microarray platform was Affymetrix mouse genomic expression array 430 2.0. For more information on what we'll call the `photoRec` dataset, read the [README](../examples/photoRec/README.html) file.
 
@@ -26,12 +39,11 @@ The full data matrix contains expression data for almost 30K genes/probesets! At
 We load this mini dataset from a saved R object, in order to preserve factor levels that were set rationally (and non-alphabetically) during data cleaning and pre-processing. FYI, the plain text version is available in the file [GSE4051_MINI.txt](../examples/photoRec/data/GSE4051_MINI.txt). 
 
 ```{r}
-#I don't want to load from plain text because I'd need to fiddle with factor
-#levels.
+# if you wanted or needed to access plain text version, do something like this:
+# kDat <- read.table("../data/photoRec/GSE4051_MINI.txt",
+#                    header = TRUE, row.names = 1) 
 
-# kDat <- read.table("../data/photoRec/GSE4051_MINI.txt",header=TRUE,row.names=1) 
-# str(kDat)
-
+# I load from an R-specific file format that retains factor levels
 kDat <- readRDS("../examples/photoRec/data/GSE4051_MINI.rds")
 str(kDat)
 table(kDat$devStage)
@@ -39,17 +51,17 @@ table(kDat$gType)
 with(kDat, table(devStage, gType))
 ```
 
-We see there are 39 samples (rows or observations). We have
+We see there are `r nrow(kDat)` samples (rows or observations). We have
 
   * sample ID character (sidChar): a string recording sample ID
-  * sample ID number (sidNum): integers between 1 and 39
+  * sample ID number (sidNum): integers between 1 and `r nrow(kDat)`
   * developmental stage of the mouse (devStage): a factor with levels E16 (day 16 of embryonic development), P2 (postnatal day 2), P6 (postnatal day 6), P10 (postnatal day 10), 4_weeks (4 weeks postnatal)
   * genotype of the mouse (gType): wt (wild type) or NrlKO (gene Nrl has been knocked out)
   * gene expression level (in some abstract unit-less sense) for crabHammer, eggBomb, and poisonFang
 
 It's pretty clear the intent was to have 4 mice at each combination of genotype and developmental stage, but there was some mishap for the embryonic knockouts, i.e. E16-NrlKO, where we only have data from 3 mice.
 
-## Scatterplots
+### Scatterplots
 
 The most important plot type is arguably the scatterplot. The `lattice` function for this is `xyplot()`. Let's plot the expression data for two of these genes against each other using the `lattice` function `xyplot()`.
 
@@ -147,7 +159,7 @@ specified on the right.
 You try: Remake this plot but instead of conveying genotype via
 color, show developmental stage.
 
-## Stripplot
+### Stripplot
 
 The next set of figures we will make requires yet more data reshaping,
 which is a substantial background task in many analyses. We drop the
@@ -240,7 +252,7 @@ stripplot(geneExp ~ devStage | probeset, oDat,
 
 The argument 'type' can be used to add a variety of enhancements. Type is specified as a vector (through the use of 'c'). The option 'p' in the above example specifies the data as points on the plot, 'a' refers to getting the average of each category and joining them by a line (other summaries can be requested too). Some of the other options include 'l' for joining points by lines, 'b' for both points and lines, 'r' for adding the fit from a simple linear regression and 'smooth' for adding a nonparametric "smooth" fitted curve.
 
-## Densityplot
+### Densityplot
 
 Here's a nice alternative to histograms!
 
@@ -275,7 +287,7 @@ densityplot(~ geneExp, oDat,
 
 You try: use `densityplot()` to explore the gene expression distribution by gene and/or developmental stage. Play with 'bw' and 'n' if you like.
 
-## Boxplot
+### Boxplot
 There is also a time and place for boxplots, obtained with the `lattice` function `bwplot()` for "box-and-whiskers plot".
 
 ```{r}
@@ -298,7 +310,7 @@ bwplot(geneExp ~ devStage, oDat,
 This is our first explicit glimpse of how a panel function might be
 specified to some non-default value. More on that can be found in Sarkar's book and the STAT545A materials.
 
-## Heatmaps
+### Heatmaps
 
 Now we need a larger dataset. Let's load the real full data matrix and experimental design now.
 
@@ -405,19 +417,19 @@ helps you determine what each color extreme actually means. If you need to insta
 ```{r, eval=FALSE}
 install.packages("gplots")
 ```
-
+Then you'll need to load it before you can use `heatmap.2()`:
 ```{r, eval=TRUE, message = FALSE}
 library(gplots)
 heatmap.2(hDat, col = jGraysFun, trace = "none")
 heatmap.2(hDat, col = jBuPuFun, trace = "none")
 ```
 
-## Overplotting
+### Overplotting
 
 Now that we've loaded the main dataset we can also explore high-volume scatterplotting and the solutions to overplotting. First let's pick two samples at random to plot against each other.
 
 ```{r}
-set.seed(2)
+set.seed(924)
 (yo <- sample(1:ncol(prDat), size = 2))
 y <- prDat[[yo[1]]]
 z <- prDat[[yo[2]]]
@@ -449,7 +461,7 @@ library(hexbin)
 hexbinplot(y ~ z)
 ```
 
-## Plot matrix  
+### Plot matrix  
 Finally, if you want to plot several variables against each other, i.e. create a scatterplot matrix, there are several functions for that.
 
   * base graphics offers `pairs()`
@@ -492,9 +504,9 @@ Finally, here's `hexplom()`.
 hexplom(pairDat)
 ```
 
-## Take-home problem
+### Take-home problem
 
-The full `photoRec` dataset has 39 samples and 29,949 probesets. Choose 2 ... or 20 ... or 200 random probesets/genes and look for gene expression differences between the two genotypes, wild type versus knockout. Make use of the graphing techniques discussed this week such as scatter plots, data heatmaps, correlation heatmaps, etc. Share questions, success, failure on the Google group.
+The full `photoRec` dataset has `r ncol(prDat)` samples and `r nrow(prDat)` probesets. Choose 2 ... or 20 ... or 200 random probesets/genes and look for gene expression differences between the two genotypes, wild type versus knockout. Make use of the graphing techniques discussed this week such as scatter plots, data heatmaps, correlation heatmaps, etc. Share questions, success, failure on the Google group.
 
 
 [base_lattice_ggplot2]: http://www.stat.ubc.ca/~jenny/STAT545A/block90_baseLatticeGgplot2.html
