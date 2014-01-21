@@ -1,7 +1,5 @@
-## TO DO (?): refactor using ggplot2
 
-## assume working directory is where this file lives
-
+library(lattice)
 library(latticeExtra)                   # ecdfplot()
 
 ## imitate color scheme I keep showing in Keynote two group cartoon
