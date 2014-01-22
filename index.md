@@ -102,7 +102,7 @@ seminar 02 | [Learn more R while reviewing probability](#seminar02) (LL) | Wed J
 
 lecture 05 | Data QC and preprocessing (JB for GC-F) | Mon Jan 20  | [slides as PDF](pvt/lect05_dataCleaning-qualityControl.pdf)
 
-lecture 06 | Statistical inference: two group comparisons, e.g. differential expression analysis (JB) | Wed Jan 22
+lecture 06 | Statistical inference: two group comparisons, e.g. differential expression analysis (JB) | Wed Jan 22  | [slides as PDF](pvt/lect06_two-groups.pdf)
 
 seminar 03 | [R graphics AND `knitr`, R markdown, and git(hub)](#seminar03) | Wed Jan 22
 

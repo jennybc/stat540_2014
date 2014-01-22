@@ -1,3 +1,6 @@
+## TO DO (?): refactor using ggplot2, plyr
+
+## assume working directory is where this file lives
 
 library(lattice)
 library(latticeExtra)                   # ecdfplot()
@@ -148,13 +151,17 @@ dev.print(pdf, "../figs/twoGroups/stripplot-yBar-zBar.pdf",
 (welchStat <- theDiff / sqrt(s2DiffWelch))
 
 by(miniDat, miniDat$gene, function(theDat) {
-    t.test(gExp ~ gType, theDat)
+  ## to be compatible with the direction of the test, as I've described in
+  ## lecture slides, I need to reverse order of levels of gType factor
+  theDat$gType <- factor(theDat$gType, rev(levels(theDat$gType)))
+  t.test(gExp ~ gType, theDat)
 })
 
 (tstStat <- theDiff / sqrt(s2Diff))
 
 by(miniDat, miniDat$gene, function(theDat) {
-    t.test(gExp ~ gType, theDat, var.equal = TRUE)
+  theDat$gType <- factor(theDat$gType, rev(levels(theDat$gType)))
+  t.test(gExp ~ gType, theDat, var.equal = TRUE)
 })
 
 ## draw the null dist'n
