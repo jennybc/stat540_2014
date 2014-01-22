@@ -223,7 +223,7 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - More advanced, revision by Gloria: [Introduction To Simulation](seminars/seminar02_probability-simulation-gloria.html)
     - More advanced, original 2013 version by Andy: [Introduction To Simulation](seminars/seminar02_probability-simulation-andy.html)
   * seminar 03 Wed Jan 22 <a id="seminar03"></a>
-    - Introduction to `knitr`, R markdown, and git(hub) (SJ)
+    - Introduction to `knitr`, R markdown, and git(hub) (SJ) | [slides as PDF](pvt/seminar03_rmarkdown-and-github.pdf)
     - [The R graphics landscape](http://www.stat.ubc.ca/~jenny/STAT545A/block90_baseLatticeGgplot2.html), borrowed from STAT 545A.
     - [Exploration of `lattice` graphics](seminars/seminar03_graphics-lattice.html) (LL)
     - __NEW!__ [Exploration of `ggplot2` graphics](seminars/seminar03_graphics-ggplot2.html) (LL)
