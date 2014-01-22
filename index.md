@@ -43,6 +43,15 @@ Vast majority of course content, including source for this website, can be found
 
 <https://github.com/jennybc/stat540_2014>
 
+### Datasets
+
+`photoRec` data
+
+  * It's in the [course repository](https://github.com/jennybc/stat540_2014)
+    - it's in the [examples/photoRec](https://github.com/jennybc/stat540_2014/tree/master/examples/photoRec) directory
+  * It's in the course website.
+    - it's in the [examples/photoRec](http://www.ugrad.stat.ubc.ca/~stat540/examples/photoRec/) directory
+
 ### Time and Location
 
 06 January 2014 - 07 April 2014
