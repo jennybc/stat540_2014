@@ -107,7 +107,7 @@ lecture 06 | Statistical inference: two group comparisons, e.g. differential exp
 seminar 03 | [R graphics AND `knitr`, R markdown, and git(hub)](#seminar03) | Wed Jan 22
 
   * Introduction to `knitr`, R markdown, and git(hub) 11:15am - 12pm SJ will run a guided, hands-on tutorial in one of the labs
-  * R graphics (LL) content will be ready to work through in the other lab, from 12 - 1pm, or on your own
+  * R graphics (LL) content is ready to work through in the other lab, from 12 - 1pm, or on your own.
 
 Fri Jan 24: Project groups should be formed. 
 
@@ -223,8 +223,12 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - More advanced, revision by Gloria: [Introduction To Simulation](seminars/seminar02_probability-simulation-gloria.html)
     - More advanced, original 2013 version by Andy: [Introduction To Simulation](seminars/seminar02_probability-simulation-andy.html)
   * seminar 03 Wed Jan 22 <a id="seminar03"></a>
-    - [Introduction to R graphics](seminars/seminar03_graphics-lattice.html) (LL)
     - Introduction to `knitr`, R markdown, and git(hub) (SJ)
+    - [The R graphics landscape](http://www.stat.ubc.ca/~jenny/STAT545A/block90_baseLatticeGgplot2.html), borrowed from STAT 545A.
+    - [Exploration of `lattice` graphics](seminars/seminar03_graphics-lattice.html) (LL)
+    - __NEW!__ [Exploration of `ggplot2` graphics](seminars/seminar03_graphics-lattice.html) (LL)
+    - __Optional__ [Using colors in R](http://www.stat.ubc.ca/~jenny/STAT545A/block14_colors.html), read only if you're curious.
+    - __Optional__ [Writing figures to file](http://www.stat.ubc.ca/~jenny/STAT545A/topic12_writeFigureToFile.html), you'll eventually need this but it's not wildly urgent.
   * seminar 04 Wed Jan 29
     - Data aggregation and two group testing
   * seminar 05 Wed Feb 05
