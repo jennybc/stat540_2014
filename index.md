@@ -226,7 +226,7 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - Introduction to `knitr`, R markdown, and git(hub) (SJ)
     - [The R graphics landscape](http://www.stat.ubc.ca/~jenny/STAT545A/block90_baseLatticeGgplot2.html), borrowed from STAT 545A.
     - [Exploration of `lattice` graphics](seminars/seminar03_graphics-lattice.html) (LL)
-    - __NEW!__ [Exploration of `ggplot2` graphics](seminars/seminar03_graphics-lattice.html) (LL)
+    - __NEW!__ [Exploration of `ggplot2` graphics](seminars/seminar03_graphics-ggplot2.html) (LL)
     - __Optional__ [Using colors in R](http://www.stat.ubc.ca/~jenny/STAT545A/block14_colors.html), read only if you're curious.
     - __Optional__ [Writing figures to file](http://www.stat.ubc.ca/~jenny/STAT545A/topic12_writeFigureToFile.html), you'll eventually need this but it's not wildly urgent.
   * seminar 04 Wed Jan 29
