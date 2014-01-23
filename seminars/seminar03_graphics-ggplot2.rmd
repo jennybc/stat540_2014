@@ -283,7 +283,7 @@ Separate panels for different genotype.
 Or different colors for different genotype. 
 
 ```{r}
-(p <- ggplot(oDat, aes(geneExp, color = probeset)) + 
+(p <- ggplot(oDat, aes(geneExp, color = gType)) + 
    stat_density(geom = "line", position = "identity") + 
    geom_point(aes(y = 0.05), position = position_jitter(height = 0.005)))
 ```
