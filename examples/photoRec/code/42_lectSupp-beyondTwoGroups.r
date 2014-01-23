@@ -4,17 +4,19 @@
 
 library(lattice)
 
-## load photoRec data and design from the interwebs to delay filepath pain
-## use the dput/dget workflow since works better with URLs 
-jURL <- "http://www.ugrad.stat.ubc.ca/~stat540/examples/photoRec/data/GSE4051_design_DPUT.txt"
-str(prDes <- dget(jURL))
-jURL <- "http://www.ugrad.stat.ubc.ca/~stat540/examples/photoRec/data/GSE4051_data.tsv"
-str(prDat <- read.table(jURL), max.level = 0)
+## load design data.frame
+prDes <- readRDS("../data/GSE4051_design.rds")
+str(prDes)
+
+## load gene expression data.frame
+prDat <- read.table("../data/GSE4051_data.tsv")
+str(prDat, max.level = 0)
+## 'data.frame':  29949 obs. of  39 variables:
 
 with(prDes, table(devStage, gType))
 head(subset(prDat, select = 1:5))
 
-## I've already done differential expression analysis by devStage for
+## in 04_dea-by-devStage.r, I've already done differential expression analysis by devStage for
 ## all probesets; here's where I stored some results
 ## will use to pick genes to feature here
 ## also good for sanity checks
