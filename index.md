@@ -122,9 +122,9 @@ Fri Jan 24: Project groups should be formed.
 
 ### Week 4
 
-lecture 07 | Statistical inference: more than two groups --> linear models (JB prep, GCF deliver) | Mon Jan 27
+lecture 07 | Statistical inference: more than two groups --> linear models (JB prep, GCF deliver) | Mon Jan 27 | [slides as PDF](pvt/lect07_beyond-two-groups.pdf)
 
-lecture 08 | Statistical inference: linear models with 2 categorical covariates, greatest hits of linear models inference (JB prep, GCF deliver) | Wed Jan 29
+lecture 08 | Statistical inference: linear models with 2 categorical covariates, greatest hits of linear models inference (JB prep, GCF deliver) | Wed Jan 29 | [slides as PDF](pvt/lect08_moreThanOneCatCovariate-linModGreatestHits.pdf)
 
 seminar 04 | Data aggregation and two group testing (LL) | Wed Jan 29
 
