@@ -1,0 +1,125 @@
+`photoRec` data: differential expression analysis by developmental stage
+========================================================
+
+```{r include = FALSE}
+opts_chunk$set(tidy = FALSE)
+```
+
+Walks through differential expression analysis with developmental stage as the covariate. Enacts for all probesets at once via `lm()`, exploiting R's built-in ability to fit multiple models at once, and via `limma`. Uses homegrown code to provide missing functionality for extracting info from fitted multiple regression objects. Does *ad hoc* comparisons of *en masse* results with hand-crafted analysis of individual probesets. Compares output from `lm()` and `limma`. Explores and validates output from `limma`.
+
+```{r include = FALSE}
+library(lattice)
+library(limma)
+```
+
+### Load the data and the design
+
+```{r}
+prDes <- readRDS("../data/GSE4051_design.rds")
+prDat <- read.table("../data/GSE4051_data.tsv")
+str(prDes)
+with(prDes, table(devStage, gType))
+str(prDat, max.level = 0)
+head(subset(prDat, select = 1:5))
+```
+
+### `limma`, probeset-specific fits
+
+`limma` requires the user to construct the model matrix, i.e. to "dummy out" the categorical covariate. Then the `lmFit()` function fits a linear model (one-way ANOVA) in this case for each gene, where the response is gene expression and the covariate is developmental stage.
+
+```{r}
+(dmDevStage <- model.matrix(~ devStage, prDes))
+colnames(dmDevStage) <- levels(prDes$devStage)
+fitDevStage <- lmFit(prDat, dmDevStage)
+```
+
+The `coef` component of the `lmFit()` output gives the estimated coefficients. One row per probeset, one column per level of `devStage`. Column 1 is the intercept, associated with `devStage = E16`. Columns 2 through 5 are the effects of subsequent timepoints or developmental stages.
+
+```{r}
+head(fitDevStage$coef)
+str(fitDevStage$coef)
+```
+
+The covariance of the estimated coefficients is $\sigma^{2} (X^{T}X)^{-1}$. Since the design matrix $X$ is the same for all probesets, that part of the covariance is global. Let's verify that we understand what the `stdev.unscaled` component of the `lmFit()` output is.
+
+```{r}
+head(fitDevStage$stdev.unscaled)
+sqrt(diag(solve(t(dmDevStage) %*% dmDevStage)))
+```
+
+Gene-specific estimates of residual standard deviation are given in `sigma`.
+
+```{r}
+head(fitDevStage$sigma)
+```
+
+Again, since the design matrix is the same for all probesets, the residual degrees of freedom are also the same. Specifically they are $n$ minus the number of parameters in the model.
+```{r}
+head(fitDevStage$df.residual)
+```
+
+At the top of page 62 in 2013 Jan 04 limma User's Guide, it says "The ordinary t-statistics can be recovered by ...". Let's do that.
+
+```{r}
+head(fitDevStage$coef/fitDevStage$stdev.unscaled/fitDevStage$sigma)
+```
+
+### Spot check a `limma` fit with a hand-crafted one
+
+Let's focus on the data for the first probeset.
+```{r}
+## work with the first probeset
+jDat <- data.frame(devStage = prDes$devStage,
+                   gExp = unlist(prDat[1, ]))
+lmRes <- lm(gExp ~ devStage, jDat)
+```
+
+Verify the coefficient estimates are empirical means and differences between such means and that they match those produced by `lmFit()` in `limma`.
+```{r}
+(foo <- with(jDat, tapply(gExp, devStage, mean)))
+foo[-1] <- foo[-1] - foo[1]
+data.frame(simpleAvgs = foo, handcraft = coef(lmRes),
+           limma = fitDevStage$coef[1, ])
+```
+
+Let's check that the estimated standard errors and t statistics agree.
+```{r}
+data.frame(handcraft = summary(lmRes)$coef[ , "Std. Error"],
+           limma = fitDevStage$sigma[1] * fitDevStage$stdev.unscaled[1, ])
+limma_t_stat <- (fitDevStage$coef/fitDevStage$stdev.unscaled/
+                   fitDevStage$sigma)[1, ]
+data.frame(handcraft = summary(lmRes)$coef[ , "t value"],
+           limma = limma_t_stat)
+```
+
+### Use built-in `lm()` to fit the probeset-specific models
+
+The build-in function `lm()` can actually do multivariate regression and, with in-house code from Rick White, we can extract the information we need from these fitted models. Strangely, base R does not include many of the standard functions one needs to extract output from a fitted model for `mlm` objects, as opposed to `lm` objects.
+
+The responses must be in a matrix, not a data.frame, with one column per response.
+```{r}
+prMat <- t(as.matrix(prDat))
+devStage <- prDes$devStage        # lesser of two evils
+rFit <- lm(prMat ~ devStage)
+```
+
+Here's where we use our homegrown code to provide missing functionality, such as a `summary` method for objects of class `mlm`. __WARNING__: The call to `summary()` will hang if you have not loaded the file sourced below.
+
+```{r}
+source("80_anova-mlm.r")
+rfSumm <- summary(rFit)
+rfSumm # shows info on first 2 fits, by default
+print(rfSumm, show = c(2, 4555, 29403)) # show gives more flexibility
+```
+
+This summary object is a list, with components for estimated coefficients, various overall statistics, and the residuals.
+
+```{r}
+str(rfSumm, max.level = 1)
+str(rfSumm$Coef)
+```
+
+The `Coefficients` component is a 3-dimensional array with one row per probeset and one column per parameter. The third dimension is 4, accomodating the estimate, standard error, t statistic and p-value for the parameters estimated for each probeset.
+
+
+
