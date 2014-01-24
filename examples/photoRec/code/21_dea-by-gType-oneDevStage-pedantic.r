@@ -1,3 +1,8 @@
+## This should be converted to R Markdown as I did for DEA w/r/t developmental
+## stage in 20_dea-by-devStage.rmd. But this really covers lots of the same
+## ground, so doesn't seem mission critical now (January 2014). Just leaving in
+## the repo.
+
 library(limma)
 library(lattice)
 
@@ -257,6 +262,6 @@ yo <- c(rep(c("est", "se", "tStat", "pVal"), each = 4))
 yo2 <- c(rep(c("int", "NrlKO", "4_weeks", "NrlKO:4_weeks"), 4))
 colnames(deGtypeBy4weeks) <- c(paste(yo, yo2, sep = "."), c("sigSq", "Fstat", "Fp"))
 
-write.table(deGtypeBy4weeks,
-            file = "../results/deGtypeBy4weeks.txt",
-            quote = FALSE, row.names = FALSE)
+# write.table(deGtypeBy4weeks,
+#             file = "../results/deGtypeBy4weeks.txt",
+#             quote = FALSE, row.names = FALSE)
