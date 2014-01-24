@@ -16,11 +16,10 @@ str(prDat, max.level = 0)
 with(prDes, table(devStage, gType))
 head(subset(prDat, select = 1:5))
 
-## in 04_dea-by-devStage.r, I've already done differential expression analysis by devStage for
-## all probesets; here's where I stored some results
-## will use to pick genes to feature here
-## also good for sanity checks
-deDevStage <- read.table("../results/deDevStage.txt")
+## in 04_dea-no-empirical-bayes.r, I've already done differential expression
+## analysis by devStage for all probesets; load those results; use them to pick
+## genes to feature here; also good for sanity checks
+deDevStage <- read.table("../results/dea-devStage-mlm-stats.txt")
 str(deDevStage)
 # 'data.frame':  29949 obs. of  4 variables:
 # $ F    : num  1.393 0.542 0.706 1.63 5.515 ...

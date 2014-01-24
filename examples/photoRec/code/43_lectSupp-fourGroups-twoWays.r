@@ -13,15 +13,23 @@ with(prDes, table(devStage, gType))
 head(subset(prDat, select = 1:5))
 
 ##########################################################
+## source in-house functions for post-processing mlm objects
+##########################################################
+
+## code written by Rick White
+source("80_anova-mlm.r")
+
+##########################################################
 ## simplying devStage to first and last timepoints
 ##########################################################
-keepMe <- with(prDes,
-               devStage %in%
-                 levels(devStage)[c(1, nlevels(devStage))])
-prDes <- droplevels(subset(prDes, keepMe))
-str(prDes)
+prDes <- 
+  droplevels(subset(prDes,
+                    subset = devStage %in%
+                      levels(devStage)[c(1, nlevels(devStage))]))
+str(prDes) # 15 obs. of  4 variables
 prDat <- subset(prDat, select = prDes$sidChar)
-str(prDat)
+prMat <- t(as.matrix(prDat))
+str(prMat) # num [1:15, 1:29949]
 
 ##########################################################
 ## show an example
@@ -44,16 +52,17 @@ stripplot(gExp ~ devStage, miniDat,
           grid = TRUE, type = c('p', 'a'),
           jitter.data = TRUE)
 
-dev.print(pdf, "../figs/gTypeBy4weeks/stripplot-twoFact.pdf",
+dev.print(pdf, "../figs/gType-by-simpleDevStage/stripplot-twoFact.pdf",
           width = 7, height = 4)
 
 stripplot(gExp ~ grp, miniDat,
           grid = TRUE, type = c('p', 'a'),
           jitter.data = TRUE)
 
-dev.print(pdf, "../figs/gTypeBy4weeks/stripplot-grp.pdf",
+dev.print(pdf, "../figs/gType-by-simpleDevStage/stripplot-grp.pdf",
           width = 7, height = 4)
 
+## stuff I use in lecture slides
 (theAvgs <- with(miniDat, tapply(gExp, grp, mean)))
 
 with(miniDat, tapply(gExp, list(gType, devStage), mean))
@@ -72,9 +81,9 @@ cbind(sampleMeans = theAvgs,
       twoFactFit = coef(twoFactFit))
 
 theAvgs["NrlKO.4_weeks"] -
-    (theAvgs["wt.E16"] +
+  (theAvgs["wt.E16"] +
      (theAvgs["NrlKO.E16"] - theAvgs["wt.E16"]) +
-      (theAvgs["wt.4_weeks"] - theAvgs["wt.E16"]))
+     (theAvgs["wt.4_weeks"] - theAvgs["wt.E16"]))
 
 ## take-home challenges
 
@@ -94,22 +103,30 @@ cbind(matrixResult = as.vector(contMat %*% coef(grpFit)),
       cellMeansFit = coef(lm(gExp ~ 0 + grp, miniDat)))
 
 ##########################################################
-## load DEA results computed in 05_dea-by-gType-oneDevStage.r
-##########################################################
-deaRes <- read.table("../results/deGtypeBy4weeks.txt", header = TRUE)
-str(deaRes)
+## do DEA 
+########################################################
+
+## re-loading the fitted mlm model and the summary produced by in-house code
+## proved too time-consuming; more practical to re-fit the model, although
+## violates DRY principles
+
+## gType * simplified devStage
+gTypeBySimpleDevStageFit <- lm(prMat ~ gType * devStage, prDes)
+gTypeBySimpleDevStageSumm <- summary(gTypeBySimpleDevStageFit)
 
 ##########################################################
 ## marshall p-values to help us find various types of 'hits'
 ##########################################################
 
-## get p-values for both the main effects, interaction, overall F test
-pVals <- subset(deaRes,
-                select = c("pVal.NrlKO", "pVal.4_weeks",
-                           "pVal.NrlKO.4_weeks", "Fp"))
-names(pVals) <- c("NrlKO", "4_weeks", "interaction", "overallF")
+## get p-values for both main effects, interaction, overall F test
+pVals <-
+  gTypeBySimpleDevStageSumm$Coef[ ,
+                                 c("gTypeNrlKO", "devStage4_weeks", "gTypeNrlKO:devStage4_weeks"),
+                                 "Pr(>|t|)"]
+pVals <- cbind(pVals, gTypeBySimpleDevStageSumm$Full[ , "Pval"])
+colnames(pVals) <- c("NrlKO", "4_weeks", "interaction", "overallF")
 splom(~ pVals, panel = panel.smoothScatter)
-pValsTall <- data.frame(pVals = unlist(pVals),
+pValsTall <- data.frame(pVals = as.vector(pVals),
                         what = rep(colnames(pVals), each = nrow(pVals)))
 densityplot(~ pVals, pValsTall,
             group = what, auto.key = TRUE, plot.points = FALSE, n = 200)
@@ -129,7 +146,7 @@ source("99_lectSupp-stripplotItFunction.r")
 ## better at this task of finding interesting genes, graphing them, and printing
 ## some model results as I went along. So the next analysis -- DEA by gType *
 ## devStage -- has a superior approach for using the p-values to find hits. I
-## haven't fully switched over here because I amd [1] lazy and [2] want to keep
+## haven't switched over here because I am [1] lazy and [2] want to keep
 ## the code that produces the figures actually in the lecture slides.
 
 pValCutoff <- 0.15
@@ -138,20 +155,6 @@ table(NrlKO = pHits[ , "NrlKO"], four_weeks = pHits[ , "4_weeks"],
       interaction = pHits[ , "interaction"],
       overallF = pHits[ , "overallF"])
 
-# NOTE to self January 2014: it appears that the "boring" genes featured in 
-# lecture slides are NOT the ones I find below. I do reproduce everything else.
-# So I suspect I made that slide before adding set.seed() to this code. I'm not 
-# replacing the figure and result because I was also using a different lattice 
-# theme at the time and then this new figure would stick out. Sigh.
-
-## NOTE to self January 2014: in the past I re-did the DEA in this script,
-## duplicating the efforts in 05_dea-by-gType-oneDevStage.r. This gave me access
-## to the full model results in the summary of the mlm object. Now that I am
-## just loading stored results, I don't have access to such detail. That's why
-## I've commented out the lines that produced typical "summary of a lm". They
-## don't work but this is a reminder of how I got the reporting found on current
-## lecture slides.
-
 ## boring genes
 ## not a hit w/r/t either main effect OR the interaction OR overall
 getMe <- which(rowSums(pHits) == 0)
@@ -159,9 +162,10 @@ length(getMe) # 13315
 set.seed(111)
 (boring <- sample(getMe, size = 3))
 stripplotIt(prepareData(boring))
-dev.print(pdf, "../figs/gTypeBy4weeks/stripplot-boring.pdf",
+dev.print(pdf, "../figs/gType-by-simpleDevStage/stripplot-boring.pdf",
           width = 7, height = 7)
-#print(rfSumm, show = which(colnames(prMatSimple) == names(boring)[2]))
+print(gTypeBySimpleDevStageSumm,
+      show = which(colnames(prMat) == names(boring)[2]))
 
 ## devStage YES NrlKO NO interaction NO
 getMe <- which(pHits[ , "overallF"] &
@@ -172,9 +176,10 @@ length(getMe)                           # 3666
 set.seed(111)
 (devStageOnly <- sample(getMe, size = 3))
 stripplotIt(prepareData(devStageOnly))
-dev.print(pdf, "../figs/gTypeBy4weeks/stripplot-4_weeks.pdf",
+dev.print(pdf, "../figs/gType-by-simpleDevStage/stripplot-4_weeks.pdf",
           width = 7, height = 7)
-#print(rfSumm, show = which(colnames(prMatSimple) == names(devStageOnly)[2]))
+print(gTypeBySimpleDevStageSumm,
+      show = which(colnames(prMat) == names(devStageOnly)[2]))
 
 ## devStage NO NrlKO YES interaction NO
 getMe <- which(pHits[ , "overallF"] &
@@ -185,9 +190,10 @@ length(getMe)                           # 1043
 set.seed(111)
 (NrlKoOnly <- sample(getMe, size = 3))
 stripplotIt(prepareData(NrlKoOnly))
-dev.print(pdf, "../figs/gTypeBy4weeks/stripplot-NrlKO.pdf",
+dev.print(pdf, "../figs/gType-by-simpleDevStage/stripplot-NrlKO.pdf",
           width = 7, height = 7)
-#print(rfSumm, show = which(colnames(prMatSimple) == names(NrlKoOnly)[2]))
+print(gTypeBySimpleDevStageSumm,
+      show = which(colnames(prMat) == names(NrlKoOnly)[2]))
 
 ## devStage YES NrlKO YES interaction NO
 getMe <- which(pHits[ , "overallF"] &
@@ -198,9 +204,10 @@ length(getMe)                           # 1307
 set.seed(222)
 (mainEffOnly <- sample(getMe, size = 3))
 stripplotIt(prepareData(mainEffOnly))
-dev.print(pdf, "../figs/gTypeBy4weeks/stripplot-mainYESinterNO.pdf",
+dev.print(pdf, "../figs/gType-by-simpleDevStage/stripplot-mainYESinterNO.pdf",
           width = 7, height = 7)
-#print(rfSumm, show = which(colnames(prMatSimple) == names(mainEffOnly)[2]))
+print(gTypeBySimpleDevStageSumm,
+      show = which(colnames(prMat) == names(mainEffOnly)[2]))
 
 ## devStage YES NrlKO YES interaction YES
 ## the randomly selected ones were not as good as some I had found
@@ -208,7 +215,7 @@ dev.print(pdf, "../figs/gTypeBy4weeks/stripplot-mainYESinterNO.pdf",
 (exciting <-
    which(rownames(prDat) %in% c("1434709_at", "1458220_at", "1455695_at")))
 stripplotIt(prepareData(exciting))
-dev.print(pdf, "../figs/gTypeBy4weeks/stripplot-mainYESinterYES.pdf",
+dev.print(pdf, "../figs/gType-by-simpleDevStage/stripplot-mainYESinterYES.pdf",
           width = 7, height = 7)
 ## little different here, due to hard-wiring
-#print(rfSumm, show = exciting[2])
+print(gTypeBySimpleDevStageSumm, show = exciting[2])
