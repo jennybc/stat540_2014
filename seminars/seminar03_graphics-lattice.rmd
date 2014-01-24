@@ -193,7 +193,7 @@ somewhere. Let's split things out for the three different genes.
 stripplot(probeset ~ geneExp, oDat)
 ```
 
-Somtimes, it can help to add jitter, a small bit of meaningless noise, in the horizontal position.
+Sometimes, it can help to add jitter, a small bit of meaningless noise, in the horizontal position.
 
 ```{r}
 stripplot(probeset ~ geneExp, oDat, jitter.data = TRUE)
