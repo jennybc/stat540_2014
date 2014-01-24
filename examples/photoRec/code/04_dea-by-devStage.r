@@ -1,5 +1,5 @@
-# see ??.r for a much more chatty and educational tour through this analysis;
-# this is stripped down to bare minimum
+# see 20_dea-by-devStage for a more chatty, educational tour through
+# this analysis; this is stripped down to bare minimum
 
 ## load design data.frame
 prDes <- readRDS("../data/GSE4051_design.rds")
