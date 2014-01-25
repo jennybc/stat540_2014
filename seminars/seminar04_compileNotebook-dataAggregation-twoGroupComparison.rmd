@@ -236,7 +236,7 @@ How do we scale this up to all 6 genes? We have now outgrown the capability of `
 
 ## The `plyr` package
 
-Please read some content from STAT 545A (all drawn from [Data aggregation](http://www.stat.ubc.ca/~jenny/STAT545A/block04_dataAggregation.html). Specific sub-sections:
+Please read some content from STAT 545A (all drawn from [Data aggregation](http://www.stat.ubc.ca/~jenny/STAT545A/block04_dataAggregation.html)). Specific sub-sections:
 
   * [Install and load `plyr`](http://www.stat.ubc.ca/~jenny/STAT545A/block04_dataAggregation.html#install-and-load-plyr)
   * [`plyr` Big Ideas](http://www.stat.ubc.ca/~jenny/STAT545A/block04_dataAggregation.html#plyr-big-ideas)

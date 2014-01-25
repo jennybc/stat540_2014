@@ -126,7 +126,7 @@ lecture 07 | Statistical inference: more than two groups --> linear models (JB p
 
 lecture 08 | Statistical inference: linear models with 2 categorical covariates, greatest hits of linear models inference (JB prep, GCF deliver) | Wed Jan 29 | [slides as PDF](pvt/lect08_moreThanOneCatCovariate-linModGreatestHits.pdf)
 
-seminar 04 | Data aggregation and two group testing (LL) | Wed Jan 29
+seminar 04 | [Two group testing and data aggregation](#seminar04) (SJ) | Wed Jan 29
 
 Fri Jan 31: Initial project proposals due.
 
@@ -238,8 +238,9 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - __NEW!__ [Exploration of `ggplot2` graphics](seminars/seminar03_graphics-ggplot2.html) (LL)
     - __Optional__ [Using colors in R](http://www.stat.ubc.ca/~jenny/STAT545A/block14_colors.html), read only if you're curious.
     - __Optional__ [Writing figures to file](http://www.stat.ubc.ca/~jenny/STAT545A/topic12_writeFigureToFile.html), you'll eventually need this but it's not wildly urgent.
-  * seminar 04 Wed Jan 29
-    - Data aggregation and two group testing
+  * seminar 04 Wed Jan 29 <a id="seminar04"></a>
+    - [Two group testing and data aggregation](seminars/seminar04_compileNotebook-dataAggregation-twoGroupComparison.html)
+    - [Data aggregation](http://www.stat.ubc.ca/~jenny/STAT545A/block04_dataAggregation.html), borrowed from STAT 545A. Certain sections are linked to from the seminar.
   * seminar 05 Wed Feb 05
     - Fitting and interpretting linear models (low volume)
   * seminar 06 Wed Feb 12
