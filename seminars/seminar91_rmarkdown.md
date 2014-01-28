@@ -69,12 +69,30 @@ markdownToHTML('README.md', 'README.html')
 
 ### Shell command line
 
-On Mac OS, install the *markdown* program using [Homebrew](http://brew.sh).
+You can run R from the command line and call *markdown::markdownToHTML*.
+
+```sh
+Rscript -e 'markdown::markdownToHTML("README.md", "README.html")'
+```
+
+Alternatively on Mac OS, install the *markdown* program using
+[Homebrew](http://brew.sh).
 
 ```sh
 brew install markdown
 markdown README.md >README.html
 ```
+
+### Mac OS X
+
+The [MOU](http://mouapp.com/) app shows a live preview of the
+rendered document while you edit the markdown.
+
+### Web browser extension
+
+With the [Markdown Here](http://markdown-here.com/) browser extension,
+you can write an e-mail (or Google Group posting, etc.) in Markdown
+and render it before sending the e-mail.
 
 R Markdown
 ==========
@@ -120,6 +138,22 @@ file and then *markdownToHTML* to generate a HTML file.
 library(knitr)
 knit2html('simple-r-markdown.rmd')
 ```
+
+### Shell command line
+
+You can run R from the command line and call *knitr::knit2html*.
+
+```sh
+Rscript -e 'knitr::knit2html("simple-r-markdown.rmd")'
+```
+
+A [Makefile][wikimake] is a good way of running a pipeline of multiple
+R scripts and rendering the final report (in R Markdown, of course).
+Here's an [example of a Makefile][rmdmakefile] for rendering R
+Markdown.
+
+[wikimake]: http://en.wikipedia.org/wiki/Make_(software)
+[rmdmakefile]: https://github.com/jennybc/STAT545A/blob/master/hw06_scaffolds/03_knitWithoutRStudio/Makefile
 
 Publishing a R Markdown document on RPubs
 -----------------------------------------
