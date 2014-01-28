@@ -155,6 +155,16 @@ Markdown.
 [wikimake]: http://en.wikipedia.org/wiki/Make_(software)
 [rmdmakefile]: https://github.com/jennybc/STAT545A/blob/master/hw06_scaffolds/03_knitWithoutRStudio/Makefile
 
+Rendering a R script
+--------------------
+
+An R script can be rendered as though it were an R Markdown document
+containing a single code chunk.
+
+### RStudio
+
+Open the R script in RStudio. Select *File -> Compile Notebook*.
+
 Publishing a R Markdown document on RPubs
 -----------------------------------------
 
