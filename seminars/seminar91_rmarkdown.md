@@ -182,3 +182,20 @@ Windows users may run into an SSL certificate problem when first attempting to u
 - You will need administrator access to edit this file, which you can get by right licking and choosing "Run as administrator" when you launch whatever you're going to use for editing.
 - Do not edit something like this with (eeeeekkk) Word. Use Notepad or even the RStudio editor. Plain text editing!
 - Another way to get permission to edit this file: Right click on the file, choose "Properties"--> "Security", and Edit to give "Full control" to "Users". Then you will be given the permission to edit the file.
+
+Further Reading
+===============
+
++ Carson Sievert's talk [Reproducible web documents with R, knitr & Markdown](http://cpsievert.github.io/slides/markdown/)
++ [MathJax](http://www.mathjax.org) is an open source JavaScript
+  display engine for mathematics that works in all browsers ... It just
+  works
++ Jeromy Anglim's blog post [Getting Started with R Markdown, knitr, and Rstudio 0.96](http://jeromyanglim.blogspot.ca/2012/05/getting-started-with-r-markdown-knitr.html)
+  and a [Gist containing the source](https://gist.github.com/jeromyanglim/2716336)
++ Yihui Xie [blog post](http://yihui.name/en/2013/10/markdown-or-latex/)
+  about when to use Markdown and when to use LaTeX
++ How to change the CSS used when R markdown is converted to HTML
+  - [Step-by-step instructions](http://www.stat.ubc.ca/~jenny/STAT545A/topic10_tablesCSS.html)
+    from Jenny Bryan's STAT 545A course
+  - [Customizing Markdown Rendering](http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering)
++ Ben Bolker RPub [Literate programming, version control, reproducible research, collaboration, and all that](http://rpubs.com/bbolker/3153)
