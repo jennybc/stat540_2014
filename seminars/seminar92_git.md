@@ -70,13 +70,18 @@ Read the RStudio documentation on using git with RStudio:
 
 + [Using Version Control with RStudio][rstudiogit]
 
-+ [Create a repository][ghcreate] on GitHub, or navigate to an existing
-  repository in your web browser.
++ [Create a repository][ghcreate] on GitHub, and select the
+  checkbox labeled *Initialize this repository with a README*
++ Open the repository in your web browser
 + [Copy the repository URL][ghclone] of your project to the clipboard by clicking the *Copy
   to clipboard* icon next to *HTTPS clone URL* on the right-hand side
-  of the project page.
+  of the project page
 + Follow the [RStudio documentation][rstudiogit] for
-  *Creating a new project based on a Git or Subversion repository*.
+  *Creating a new project based on a Git or Subversion repository*
++ It's also possible to
+  + create a new RStudio project from scratch and request that RStudio make it a git repo upon creation
+  + or add version control to an existing RStudio project
+  + and then import that git repository into GitHub
 
 [rstudiogit]: http://www.rstudio.com/ide/docs/version_control/overview
 [ghcreate]: https://help.github.com/articles/create-a-repo
