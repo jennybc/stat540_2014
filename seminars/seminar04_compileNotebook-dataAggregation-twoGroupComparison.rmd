@@ -129,7 +129,7 @@ apply(kMat, 2, quantile, probs = 0.5)
 apply(kMat, 2, quantile, probs = c(0.25, 0.75))
 ```
 
-Let's take the minimum gene expression for each sample, across these three genes. Then let's determine *which gene* contributed that maximum value.
+Let's take the minimum gene expression for each sample, across these three genes. Then let's determine *which gene* contributed that minimum value.
 
 ```{r}
 apply(kMat, 1, min)
