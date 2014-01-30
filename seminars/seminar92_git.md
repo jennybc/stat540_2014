@@ -15,8 +15,11 @@ Install the git command line program
 
 ### Mac
 
-Mac OS comes with git installed. Yeah! Try running `git --version` at
-the terminal prompt to double check.
++ [Install Xcode](macappstores://itunes.apple.com/us/app/xcode/id497799835)
+  from the App Store
++ Open Xcode, and select
+  *Xcode -> Preferences -> Downloads -> Command Line Tools -> Install*
++ Run `git --version` at the terminal prompt to verify that git's installed
 
 ### Windows
 
