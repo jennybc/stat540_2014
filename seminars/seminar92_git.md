@@ -87,6 +87,63 @@ Read the RStudio documentation on using git with RStudio:
 [ghcreate]: https://help.github.com/articles/create-a-repo
 [ghclone]: https://help.github.com/articles/fetching-a-remote
 
+GitHub password
+---------------
+
+You may see this error message from RStudio:
+
+```
+error: unable to read askpass response from 'rpostback-askpass'
+fatal: could not read Username for 'https://github.com': Device not configured
+```
+
+There's a few ways to go about fixing the password issue.
+
+### Password Caching
+
+The easiest is to tell git to cache your password for the next four
+months (about ten million seconds) by opening a terminal and running
+the following command:
+
+```sh
+git config --global credential.helper 'cache --timeout=10000000'
+```
+
+You'll then have to force git to ask for your password once at the
+command line. You can do this by cloning your GitHub repository and
+then pushing it back to GitHub. In the following commands, substitute
+USERNAME for your GitHub user name, and REPOSITORY for the name of
+your stat540 repository.
+
+```sh
+git clone https://github.com/USERNAME/REPOSITORY
+cd REPOSITORY
+git push
+```
+
+These instructions are on the GitHub help page under
+[Password Caching][githubpassword].
+
+### SSH RSA Key
+
+Another option is to set up git, GitHub and RStudio to use an SSH RSA key.
+In RStudio, click *Preferences -> Git/SVN -> SSH RSA Key -> Create RSA
+Key* then *View public key* and then follow these instructions to add
+[Add your SSH key to GitHub][githubsshkey]. You may need to restart
+RStudio before the configuration takes effect.
+
+[githubpassword]: https://help.github.com/articles/set-up-git#platform-linux
+[githubsshkey]: https://help.github.com/articles/generating-ssh-keys#step-3-add-your-ssh-key-to-github
+
+### Mac OS Keychain Credential Helper
+
+On Mac OS, you have one more option. You can configure git to use the
+Mac OS keychain helper `git-credential-osxkeychain` to store your
+password. Folllow the GitHub Help instructions for
+[Password caching][githubosxkeychain].
+
+[githubosxkeychain]: https://help.github.com/articles/set-up-git#platform-mac
+
 Install a GUI for git
 ---------------------
 
