@@ -93,7 +93,18 @@ Install a GUI for git
 We're recommending that you use RStudio to manage your files in
 GitHub, which keeps everything all in one nice tidy package. That
 being said, there are other pretty GUIs out there for git and GitHub.
-SourceTree is particularly recommended.
+
+Atlassian SourceTree is a nice complement to RStudio's somewhat
+limited Git GUI. Some useful features of SourceTree are:
+
++ shows visual evidence when your local repo is not current
+  and there are remote commits that you need to pull
++ launch external merge tools to resolve conflicts
++ configure [remote repositories][gitscmremotes] and
+  [remote tracking branches][gitscmremotebranches]
+
+[gitscmremotes]: http://git-scm.com/book/en/Git-Basics-Working-with-Remotes
+[gitscmremotebranches]: http://git-scm.com/book/en/Git-Branching-Remote-Branches
 
 ### Mac
 
