@@ -1,117 +1,66 @@
-library(car)                            # recode()
+library(car)          # recode()
+library(lattice)      # stripplot() in stripplotIt()
+                      # xyplot() in xyplotIt()
 
-whereAmI <- "/Users/jenny/teaching/2012-2013/STAT540"
+##########################################################
+## source in-house functions for post-processing mlm objects
+##########################################################
 
-whereLectureLives <-
-  "/Users/jenny/teaching/2012-2013/STAT540-jennyLocal/classMeetings/"
+## code written by Rick White
+source("80_anova-mlm.r")
 
-## code Rick developed for working with mlm objects, ie fitted multivariate
-## regression
-source(file.path(whereAmI, "rmd/caseStudies/photoRecDiffExp/anova.mlm.R"))
+##########################################################
+## load data and design
+##########################################################
 
-## design data.frame
-load(file = file.path(whereAmI,
-     "rmd/data/photoRec/GSE4051_design.robj"))
-str(prDes)
-## 'data.frame':	39 obs. of  3 variables:
-##  $ sample  : num  20 21 22 23 16 17 6 24 25 26 ...
-##  $ devStage: Factor w/ 5 levels "E16","P2","P6",..: 1 1 1 1 1 1 1 2 2 2 ...
-##  $ gType   : Factor w/ 2 levels "wt","NrlKO": 1 1 1 1 2 2 2 1 1 1 ...
+## load design data.frame
+prDes <- readRDS("../data/GSE4051_design.rds")
+str(prDes) # 39 obs. of  4 variables
 
-## gene expression data.frame
-prDat <- read.table(file.path(whereAmI,
-                              "rmd/data/photoRec/GSE4051_data.txt"))
+## load gene expression data.frame
+prDat <- read.table("../data/GSE4051_data.tsv")
 str(prDat, max.level = 0)
-## 'data.frame':	29949 obs. of  39 variables:
-##  $ Sample_20: num  7.24 9.48 10.01 8.36 8.59 ...
-##  $ Sample_21: num  7.41 10.02 10.04 8.37 8.62 ...
-## ...
-##  $ Sample_2 : num  7.35 9.66 9.91 8.4 8.37 ...
-##  $ Sample_9 : num  7.32 9.8 9.85 8.4 8.46 ...
+## 'data.frame':  29949 obs. of  39 variables:
+
+with(prDes, table(devStage, gType))
+head(subset(prDat, select = 1:5))
+
+##########################################################
+## prepare data for multivariate regression
+##########################################################
+
+## from lm() documentation: "If response is a matrix a linear model is fitted separately by least-squares to each column of the matrix."
+
+## responses must be a matrix, one *column* per probeset
+prMat <- t(as.matrix(prDat))
 
 ##########################################################
 ## adding quantitative version of devStage
 ##########################################################
 ## recode() is from add-on package 'car'
 prDes$age <-
-    recode(prDes$devStage,
-           "'E16'=-2; 'P2'=2; 'P6'=6; 'P10'=10; '4_weeks'=28",
-           as.factor.result = FALSE)
-peek(prDes)
+  recode(prDes$devStage,
+         "'E16'=-2; 'P2'=2; 'P6'=6; 'P10'=10; '4_weeks'=28",
+         as.factor.result = FALSE)
+head(prDes)
 str(prDes)
-
-##########################################################
-## prepare to use homegrown mlm code
-##########################################################
-
-## responses must be a matrix, one *row* per response
-prMat <- t(as.matrix(prDat))
-gType <- prDes$gType              # lesser of two evils
-devStage <- prDes$devStage        # lesser of two evils
-age <- prDes$age                  # lesser of two evils
 
 ##########################################################
 ## helper functions for finding and featuring genes
 ##########################################################
 
-## handy for isolating and reshaping the data for a small set of
-## probesets
-extractIt <- function(myGenes) {
-    miniDat <- t(prDat[myGenes, ])
-    miniDat <- data.frame(gExp = as.vector(miniDat),
-                          gene = rep(colnames(miniDat), each = nrow(miniDat)))
-    miniDat <- data.frame(prDes, miniDat)
-    miniDat
-}
-
-## handy for scatterplotting the data for a small set of probesets
-graphIt <- function(jDat, yFree = FALSE, ...) {
-    thePlot <- stripplot(gExp ~ devStage | gene, jDat,
-                      type = c('p', 'a'), grid = TRUE,
-                      group = gType, auto.key = TRUE,
-                      jitter.data = TRUE, ...)
-    if(yFree) {
-        thePlot <- update(thePlot,
-                          scales = list(y = list(relation = "free")))
-    }
-    print(thePlot)
-}
-
-## handy for scatterplotting the data for a small set of probesets
-graphIt2 <- function(jDat, yFree = FALSE, ...) {
-    thePlot <- xyplot(gExp ~ age | gene, jDat,
-                      type = c('p', 'a'), grid = TRUE,
-                      group = gType, auto.key = TRUE,
-                      jitter.data = TRUE, ...)
-    if(yFree) {
-        thePlot <- update(thePlot,
-                          scales = list(y = list(relation = "free")))
-    }
-    print(thePlot)
-}
-
-## handy for scatterplotting the data for a small set of probesets
-graphIt3 <- function(jDat, yFree = FALSE, ...) {
-    thePlot <- xyplot(gExp ~ age | gene, jDat,
-                      type = c('p', 'r'), grid = TRUE,
-                      subset = gType == "wt",
-                      jitter.data = TRUE, ...)
-    if(yFree) {
-        thePlot <- update(thePlot,
-                          scales = list(y = list(relation = "free")))
-    }
-    print(thePlot)
-}
+source("98_lectSupp-prepareDataFunction.r")
+source("99_lectSupp-plotItFunction.r")
 
 ##########################################################
 ## re-fitting some of the models we've worked with
 ##########################################################
 
-twAnova <- lm(prMat ~ gType * devStage)
-dsOnly <- lm(prMat ~ devStage)
-twAnovaNoInter <- lm(prMat ~ gType + devStage)
-quadBoth <- lm(prMat ~ gType * (age + I(age^2)))
-quadAge <- lm(prMat ~ age + I(age^2))
+twAnova <- lm(prMat ~ gType * devStage, prDes)
+dsOnly <- lm(prMat ~ devStage, prDes)
+twAnovaNoInter <- lm(prMat ~ gType + devStage, prDes)
+quadBoth <- lm(prMat ~ gType * (age + I(age^2)), prDes)
+quadAge <- lm(prMat ~ age + I(age^2), prDes)
 
 twSumm <- summary(twAnova)
 dsSumm <- summary(dsOnly)
@@ -134,8 +83,8 @@ stdDevn <-
 summary(stdDevn)
 sdTall <-
     data.frame(fittedModel =
-               factor(rep(names(vars), each = nrow(vars)),
-                      levels = names(vars)),
+               factor(rep(names(stdDevn), each = nrow(stdDevn)),
+                      levels = names(stdDevn)),
                estResSd = unlist(stdDevn))
 
 splom(stdDevn,
@@ -145,16 +94,21 @@ splom(stdDevn,
           panel.abline(a = 0, b = 1, col = "orange")
       })
 
-dev.print(pdf,
-          paste0(whereLectureLives, "figs/enMasse/splom-errorStdDevn.pdf"),
+dev.print(pdf, "../figs/enMasse/splom-errorStdDevn.pdf",
           width = 7, height = 7)
 
 densityplot(~ estResSd, sdTall,
             group = fittedModel, auto.key = TRUE,
             plot.points = FALSE, n = 300)
 
-dev.print(pdf,
-          paste0(whereLectureLives, "figs/enMasse/densityplot-errorStdDevn.pdf"),
+dev.print(pdf, "../figs/enMasse/densityplot-errorStdDevn.pdf",
+          width = 7, height = 7)
+
+densityplot(~ estResSd, sdTall,
+            group = fittedModel, auto.key = TRUE,
+            plot.points = FALSE, n = 300, xlim = c(0, 0.3))
+
+dev.print(pdf, "../figs/enMasse/densityplot-errorStdDevn-zoomed.pdf",
           width = 7, height = 7)
 
 sum(highVar <- with(stdDevn,
@@ -164,11 +118,11 @@ sum(lowVar <- with(stdDevn,
                     twAnova < quantile(twAnova, 0.05))) # 1498
 
 set.seed(111)
-graphIt2(extractIt(yo <- c(sample(which(highVar), size = 4),
-                           sample(which(lowVar), size = 4))),
+xyplotIt(prepareData(yo <- c(sample(which(highVar), size = 4),
+                             sample(which(lowVar), size = 4))),
          layout = c(4, 2))
 dev.print(pdf,
-          paste0(whereLectureLives, "figs/enMasse/scatterplot-lowHighVar.pdf"),
+          "../figs/enMasse/scatterplot-lowHighVar.pdf",
           width = 7, height = 7)
 
 ##########################################################
@@ -181,19 +135,19 @@ str(foo)
 densityplot(~ foo, plot.points = FALSE, n = 300, xlab = "p-value")
 
 dev.print(pdf,
-          paste0(whereLectureLives, "figs/enMasse/densityplot-interactionYesAnova.pdf"),
+          "../figs/enMasse/densityplot-interactionYesAnova.pdf",
           width = 7, height = 7)
 
 sum(interactionYES <- foo < 0.005 & huh < 0.005) # 1344
 sum(interactionNO <- foo > 0.9 & huh < 0.005)    # 155
 
 set.seed(333)
-graphIt(extractIt(yo <- c(sample(which(interactionYES), size = 4),
-                           sample(which(interactionNO), size = 4))),
+stripplotIt(prepareData(yo <- c(sample(which(interactionYES), size = 4),
+                                sample(which(interactionNO), size = 4))),
          layout = c(4, 2))
 
 dev.print(pdf,
-          paste0(whereLectureLives, "figs/enMasse/stripplot-interactionYesNoAnova.pdf"),
+          "../figs/enMasse/stripplot-interactionYesNoAnova.pdf",
           width = 7, height = 7)
 
 ##########################################################
@@ -206,17 +160,17 @@ str(foo)
 densityplot(~ foo, plot.points = FALSE, n = 300, xlab = "p-value")
 
 dev.print(pdf,
-          paste0(whereLectureLives, "figs/enMasse/densityplot-gTypeMattersAnova.pdf"),
+          "../figs/enMasse/densityplot-gTypeMattersAnova.pdf",
           width = 7, height = 7)
 
 sum(gTypeYES <- foo < 0.005 & huh < 0.005) # 2629
 
 set.seed(333)
-graphIt(extractIt(yo <- sample(which(gTypeYES), size = 8)),
-        layout = c(4, 2))
+stripplotIt(prepareData(yo <- sample(which(gTypeYES), size = 8)),
+            layout = c(4, 2))
 
 dev.print(pdf,
-          paste0(whereLectureLives, "figs/enMasse/stripplot-gTypeYesAnova.pdf"),
+          "../figs/enMasse/stripplot-gTypeYesAnova.pdf",
           width = 7, height = 7)
 
 ##########################################################
@@ -229,7 +183,7 @@ densityplot(~ tw + qb, plot.points = FALSE, n = 300, xlab = "p-value",
             auto.key = TRUE)
 
 dev.print(pdf,
-          paste0(whereLectureLives, "figs/enMasse/densityplot-overallFAnovaVsQuad.pdf"),
+          "../figs/enMasse/densityplot-overallFAnovaVsQuad.pdf",
           width = 7, height = 7)
 
 xyplot(tw ~ qb,
@@ -239,10 +193,8 @@ xyplot(tw ~ qb,
            panel.smooth(x, y, col = "pink")
        })
 
-           type = c('p', 'smooth'))
-
 dev.print(pdf,
-          paste0(whereLectureLives, "figs/enMasse/stripplot-gTypeYesAnova.pdf"),
+          "../figs/enMasse/stripplot-gTypeYesAnova.pdf",
           width = 7, height = 7)
 
 
