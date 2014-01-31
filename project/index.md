@@ -57,7 +57,7 @@ Groups should have 4 to 6 members. We strongly encourage that groups be diverse 
 
 Fri Jan 24 | Report project group membership.
 
-Wed Jan 31 | Initial project proposals due = a paragraph.
+Fri Jan 31 | Initial project proposals due = a paragraph.
 
 Fri Feb 14 | Feedback to groups re: initial project proposals. Each group will be assigned an instructor or TA + instructor pair for extra support.
 
