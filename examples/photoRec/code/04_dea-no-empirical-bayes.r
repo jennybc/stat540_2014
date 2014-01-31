@@ -150,3 +150,21 @@ gTypeByDevStageFit <- lm(prMat ~ gType * devStage, prDes)
 ## write the fit to file for use elsewhere
 dput(gTypeByDevStageFit,
      "../results/dea-gType-by-devStage-mlm-DPUT.txt")
+
+##########################################################
+## devStage as factor vs. quantitative covariate
+##########################################################
+
+# given where and how I use these models, makes no sense to fit here and write
+# to file; putting the code here just as a central collection of lm() commands
+# we've used
+
+## recode() is from add-on package 'car'
+# prDes$age <-
+#   recode(prDes$devStage,
+#          "'E16'=-2; 'P2'=2; 'P6'=6; 'P10'=10; '4_weeks'=28",
+#          as.factor.result = FALSE)
+
+# rFit <- lm(prMat ~ devStage, prDes, subset = gType == "wt")
+# rFit <- lm(prMat ~ age, prDes, subset = gType == "wt")
+# rFit <- lm(prMat ~ age + I(age^2), prDes, subset = gType == "wt")
