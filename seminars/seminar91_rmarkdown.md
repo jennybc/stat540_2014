@@ -165,6 +165,23 @@ containing a single code chunk.
 
 Open the R script in RStudio. Select *File -> Compile Notebook*.
 
+### R command line
+
+The R function *stitch_rmd* does something very similar to *File -> Compile Notebook*.
+
+```r
+library(knitr)
+stitch_rmd('an-r-script.r')
+```
+
+### Shell command line
+
+You can run R from the command line and call *knitr::stitch_rmd*.
+
+```sh
+Rscript -e 'knitr::stitch_rmd("an-r-script.r")'
+```
+
 Publishing a R Markdown document on RPubs
 -----------------------------------------
 
