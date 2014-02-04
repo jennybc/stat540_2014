@@ -299,47 +299,85 @@ summary(quadFits[["1456341_a_at"]])
 
 factFits <- with(jDat, by(jDat, gene, function(z) lm(gExp ~ devStage, z)))
 
-(jGene <- luckyGenes[1])
-(jGene <- luckyGenes[2])
-(jGene <- luckyGenes[3])
-
+(jGene <- luckyGenes[1]) # "1427275_at"
 anova(linFits[[jGene]], quadFits[[jGene]])
-anova(quadFits[[jGene]], factFits[[jGene]])
+# Model 1: gExp ~ age
+# Model 2: gExp ~ age + I(age^2)
+# Res.Df     RSS Df Sum of Sq      F   Pr(>F)    
+# 1     18 17.9021                                 
+# 2     17  7.0591  1    10.843 26.113 8.71e-05 ***
 
-print(jLinear <-
-      xyplot(gExp ~ age, jDat,
-             subset = gene == jGene,
-             grid = TRUE,
-             panel = function(x, y, ...) {
-                 panel.xyplot(x, y, ...)
-                 with(linFitted[[jGene]],
-                      panel.lines(age, fitted))
-             }))
+AIC(linFits[[jGene]], quadFits[[jGene]], factFits[[jGene]])
+#                   df      AIC
+# linFits[[jGene]]   3 60.54129
+# quadFits[[jGene]]  4 43.92930
+# factFits[[jGene]]  6 47.54810
+
+(jGene <- luckyGenes[2]) # "1456341_a_at"
+anova(linFits[[jGene]], quadFits[[jGene]])
+# Model 1: gExp ~ age
+# Model 2: gExp ~ age + I(age^2)
+# Res.Df    RSS Df Sum of Sq      F  Pr(>F)  
+# 1     18 19.370                              
+# 2     17 15.139  1    4.2308 4.7509 0.04363 *
+
+AIC(linFits[[jGene]], quadFits[[jGene]], factFits[[jGene]])
+#                   df      AIC
+# linFits[[jGene]]   3 62.11743
+# quadFits[[jGene]]  4 59.18864
+# factFits[[jGene]]  6 48.70210
 
 
-print(jQuadratic <-
-      xyplot(gExp ~ age, jDat,
-             subset = gene == jGene,
-             grid = TRUE,
-             panel = function(x, y, ...) {
-                 panel.xyplot(x, y, ...)
-                 with(quadFitted[[jGene]],
-                      panel.lines(age, fitted))
-             }))
+(jGene <- luckyGenes[3]) # "1441811_x_at"
+anova(linFits[[jGene]], quadFits[[jGene]])
+# Model 1: gExp ~ age
+# Model 2: gExp ~ age + I(age^2)
+# Res.Df    RSS Df Sum of Sq      F Pr(>F)  
+# 1     18 3.7176                             
+# 2     17 3.1120  1   0.60559 3.3081 0.0866 .
 
-print(jAnova <-
-      xyplot(gExp ~ age, jDat,
-             subset = gene == jGene,
-             grid = TRUE, type = c('p','a')))
+AIC(linFits[[jGene]], quadFits[[jGene]], factFits[[jGene]])
+#                   df      AIC
+# linFits[[jGene]]   3 29.10466
+# quadFits[[jGene]]  4 27.54851
+# factFits[[jGene]]  6 27.12587
 
-print(jAnova, c(0, 0, 1, 0.33), more = TRUE)
-print(jQuadratic, c(0, 0.33, 1, 0.67), more = TRUE)
-print(jLinear, c(0, 0.67, 1, 1), more = FALSE)
+for(jGene in luckyGenes) {
+  print(jLinear <-
+          xyplot(gExp ~ age, jDat,
+                 subset = gene == jGene,
+                 grid = TRUE,
+                 panel = function(x, y, ...) {
+                   panel.xyplot(x, y, ...)
+                   with(linFitted[[jGene]],
+                        panel.lines(age, fitted))
+                 }))  
+  
+  print(jQuadratic <-
+          xyplot(gExp ~ age, jDat,
+                 subset = gene == jGene,
+                 grid = TRUE,
+                 panel = function(x, y, ...) {
+                   panel.xyplot(x, y, ...)
+                   with(quadFitted[[jGene]],
+                        panel.lines(age, fitted))
+                 }))
+  
+  print(jAnova <-
+          xyplot(gExp ~ age, jDat,
+                 subset = gene == jGene,
+                 grid = TRUE, type = c('p','a')))
+  
+  print(jAnova, c(0, 0, 1, 0.33), more = TRUE)
+  print(jQuadratic, c(0, 0.33, 1, 0.67), more = TRUE)
+  print(jLinear, c(0, 0.67, 1, 1), more = FALSE)
+  
+  dev.print(pdf,
+            paste0("../figs/ageQuantCovariate/",
+                   jGene, "-wtOnly-linearVsQuad.pdf"),
+            width = 6, height = 10)
+}
 
-dev.print(pdf,
-          paste0("../figs/ageQuantCovariate/",
-                 jGene, "-wtOnly-linearVsQuad.pdf"),
-          width = 6, height = 10)
 
 ##########################################################
 ## now put knockouts back in, i.e. use gType
@@ -347,7 +385,7 @@ dev.print(pdf,
 ##########################################################
 
 jDat <- prepareData(luckyGenes)
-str(jDat)
+str(jDat) # 117 obs. of  7 variables
 
 xyplot(gExp ~ age | gene, jDat,
        group = gType, grid = TRUE, layout = c(3, 1),
