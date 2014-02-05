@@ -1,42 +1,38 @@
 library(limma)
 library(hexbin)
 
-whereAmI <- "/Users/jenny/teaching/2012-2013/STAT540"
+##########################################################
+## load data and design
+##########################################################
 
-whereLectureLives <-
-  "/Users/jenny/teaching/2012-2013/STAT540-jennyLocal/classMeetings/"
+## load design data.frame
+prDes <- readRDS("../data/GSE4051_design.rds")
+str(prDes) # 39 obs. of  4 variables
 
-## code Rick developed for working with mlm objects, ie fitted multivariate
-## regression
-source(file.path(whereAmI, "rmd/caseStudies/photoRecDiffExp/anova.mlm.R"))
+## load gene expression data.frame
+prDat <- read.table("../data/GSE4051_data.tsv")
+str(prDat, max.level = 0)
+## 'data.frame':  29949 obs. of  39 variables:
 
-## helper functions for isolating and plotting data for small groups
-## of probesets
-source(file.path(whereLectureLives, "code/20-prepareDataFunction.R"))
-source(file.path(whereLectureLives, "code/21-stripplotItFunction.R"))
+with(prDes, table(devStage, gType))
+head(subset(prDat, select = 1:5))
+
+##########################################################
+## helper functions for finding and featuring genes
+##########################################################
+
+source("98_lectSupp-prepareDataFunction.r")
+source("99_lectSupp-plotItFunction.r")
+
+##########################################################
+## source in-house functions for post-processing mlm objects
+##########################################################
+
+## code written by Rick White
+source("80_anova-mlm.r")
 
 ## was helpful when printing stuff to screen to insert into lecture slides
 options(width = 110)
-
-## design data.frame
-load(file = file.path(whereAmI,
-     "rmd/data/photoRec/GSE4051_design.robj"))
-str(prDes)
-## 'data.frame':	39 obs. of  3 variables:
-##  $ sample  : num  20 21 22 23 16 17 6 24 25 26 ...
-##  $ devStage: Factor w/ 5 levels "E16","P2","P6",..: 1 1 1 1 1 1 1 2 2 2 ...
-##  $ gType   : Factor w/ 2 levels "wt","NrlKO": 1 1 1 1 2 2 2 1 1 1 ...
-
-## gene expression data.frame
-prDat <- read.table(file.path(whereAmI,
-                              "rmd/data/photoRec/GSE4051_data.txt"))
-str(prDat, max.level = 0)
-## 'data.frame':	29949 obs. of  39 variables:
-##  $ Sample_20: num  7.24 9.48 10.01 8.36 8.59 ...
-##  $ Sample_21: num  7.41 10.02 10.04 8.37 8.62 ...
-## ...
-##  $ Sample_2 : num  7.35 9.66 9.91 8.4 8.37 ...
-##  $ Sample_9 : num  7.32 9.8 9.85 8.4 8.46 ...
 
 ##########################################################
 ## limma
@@ -50,7 +46,7 @@ str(jDesMat)
 cbind(colnames(jDesMat))
 foo <- jDesMat
 dimnames(jDesMat)
-colnames(foo) <- paste0("X", formatC(seq_len(ncol(jDesMat)), width = 2, flag = "0"))
+colnames(foo) <- paste0("X", sprintf("%02d", seq_len(ncol(jDesMat))))
 cbind(prDes, foo)
 
 ## fitting two-way ANOVA to all probesets at once
@@ -77,17 +73,14 @@ topTable(ebFit)
 ##########################################################
 ## prepare to use homegrown mlm code
 ## responses must be a matrix, one *row* per response
+
 prMat <- t(as.matrix(prDat))
-gType <- prDes$gType              # lesser of two evils
-devStage <- prDes$devStage        # lesser of two evils
-
-twAnova <- lm(prMat ~ gType * devStage)
+twAnova <- lm(prMat ~ gType * devStage, prDes)
 twSumm <- summary(twAnova)
-dsOnly <- lm(prMat ~ devStage)
-dsSumm <- summary(dsOnly)
-twAnovaNoInter <- lm(prMat ~ gType + devStage)
+twAnovaNoInter <- lm(prMat ~ gType + devStage, prDes)
 twNiSumm <- summary(twAnovaNoInter)
-
+dsOnly <- lm(prMat ~ devStage, prDes)
+dsSumm <- summary(dsOnly)
 
 ##########################################################
 ## testing gTypeNrlKO
@@ -100,11 +93,11 @@ topTable(ebFit, coef = "gTypeNrlKO")
 
 hits <- topTable(ebFit, coef = "gTypeNrlKO")
 
-stripplotIt(hitDat <- prepareData(head(hits$ID, 6)),
+stripplotIt(hitDat <- prepareData(head(rownames(hits), 6)),
             scales = list(rot = c(45, 0)))
 
 dev.print(pdf,
-          file.path(whereLectureLives, "figs/limma/stripplot-NrlKO.E16-hits.pdf"),
+          "../figs/limma/stripplot-NrlKO.E16-hits.pdf",
           width = 10, height = 6)
 
 ##########################################################
@@ -114,14 +107,14 @@ colnames(coef(ebFit))                 # parameters in the linear model
 grep(":", colnames(coef(ebFit)))      # isolate the interaction terms
 hits <- topTable(ebFit, coef = grep(":", colnames(coef(ebFit))))
 
-stripplotIt(hitDat <- prepareData(head(hits$ID, 6)),
+stripplotIt(hitDat <- prepareData(head(rownames(hits), 6)),
             scales = list(rot = c(45, 0)))
 
 dev.print(pdf,
-          file.path(whereLectureLives, "figs/limma/stripplot-interaction-hits.pdf"),
+          "../figs/limma/stripplot-interaction-hits.pdf",
           width = 10, height = 6)
 
-(huh <- hits$ID[1])
+(huh <- rownames(hits)[1])
 stripplotIt(huhDat <- prepareData(huh))
 
 huhFitBig <- lm(gExp ~ gType * devStage, huhDat)
@@ -143,13 +136,13 @@ xyplot(hits$P.Value ~ foo, xlab = "interaction p-value, lm",
        })
 
 dev.print(pdf,
-          file.path(whereLectureLives, "figs/limma/smoothScatter-interactionPvalsLimmaVsLm.pdf"),
+          "../figs/limma/smoothScatter-interactionPvalsLimmaVsLm.pdf",
           width = 7, height = 7)
 
 densityplot(~ foo + hits$P.Value, plot.points = FALSE, n = 300, xlab = "p-value")
 
 dev.print(pdf,
-          paste0(whereLectureLives, "figs/limma/densityplot-interactionPvalsLimmaVsLm.pdf"),
+          "../figs/limma/densityplot-interactionPvalsLimmaVsLm.pdf",
           width = 7, height = 7)
 
 table(hits$P.Value > foo)
@@ -160,8 +153,8 @@ table(hits$P.Value > foo)/nrow(prDat)
 ##     FALSE      TRUE
 ## 0.5910715 0.4089285
 
-sum(foo < 0.01)
-sum(hits$P.Value < 0.01)
+sum(foo < 0.01) # 1874
+sum(hits$P.Value < 0.01) # 1888
 
 ##########################################################
 ## does genotype matter?
@@ -172,12 +165,12 @@ hits3 <- topTable(ebFit,
                   coef = grep("gType", colnames(coef(ebFit))),
                   n = Inf)
 
-stripplotIt(hitDat <- prepareData(c(head(hits3$ID, 3),
-                                    tail(hits3$ID, 3))),
+stripplotIt(hitDat <- prepareData(c(head(rownames(hits3), 3),
+                                    tail(rownames(hits3), 3))),
             scales = list(rot = c(45, 0)))
 
 dev.print(pdf,
-          file.path(whereLectureLives, "figs/limma/stripplot-gType-hits.pdf"),
+          "../figs/limma/stripplot-gType-hits.pdf",
           width = 10, height = 6)
 
 huh <- twSumm$Full[ , "Pval"]
@@ -195,11 +188,8 @@ densityplot(~ foo + hits3$P.Value, plot.points = FALSE, n = 300, xlab = "p-value
 ## testing across contrasts
 topTable(ebFit, coef = grep("gType", colnames(coef(ebFit))))
 
-
 hits3 <- topTable(ebFit,
                   coef = grep("gType", colnames(coef(ebFit))))
-
-
 
 ##########################################################
 ## looking at variance
@@ -240,7 +230,7 @@ xyplot(ebFit$s2.post ~ jFit$sigma ^ 2,
        prepanel = function(x, y, ...) {
            rng <- range(x, y, finite = TRUE)
            ## comment next line out to get all vars!
-           rng = c(0, 0.1)
+           #rng = c(0, 0.1)
            list(xlim = rng, ylim = rng)
        },
        panel = function(x, y, ...) {
@@ -254,8 +244,8 @@ xyplot(ebFit$s2.post ~ jFit$sigma ^ 2,
       })
 
 dev.print(pdf,
-          file.path(whereLectureLives, "figs/limma/xyplot-rawAndModeratedResidVarZoom.pdf"),
-#          file.path(whereLectureLives, "figs/limma/xyplot-rawAndModeratedResidVar.pdf"),
+          #"../figs/limma/xyplot-rawAndModeratedResidVarZoom.pdf",
+          "../figs/limma/xyplot-rawAndModeratedResidVar.pdf",
           width = 7, height = 7)
 
 
@@ -271,6 +261,9 @@ ebFit$s2.prior
 
 ## post-eb residual variance
 str(ebFit$s2.post)
+
+
+## 2014 refresh has gotten to here ... refresh below as we approach multiple testing lecture
 
 ##########################################################
 ## trying to understand the utility, if any, of a 'sum to zero' parametrization
@@ -303,7 +296,7 @@ hits3 <- topTable(ebFit,
 head(hits2)
 head(hits3)
 
-stripplotIt(hitDat <- prepareData(tail(hits2$ID, 6)),
+stripplotIt(hitDat <- prepareData(tail(rownames(hits2), 6)),
             scales = list(rot = c(45, 0)))
 
 ##########################################################
@@ -313,9 +306,9 @@ stripplotIt(hitDat <- prepareData(tail(hits2$ID, 6)),
 
 ## get my head straight with just 1 probeset
 stripplotIt(tinyDat <- prepareData("1448904_at"))
-dev.print(pdf,
-          file.path(whereLectureLives, "figs/limma/stripplot-1448904_at.pdf"),
-          width = 7, height = 5)
+#dev.print(pdf,
+ #         file.path(whereLectureLives, "figs/limma/stripplot-1448904_at.pdf"),
+  #        width = 7, height = 5)
 
 tinyDat$grp <- with(tinyDat, interaction(gType, devStage))
 summary(lm(gExp ~ grp + 0, tinyDat))
@@ -372,13 +365,13 @@ head(NrlKOHitsAll, 4)
 ## show the top hit for wt and NrlKO
 stripplotIt(tinyDat <- prepareData(c("1425171_at", "1425530_a_at")))
 
-dev.print(pdf,
-          file.path(whereLectureLives, "figs/limma/stripplot-topHitsE16vsP10ByBtype_at.pdf"),
-          width = 7, height = 5)
+#dev.print(pdf,
+ #         file.path(whereLectureLives, "figs/limma/stripplot-topHitsE16vsP10ByBtype_at.pdf"),
+  #        width = 7, height = 5)
 
 ## use decideTests, optionally with method = "global"
 kRes <- decideTests(kebFit, p.value = cutoff)
-kResglobal <- decideTests(kebFit, p.value = cutoff, method = "global")
+kResGlobal <- decideTests(kebFit, p.value = cutoff, method = "global")
 
 summary(kRes)
 ##    wt.P10vsE16 NrlKO.P10vsE16
@@ -552,7 +545,7 @@ model.matrix(~ strain/tx, limDat)
 
 ## Yep, the same result.
 
-(huh <- hits$ID[1])
+(huh <- rownames(hits)[1])
 stripplotIt(huhDat <- prepareData(huh))
 
 huhFitBig <- lm(gExp ~ gType * devStage, huhDat)
