@@ -134,7 +134,7 @@ Fri Jan 31: Initial project proposals due.
 
 lecture 09 | Statistical inference: linear models including a quantitative covariate, fitting many linear models at once (JB) | Mon Feb 03  | [slides as PDF](pvt/lect09_quantCovariate-manyLinModAtOnce.pdf)
 
-lecture 10 | Large scale inference: Empirical Bayes, limma (JB) | Wed Feb 05
+lecture 10 | Large scale inference: Empirical Bayes, limma (JB) | Wed Feb 05  | [slides as PDF](pvt/lect10_limma.pdf)
 
 seminar 05 | [Fitting and interpretting linear models (low volume)](#seminar05) (SJ) | Wed Feb 05
 
