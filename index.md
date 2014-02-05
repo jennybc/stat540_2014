@@ -132,11 +132,11 @@ Fri Jan 31: Initial project proposals due.
 
 ### Week 5
 
-lecture 09 | Statistical inference: linear models including a quantitative covariate, fitting many linear models at once (JB) | Mon Feb 03
+lecture 09 | Statistical inference: linear models including a quantitative covariate, fitting many linear models at once (JB) | Mon Feb 03  | [slides as PDF](pvt/lect09_quantCovariate-manyLinModAtOnce.pdf)
 
 lecture 10 | Large scale inference: Empirical Bayes, limma (JB) | Wed Feb 05
 
-seminar 05 | Fitting and interpretting linear models (low volume) (SJ) | Wed Feb 05
+seminar 05 | [Fitting and interpretting linear models (low volume)](#seminar05) (SJ) | Wed Feb 05
 
 Fri Feb 07: Homework #1 will be assigned.
 
@@ -241,8 +241,8 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
   * seminar 04 Wed Jan 29 <a id="seminar04"></a>
     - [Two group testing and data aggregation](seminars/seminar04_compileNotebook-dataAggregation-twoGroupComparison.html)
     - [Data aggregation](http://www.stat.ubc.ca/~jenny/STAT545A/block04_dataAggregation.html), borrowed from STAT 545A. Certain sections are linked to from the seminar.
-  * seminar 05 Wed Feb 05
-    - Fitting and interpretting linear models (low volume)
+  * seminar 05 Wed Feb 05 <a id="seminar05"></a>
+    - [Fitting and interpretting linear models (low volume)](seminars/seminar05_lowVolumeLinearModelling.html)
   * seminar 06 Wed Feb 12
     - Fitting and interpretting linear models (high volume), limma package
   * seminar 07 Wed Feb 26
