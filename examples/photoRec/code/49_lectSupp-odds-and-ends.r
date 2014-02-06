@@ -175,3 +175,76 @@ print(rfAnova, show = which(colnames(prMat) %in% names(exciting)))
 ##                                                 levels(factFitted$gType)[group.number]],
 ##                               col = trellis.par.get("superpose.line")$col[group.number])
 ##               })
+
+
+
+## code below here came out of 48_lectSupp-multiple-testing.r
+
+##########################################################
+## trying to understand the utility, if any, of a 'sum to zero' parametrization
+##########################################################
+miniDes <- with(prDes, expand.grid(levels(gType), levels(devStage)))
+names(miniDes) <- c("gType", "devStage")
+
+## "the usual"
+model.matrix(~ gType * devStage, miniDes)
+
+## "sum to zero"
+jDesMat2 <- model.matrix(~ gType * devStage, prDes,
+                         contrasts.arg = list(gType = "contr.sum",
+                                              devStage = "contr.sum"))
+system.time(jFit2 <- lmFit(prDat, jDesMat2))
+ebFit2 <- eBayes(jFit2)
+colnames(coef(ebFit2))                # parameters in the linear model
+grep("gType1", colnames(coef(ebFit2)))  # isolate the genotype terms
+hits2 <- topTable(ebFit2, coef = grep("gType1",
+                                      colnames(coef(ebFit2))),
+                  n = Inf)
+tail(hits2)
+
+colnames(coef(ebFit))                 # parameters in the linear model
+grep("gType", colnames(coef(ebFit)))  # isolate the genotype terms
+hits3 <- topTable(ebFit,
+                  coef = grep("gType", colnames(coef(ebFit))),
+                  n = Inf)
+
+head(hits2)
+head(hits3)
+
+stripplotIt(hitDat <- prepareData(tail(rownames(hits2), 6)),
+            scales = list(rot = c(45, 0)))
+
+
+
+
+
+
+## below was removed from 48_lectSupp-multiple-testing.r
+
+##########################################################
+## trying to understand limma manual around page 43 (different ways to
+## do 2x2 factorial
+##########################################################
+
+limDat <- data.frame(strain = factor(c("wt", "wt", "mut", "mut", "mut"),
+                                     levels = c("wt", "mut")),
+                     tx = factor(c("untx", "stim", "untx", "stim", "stim"),
+                                 levels = c("untx", "stim")))
+
+model.matrix(~ strain + strain:tx, limDat)
+##   (Intercept) strainmut strainwt:txstim strainmut:txstim
+## 1           1         0               0                0
+## 2           1         0               1                0
+## 3           1         1               0                0
+## 4           1         1               0                1
+## 5           1         1               0                1
+
+model.matrix(~ strain/tx, limDat)
+##   (Intercept) strainmut strainwt:txstim strainmut:txstim
+## 1           1         0               0                0
+## 2           1         0               1                0
+## 3           1         1               0                0
+## 4           1         1               0                1
+## 5           1         1               0                1
+
+## Yep, the same result.
