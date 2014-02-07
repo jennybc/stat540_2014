@@ -7,7 +7,7 @@ Contributors: Jenny Bryan
 ## once I upgrade knitr, "no tidy" will be the default and I can delete this
 opts_chunk$set(tidy = FALSE)
 ```
-
+l
 We will start providing less code now, since you should be generating more yourself now. Worst case, you can consult previous seminars, lectures, and your neighbor if you get stuck. Take advantage of R documentation and RStudio's facilities for accessing it.
 
 You are also strongly encouraged to retain and develop your R code in a script.
@@ -20,6 +20,8 @@ You are also strongly encouraged to retain and develop your R code in a script.
 
 ```{r}
 library(lattice) # if you don't already have this loaded ...
+library(ggplot2)
+library(plyr)
 prDat <- read.table("../examples/photoRec/data/GSE4051_data.tsv")
 str(prDat, max.level = 0)
 prDes <- readRDS("../examples/photoRec/data/GSE4051_design.rds")
@@ -73,6 +75,16 @@ makeStripplot <- function(myData, ...) {
   stripplot(gExp ~ devStage | gene, myData,
             group = gType, jitter.data = TRUE,
             auto.key = TRUE, type = c('p', 'a'), grid = TRUE, ...)
+}
+# note the ggplot version does NOT accept the extra parameters
+# assumes that the dataframe has columns "devStage", "gExp", "gType"
+makeStripplotGg <- function(.data) {
+  p <- ggplot(.data, aes(x = devStage, y = gExp, color = gType, group = gType))
+  p <- p + geom_line(stat = "summary", fun.y = mean)
+  p <- p + geom_point(position = position_jitter(width = .2))
+  p <- p + facet_wrap(~ gene)
+  
+  print(p)
 }
 ```
 ```{r}
@@ -145,6 +157,8 @@ Let's check that this really is the observed difference in sample mean for the w
 ```{r}
 (sampMeans <- aggregate(gExp ~ devStage, mDat, FUN = mean,
                         subset = gType == "wt"))
+sampMeansPlyr <-
+  ddply(subset(mDat, gType == 'wt'), ~ devStage, summarize, gExp = mean(gExp))
 with(sampMeans, gExp[devStage == "P2"] - gExp[devStage == "P10"])
 ```
 Yes! Agrees with the observed difference we computed by multiplying our contrast matrix and the estimated parameters. If you don't get agreement, you have a problem ... probably with your contrast matrix.
