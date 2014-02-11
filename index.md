@@ -138,7 +138,7 @@ lecture 10 | Large scale inference: Empirical Bayes, limma (JB) | Wed Feb 05  | 
 
 seminar 05 | [Fitting and interpretting linear models (low volume)](#seminar05) (SJ) | Wed Feb 05
 
-Fri Feb 07: Homework #1 will be assigned.
+Fri Feb 07: [Homework #1 assignment](homework/hw01_quality-exploration-DE.html) is posted. Due Tues Feb 25.
 
 ### Week 6
 
