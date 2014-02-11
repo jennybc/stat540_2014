@@ -1,4 +1,4 @@
-Fitting and interpretting linear models (low volume)
+Fitting and interpreting linear models (low volume)
 ======================================================================
 
 Contributors: Jenny Bryan

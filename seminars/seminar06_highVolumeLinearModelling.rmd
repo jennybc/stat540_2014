@@ -1,4 +1,4 @@
-% Seminar 6: Fitting and interpretting linear models (high volume)
+% Seminar 6: Fitting and interpreting linear models (high volume)
 % Jenny Bryan
 % 2013-02-06
 
