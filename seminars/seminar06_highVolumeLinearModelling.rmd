@@ -20,6 +20,8 @@ library(limma)
 library(lattice)
 ```
 
+> As usual, `ggplot2` is warmly welcomed as an alternative graphing package.
+
 Load the `photoRec` dataset:
 
 > Remember you may need to edit the file paths below, to reflect your working directory and local file storage choices.
@@ -103,11 +105,8 @@ topTable(wtEbFit)
 You'll see that, by default, `topTable()` reports the top 10 hits. But let's take more care and specify explicitly the coefficients we want to test for equality with zero. Recall that one can specify these by number but I recommend doing this by name.
 
 ```{r, eval=FALSE}
-## these calls will work but have drawbacks
+## this call will work but I don't like it
 topTable(wtEbFit, coef = 2:5) # cryptic! error-prone!
-topTable(wtEbFit,
-         coef = c("devStageP2", "devStageP6",
-                  "devStageP10", "devStage4_weeks")) # a drag to type
 ```
 
 ```{r}
@@ -121,7 +120,7 @@ You will notice that these are __not__ the same hits we got with our first call 
 Use the hit list you stored above and your functions for extracting and plotting data to produce this plot for hits 3, 6, and 9 on the list.
 
 ```{r, echo=FALSE}
-stripplotIt(prepareData(dsHits$ID[c(3, 6, 9)]))
+stripplotIt(prepareData(rownames(dsHits)[c(3, 6, 9)]))
 ```
 
 Does it look plausible to you that -- using only wild type data -- these probes show the most compelling evidence for expression change over development? Note: I have redefined my data extraction and plotting functions to include only the wild type data. You can do that or not, as long as you can remember that all of today's models only work with wild type data.
@@ -147,14 +146,14 @@ What is the 63rd hit on this list? Provide it's Affy ID, F statistic, BH adjuste
 dsHits[63, c("F", "adj.P.Val", "devStageP6")]
 ```
 
-Consider the effects associated with developmental stages P2 and P10. Scatterplot the t statistics for the test that the P2 effect is zero against that for P10. Ideally this plot would be a high-volume scatterplot, have an aspect ratio of 1 and common axes, but don't sweat it too much if you can't do all of that on the spot. Here's what I get:
+Consider the effects associated with developmental stages P2 and P10. Scatterplot the t statistics for the test that the P2 effect is zero against that for P10. Ideally this plot would be a high-volume scatterplot, include an `x = y` line,  and have an aspect ratio of 1 and common axes, but just do your best. Here's what I get:
 
 ```{r, echo=FALSE}
 P2Hits <- topTable(wtEbFit, coef = "devStageP2", n = Inf, sort = "none")
 P10Hits <- topTable(wtEbFit, coef = "devStageP10", n = Inf, sort = "none")
 xyplot(P10Hits$t ~ P2Hits$t, aspect = 1,
-       xlab = "p-value for P2 effect",
-       ylab = "p-value for P10 effect",
+       xlab = "t-statistic for P2 effect",
+       ylab = "t-statistic for P10 effect",
        xlim = c(-20, 16), ylim = c(-20, 16),
        panel = function(x, y, ...) {
          panel.smoothScatter(x, y, nbin = 100, ...)
@@ -165,7 +164,8 @@ xyplot(P10Hits$t ~ P2Hits$t, aspect = 1,
 Create a densityplot of the associated p-values, so you can get a sense of which developmental stage, P2 or P10, is more clearly distinguished from baseline E16.
 
 ```{r, echo=FALSE}
-densityplot(~ P10Hits$adj.P.Val + P2Hits$adj.P.Val, auto.key = TRUE, plot.points = FALSE)
+densityplot(~ P10Hits$adj.P.Val + P2Hits$adj.P.Val, auto.key = TRUE,
+            plot.points = FALSE, n = 300)
 ```
 
 Is this what you'd expect?
@@ -214,7 +214,7 @@ The top hits are probes where there is big change from P6 to P10, from P10 to 4_
 
 ```{r, echo=FALSE}
 foo <- topTable(wtEbFitCont)
-stripplotIt(prepareData(foo$ID[1:4]))
+stripplotIt(prepareData(rownames(foo)[1:4]))
 ```
 
 So far, so good. These 4 probes show little expression change from P6 to P10 and a strong increase from P10 to 4_weeks. I would like to find some where there's a change in each case but perhaps in opposite direction. Let's press on.
@@ -289,7 +289,8 @@ Take-home exercise: See if you can find one or more probes that have some expres
 
 ```{r, echo=FALSE}
 lateStuff <- topTable(wtEbFitCont, n = Inf, sort = "none")
-earlyStuff <- topTable(wtEbFit, coef = c("devStageP2", "devStageP6"),
+earlyStuff <- topTable(wtEbFit,
+                       coef = grep("devStageP[26]", colnames(coef(wtEbFit))),
                        n = Inf, sort = "none")
 pVals <-
   data.frame(earlyStuff = earlyStuff$adj.P.Val,
