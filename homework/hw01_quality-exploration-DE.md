@@ -169,7 +169,7 @@ What are the p-values associated with these probes? Comment on the plots.
 
 
 
-#### Q4e: Find probes where the expression in the S1P3 knockout is the same as that of the wild type.
+#### Q4e: Find probes where the expression in the S1P3 knockout is different from that of wild type.
 
 How many hits do you find if you control FDR at 0.10?
 
