@@ -144,7 +144,7 @@ Fri Feb 07: [Homework #1 assignment](homework/hw01_quality-exploration-DE.html) 
 
 Mon Feb 10 is Family Day; no class
 
-lecture 11 | Large scale inference: multiple testing (JB) | Wed Feb 12
+lecture 11 | Large scale inference: multiple testing (JB) | Wed Feb 12 | [slides as PDF](pvt/lect11_multiple-testing.pdf)
 
 seminar 06 | [Fitting and interpretting linear models (high volume), limma package](#seminar06) | Wed Feb 12
 
