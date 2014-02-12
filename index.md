@@ -146,7 +146,7 @@ Mon Feb 10 is Family Day; no class
 
 lecture 11 | Large scale inference: multiple testing (JB) | Wed Feb 12
 
-seminar 06 | Fitting and interpretting linear models (high volume) (SJ), limma package (JB) | Wed Feb 12
+seminar 06 | [Fitting and interpretting linear models (high volume), limma package](#seminar06) | Wed Feb 12
 
 Fri Feb 14: feedback to groups re: initial project proposals. Each group will be assigned an instructor or TA + instructor pair for extra support.
 
@@ -243,8 +243,8 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - [Data aggregation](http://www.stat.ubc.ca/~jenny/STAT545A/block04_dataAggregation.html), borrowed from STAT 545A. Certain sections are linked to from the seminar.
   * seminar 05 Wed Feb 05 <a id="seminar05"></a>
     - [Fitting and interpretting linear models (low volume)](seminars/seminar05_lowVolumeLinearModelling.html)
-  * seminar 06 Wed Feb 12
-    - Fitting and interpretting linear models (high volume), limma package
+  * seminar 06 Wed Feb 12 <a id="seminar06"></a>
+    - [Fitting and interpretting linear models (high volume), limma package](seminars/seminar06_highVolumeLinearModelling.html)
   * seminar 07 Wed Feb 26
     - RNA-Seq data
   * seminar 08 Wed Mar 05
