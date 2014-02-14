@@ -138,7 +138,7 @@ lecture 10 | Large scale inference: Empirical Bayes, limma (JB) | Wed Feb 05  | 
 
 seminar 05 | [Fitting and interpretting linear models (low volume)](#seminar05) (SJ) | Wed Feb 05
 
-Fri Feb 07: [Homework #1 assignment](homework/hw01_quality-exploration-DE.html) is posted. Due Tues Feb 25.
+Fri Feb 07: [Homework #1 assignment](homework/hw01_quality-exploration-DE.html) is posted. Due Thurs Feb 27.
 
 ### Week 6
 
@@ -160,17 +160,17 @@ Fri Feb 14: feedback to groups re: initial project proposals. Each group will be
 
 lecture 12 | Analysis of RNA-Seq data (PP), 1 of 2 | Mon Feb 24
 
-Tues Feb 25: Homework #1 due 
-
 lecture 13 | Analysis of RNA-Seq data (PP), 2 of 2 | Wed Feb 26
 
 seminar 07 | RNA-Seq analysis (LL) | Wed Feb 26
 
-Fri Feb 28: final project proposals due.
+Thurs Feb 27: Homework #1 due 
 
 ### Week 9
 
 lecture 14 | Analysis of epigenetic data, focus on methylation (PP or designate) | Mon Mar 03
+ 
+Wed Mar 05: final project proposals due. 
  
 lecture 15 | Principal component analysis (PP) | Wed Mar 05
 
