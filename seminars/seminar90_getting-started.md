@@ -11,5 +11,6 @@ __NOTE__: The use of RPubs and GitHub and Gravatar will inevitably put informati
   - Create a public GitHub repository named `stat540-2014-lastname-firstname` for lab work
   - Create a private GitHub repository named `stat540-2014-lastname-firstname-hw` for assignments
   - Add the profs and TAs as collaborators to your private GitHub repository
-    - [Jenny Bryan](https://github.com/jennybc) on GitHub
-    - [Shaun Jackman](https://github.com/sjackman) on GitHub
+    - [Jenny Bryan -- jennybc](https://github.com/jennybc) on GitHub
+    - [Shaun Jackman -- sjackman](https://github.com/sjackman) on GitHub
+    - [Gloria Li -- gloriali](https://github.com/gloriali) on GitHub
