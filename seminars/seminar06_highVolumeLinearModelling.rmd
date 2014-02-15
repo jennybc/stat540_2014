@@ -18,6 +18,7 @@ Load the `limma` and/or `lattice` package, if you need to:
 ```{r}
 library(limma)
 library(lattice)
+library(ggplot2)
 ```
 
 > As usual, `ggplot2` is warmly welcomed as an alternative graphing package.
@@ -60,14 +61,14 @@ The `lmFit` function from `limma` is arguably your main workhorse function for f
   
 Before we dive in and start using `limma` with the `photoRec` dataset, let's do a small simulation to illustrate how lousy variance estimates can be when the number of samples is small.
 
-Let's simulate data for 1000 genes. For each we gene, we get 3 observations from a normal distribution with mean 0 and variance 1. We generate the data for each gene independent of the others.
+Let's simulate data for 1000 genes. For each gene, we get 3 observations from a normal distribution with mean 0 and variance 1. We generate the data for each gene independent of the others.
 
 ```{r}
 m <- 1000
 n <- 3
 x <- matrix(rnorm(m * n), nrow = m)
 ```
-Let's take the observed gene-wise variances. Yes, folks, we are estimating with variance with samples of size 3. People do this all the time -- remember the video? We inspect them a bit numerically and graphically.
+Let's take the observed gene-wise variances. Yes, folks, we are estimating variance with samples of size 3. People do this all the time -- remember the video? We inspect them a bit numerically and graphically.
 ```{r}
 obsVars <- apply(x, 1, var)
 summary(obsVars)
@@ -159,13 +160,44 @@ xyplot(P10Hits$t ~ P2Hits$t, aspect = 1,
          panel.smoothScatter(x, y, nbin = 100, ...)
          panel.abline(a = 0, b = 1, col = "orange")
          })
+
+# and now a ggplot version
+p2vp10t <- data.frame(p2 = P2Hits$t, p10 = P10Hits$t)
+ggplot(p2vp10t, aes(p2, p10)) +
+  geom_point(alpha=0.1) +
+  stat_density2d(aes(fill = ..level..), geom="polygon") +
+  geom_abline(intercept=0, slope=1) +
+  scale_x_continuous(limits=c(-21,20)) +
+  scale_y_continuous(limits=c(-21,20)) +
+  coord_fixed() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(color = 'black')) +
+  xlab("t-statistic for P2 effect") + 
+  ylab("t-statistic for P10 effect")+
+  theme(legend.position = "none")
 ```
 
-Create a densityplot of the associated p-values, so you can get a sense of which developmental stage, P2 or P10, is more clearly distinguished from baseline E16.
+Create a densityplot of the associated adjusted p-values, so you can get a sense of which developmental stage, P2 or P10, is more clearly distinguished from baseline E16.
 
 ```{r, echo=FALSE}
 densityplot(~ P10Hits$adj.P.Val + P2Hits$adj.P.Val, auto.key = TRUE,
             plot.points = FALSE, n = 300)
+            
+## ggplot version
+p2vp10p <- data.frame(p2 = P2Hits$adj.P.Val, p10 = P10Hits$adj.P.Val)
+ggplot(p2vp10p) +
+  geom_density(aes(x = p2, colour = "red")) +
+  geom_density(aes(x = p10, colour = "blue")) +
+  scale_colour_manual(name = "",
+                      values = c('blue', 'red'),
+                      labels = c('P10 adj p-val', 'P2 adj p-val')) +
+  xlab("p2/p10 adj p-val") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(color = 'black'))
 ```
 
 Is this what you'd expect?
