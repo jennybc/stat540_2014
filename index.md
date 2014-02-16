@@ -78,7 +78,7 @@ Officially none BUT here in reality ...
 
 ### Evaluation
 
-* Homework. Two assignments worth 25 points each. Homework #1 will be assigned in early February and will be due in late February. Homework #2 will be assigned in early March and will be due in late March. *New for 2014: we may suggest/require that incremental progress be submitted along the way.*
+* Homework. Two assignments worth 25 points each. [Homework #1](homework/hw01_quality-exploration-DE.html) was assigned in early February and is due Thurs Feb 27. Homework #2 will be assigned in early March and will be due in late March.
 
 * [Group project](project/index.html). Groups formed and projects conceived during January/February. Primary deliverable is a poster, presented in last class meeting. Each student also produces a short report. 40 points. More more information, [go here](project/index.html).
 
@@ -168,7 +168,7 @@ Thurs Feb 27: Homework #1 due
 
 ### Week 9
 
-lecture 14 | Analysis of epigenetic data, focus on methylation (PP or designate) | Mon Mar 03
+lecture 14 | Analysis of epigenetic data, focus on methylation (Elodie Portales-Casamar) | Mon Mar 03
  
 Wed Mar 05: final project proposals due. 
  
