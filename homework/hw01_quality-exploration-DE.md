@@ -102,7 +102,7 @@ Here are the 2 plots:
   * The data as provided
   * The data after you apply quantile normalization.
 
-Hint: `normalize.quantiles()` in the Bioconductor package `preprocessCore` is helpful. So is `boxplot()`.
+Hint: `normalize.quantiles()` in the Bioconductor package `preprocessCore` is helpful. So are `graphics::boxplot()`, `lattice::bwplot()` and `ggplot2::geom_boxplot()`.
 
 
 
