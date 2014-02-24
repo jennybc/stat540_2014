@@ -1,13 +1,14 @@
-% Seminar 8: RNA-Seq - Differential Expression Analysis
-% Katayoon Kasaian
-% February 25, 2013
+RNA-seq - Differential Expression Analysis
+==========================================
+
+Contributors: Katayoon Kasaian
 
 ## Introduction
 
-In the last seminar we produced a table of read counts for genomic features such as genes or exons from RNA-seq alignment BAM file. In this seminar we will use a table of counts to perform differential expression analysis. We will use edgeR, DESeq and voom + limma packages for this purpose. We will use the data from this [publication](http://www.ncbi.nlm.nih.gov/pubmed?term=21455293). The mRNA from 21 mice belonging to two different strains have been sequenced; the count table lists the number of reads aligned to the annotated mouse genes in the Ensembl database. Our goal is to identify those genes that are differentially expressed between the two strains.
+In this seminar we will use a table of read counts for genomic features, such as genes or exons, derived from RNA-seq alignment BAM file to perform differential expression analysis. We will use edgeR, DESeq and voom + limma packages for this purpose. We will use the data from this [publication](http://www.ncbi.nlm.nih.gov/pubmed?term=21455293). The mRNA from 21 mice belonging to two different strains have been sequenced; the count table lists the number of reads aligned to the annotated mouse genes in the Ensembl database. Our goal is to identify those genes that are differentially expressed between the two strains.
 
-* [Data file](../data/bottomly/bottomly_count_table.txt)
-* [Design file](../data/bottomly/bottomly_phenodata.txt)
+* [Data file](../examples/bottomly/data/bottomly_count_table.tsv)
+* [Design file](../examples/bottomly/data/bottomly_phenodata.tsv)
 
 ## Preliminaries
 
@@ -37,8 +38,8 @@ edgeR takes in as an argument a table of integer counts, with rows corresponding
 > Remember you may need to edit the file paths below, to reflect your working directory and local file storage choices.
 
 ```{r}
-dat <- read.table("../data/bottomly/bottomly_count_table.txt", header=TRUE, row.names=1)
-des <- read.table("../data/bottomly/bottomly_phenodata.txt", header=TRUE, row.names=1)
+dat <- read.table("../examples/bottomly/data/bottomly_count_table.tsv", header=TRUE, row.names=1)
+des <- read.table("../examples/bottomly/data/bottomly_phenodata.tsv", header=TRUE, row.names=1)
 str(dat)
 show(des)
 all(rownames(des) == colnames(dat))
