@@ -26,7 +26,7 @@ biocLite("biomaRt")
 
 ## Reading BAM Files
 
-We start by importing the BAM file, [drosophilaMelanogasterSubset.bam](../data/drosophilaRnaSeq/drosophilaMelanogasterSubset.bam):
+We start by importing the BAM file, [drosophilaMelanogasterSubset.bam](../examples/drosophilaRnaSeq/data/drosophilaMelanogasterSubset.bam):
 
 > Remember you may need to edit the file paths below, to reflect your working directory and local file storage choices.
 
@@ -34,7 +34,7 @@ We start by importing the BAM file, [drosophilaMelanogasterSubset.bam](../data/d
 library(ShortRead)
 library(Rsamtools)
 
-bamDat <- readAligned("../data/drosophilaRnaSeq/drosophilaMelanogasterSubset.bam", type="BAM")
+bamDat <- readAligned("../examples/drosophilaRnaSeq/data/drosophilaMelanogasterSubset.bam", type="BAM")
 
 #bamDat is an AlignedRead object from the ShortRead package. It stores reads and their genomic alignment information.
 str(bamDat)
@@ -43,10 +43,10 @@ str(bamDat)
 Note that in addition to the drosophilaMelanogasterSubset.bam file, there is an index file called drosophilaMelanogasterSubset.bam.bai. This index file allows fast look up of data from the binary alignment file. To index a bam file, you can use the following code:
 
 ```{r, eval=FALSE}
-indexFile <- indexBam("../data/drosophilaRnaSeq/drosophilaMelanogasterSubset.bam")
+indexFile <- indexBam("../examples/drosophilaRnaSeq/data/drosophilaMelanogasterSubset.bam")
 ```
 
-This will create the index file `../data/drosophilaRnaSeq/drosophilaMelanogasterSubset.bam.bai`, note that ".bai" has been appended to the original file name.
+This will create the index file `../examples/drosophilaRnaSeq/data/drosophilaMelanogasterSubset.bam.bai`, note that ".bai" has been appended to the original file name.
 
 ## Filtering BAM Files
 
