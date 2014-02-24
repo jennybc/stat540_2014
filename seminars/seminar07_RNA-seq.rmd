@@ -31,7 +31,7 @@ or [the reference manual](http://www.bioconductor.org/packages/2.11/bioc/manuals
 
 ## edgeR
 
-edgeR implements statistical methods based on the negative binomial distribution for count data. The first version of edgeR implemented exact statistical methods for comparison of multiple groups but is only applicable to experiments with one factor. This sometimes is referred to as classis edgeR. An addition to the classic version is an implementation of generalized linear models (glms) used for analysis of multifactor experiments where the response variables might not follow normal distribution. This sometimes is referred to as glm edgeR. Similar to limma, both versions of edgeR use empirical Bayes methods to estimate gene-specific variation. The classic edgeR uses quantile-adjusted conditional maximum likelihood (qCML) to estimate the disperison while the glm edgeR uses Cox-Reid profile-adjusted likelihood (CR) for dispersion estimation. 
+edgeR implements statistical methods based on the negative binomial distribution for count data. The first version of edgeR implemented exact statistical methods for comparison of multiple groups but is only applicable to experiments with one factor. This sometimes is referred to as classis edgeR. An addition to the classic version is an implementation of generalized linear models (glms) used for analysis of multifactor experiments where the response variables might not follow normal distribution. This sometimes is referred to as glm edgeR. Similar to limma, both versions of edgeR use empirical Bayes methods to estimate gene-specific variation. The classic edgeR uses quantile-adjusted conditional maximum likelihood (qCML) to estimate the disperison while the glm edgeR uses Cox-Reid profile-adjusted likelihood (CR) for dispersion estimation.
 
 edgeR takes in as an argument a table of integer counts, with rows corresponding to genes and columns to samples.
 
@@ -45,7 +45,7 @@ show(des)
 all(rownames(des) == colnames(dat))
 ```
 
-### GLM edgeR 
+### GLM edgeR
 
 GLM approach allows for comparison of multiple groups and/or factor levels. A design matrix can be created in the same way done for limma. Similarly, contrasts matrices can be used to make comparisons. Most of the glm functions have similar names to the classic version with an addition of 'glm'.
 
@@ -109,7 +109,7 @@ Redo the above analysis but first filter the data and remove any gene that has:
 
 
 
-## DESeq 
+## DESeq
 
 We will try the differential expression analysis of the same dataset using DESeq.
 
