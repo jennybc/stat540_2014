@@ -1,6 +1,7 @@
-% Seminar 7: RNA-Seq 101 - From BAM File To Count Data
-% Katayoon Kasaian
-% February 05, 2013
+Seminar 7 optional material: From BAM File To Count Data
+========================================================
+
+Contributors: Katayoon Kasaian
 
 ## Introduction
 
