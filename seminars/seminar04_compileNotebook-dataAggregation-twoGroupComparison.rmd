@@ -153,7 +153,7 @@ colnames(kMat)[apply(kMat, 1, which.min)]
 Computing row- and column-wise sums and means is such an important special case that there are purpose-built and fast functions for this that I recommend you use when relevant.
 
 ```{r}
-rowSums(kMat) #see also rowSums, colMeans, colSums
+rowSums(kMat) #see also rowMeans, colMeans, colSums
 all.equal(rowSums(kMat), apply(kMat, 1, sum))
 colMeans(kMat)
 all.equal(colMeans(kMat), apply(kMat, 2, mean))

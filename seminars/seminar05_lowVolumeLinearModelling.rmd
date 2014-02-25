@@ -12,14 +12,13 @@ We will start providing less code now, since you should be generating more yours
 
 You are also strongly encouraged to retain and develop your R code in a script.
 
-## Brief pause to load the `photoRec` data and the `lattice` package
-
-> As always, `ggplot2` implementations of the figures are welcome.
+## Brief pause to load the `photoRec` data and necessary packages
 
 > Remember you may need to edit the file paths below, to reflect your working directory and local file storage choices.
 
 ```{r}
 library(lattice) # if you don't already have this loaded ...
+library(ggplot2) # we'll make figures with both
 prDat <- read.table("../examples/photoRec/data/GSE4051_data.tsv")
 str(prDat, max.level = 0)
 prDes <- readRDS("../examples/photoRec/data/GSE4051_design.rds")
@@ -75,9 +74,24 @@ makeStripplot <- function(myData, ...) {
             auto.key = TRUE, type = c('p', 'a'), grid = TRUE, ...)
 }
 ```
+
+```{r, echo=FALSE}
+## here is a ggplot2 version supplied by Dean Attali
+# note the ggplot version does NOT accept the extra parameters
+# assumes that the dataframe has columns "devStage", "gExp", "gType"
+makeStripplotGg <- function(.data) {
+  p <- ggplot(.data, aes(x = devStage, y = gExp, color = gType, group = gType))
+  p <- p + geom_line(stat = "summary", fun.y = mean)
+  p <- p + geom_point(position = position_jitter(width = .2))
+  p <- p + facet_wrap(~ gene)  
+  print(p)
+  }
+```
 ```{r}
 makeStripplot(jDat)
 makeStripplot(jDat, pch = 17, cex = 3) # fugly, but proves I've got control!
+## use student-supplied function based on ggplot2
+makeStripplotGg(jDat)
 ```
 
 The ability to change plotting symbol and size is __purely optional__ and don't let that stress you out.
@@ -148,6 +162,13 @@ Let's check that this really is the observed difference in sample mean for the w
 with(sampMeans, gExp[devStage == "P2"] - gExp[devStage == "P10"])
 ```
 Yes! Agrees with the observed difference we computed by multiplying our contrast matrix and the estimated parameters. If you don't get agreement, you have a problem ... probably with your contrast matrix.
+
+
+```{r include = FALSE, eval = FALSE, echo = FALSE}
+## Here's `plyr` code for computing the sample means.
+library(plyr)
+ddply(subset(mDat, gType == 'wt'), ~ devStage, summarize, gExp = mean(gExp))
+```
 
 Now we need the (estimated) standard error for our contrast. The variance-covariance matrix of the parameters estimated in the original model can be obtained with `vcov()` and is equal to $(X^{T}X)^{-1}\hat{\sigma}^{2}$. 
 ```{r}
