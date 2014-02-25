@@ -158,7 +158,7 @@ Fri Feb 14: feedback to groups re: initial project proposals. Each group will be
 
 ### Week 8
 
-lecture 12 | Analysis of RNA-Seq data (PP), 1 of 2 | Mon Feb 24
+lecture 12 | Analysis of RNA-Seq data (PP), 1 of 2 | Mon Feb 24 | [slides as PDF](pvt/lect12_RNA-seq-1.pdf)
 
 lecture 13 | Analysis of RNA-Seq data (PP), 2 of 2 | Wed Feb 26
 
