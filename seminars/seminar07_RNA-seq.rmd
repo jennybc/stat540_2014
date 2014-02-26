@@ -38,8 +38,10 @@ edgeR takes in as an argument a table of integer counts, with rows corresponding
 > Remember you may need to edit the file paths below, to reflect your working directory and local file storage choices.
 
 ```{r}
-dat <- read.table("../examples/bottomly/data/bottomly_count_table.tsv", header=TRUE, row.names=1)
-des <- read.table("../examples/bottomly/data/bottomly_phenodata.tsv", header=TRUE, row.names=1)
+dat <- read.table("../examples/bottomly/data/bottomly_count_table.tsv",
+                  header = TRUE, row.names = 1)
+des <- read.table("../examples/bottomly/data/bottomly_phenodata.tsv",
+                  header = TRUE, row.names = 1)
 str(dat)
 show(des)
 all(rownames(des) == colnames(dat))
@@ -136,6 +138,7 @@ plotDispEsts(deSeqDat)
 
 Next, we will fit the model and examine the results
 ```{r}
+## this takes a minute or so for JB
 results <- nbinomTest(deSeqDat, levels(group)[1], levels(group)[2])
 str(results)
 plotMA(results)
