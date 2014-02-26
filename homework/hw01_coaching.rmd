@@ -1,6 +1,8 @@
 Homework 1 Coaching
 ========================================================
 
+[Homework #1](homework/hw01_quality-exploration-DE.html) assignment
+
 > all previous installments could be copied from Google group and pasted here ...
 
 ## Polish and submit

@@ -164,7 +164,7 @@ lecture 13 | Analysis of RNA-Seq data (PP), 2 of 2 | Wed Feb 26
 
 seminar 07 | RNA-Seq analysis (LL) | Wed Feb 26
 
-Thurs Feb 27: Homework #1 due 
+Thurs Feb 27: [Homework #1](homework/hw01_quality-exploration-DE.html) due. 
 
 ### Week 9
 
