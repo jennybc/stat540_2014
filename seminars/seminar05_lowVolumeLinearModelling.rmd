@@ -1,7 +1,7 @@
 Fitting and interpreting linear models (low volume)
 ======================================================================
 
-Contributors: Jenny Bryan
+Contributors: Jenny Bryan, Dean Attali
 
 ```{r include = FALSE}
 ## once I upgrade knitr, "no tidy" will be the default and I can delete this
@@ -61,6 +61,37 @@ To be more sure your function is working, see if your data.frame yields the same
 stripplot(gExp ~ devStage | gene, jDat,
           group = gType, jitter.data = TRUE,
           auto.key = TRUE, type = c('p', 'a'), grid = TRUE)
+```
+
+```{r include = FALSE, echo = FALSE, eval = FALSE}
+## an alternative function supplied by Dean Attali
+## https://gist.github.com/daattali/8857443#file-preparedata-r
+# output a data frame with only data from the input genes
+prepareData <- function(.genes) {
+  # step 1: transpose the data matrix
+  prDatT <- as.data.frame(t(prDat))
+  
+  # step 2: retain only the columns corresponding to genes we're interested in
+  colNumsKeep <- which(colnames(prDatT) %in% .genes)
+  prDatT <- prDatT[, colNumsKeep, drop = F]
+  
+  # step 3: add the sample id info to each row
+  prDatT$sidChar <- row.names(prDatT)
+  
+  # step 4: "melt" the dataframe from wide format to long format
+  # this will achieve having just two columns for every sample: gene, and expression
+  prDatT <- melt(prDatT,
+                 id.vars = c("sidChar"),
+                 measure.vars = .genes,
+                 variable.name = "gene",
+                 value.name = "gExp")
+  
+  # step 5: combine the gene/expression data with the metadata per sample
+  prDatT <- merge(prDes, prDatT)
+  
+  # done!
+  return(prDatT)
+}
 ```
 
 ## Write a function to stripplot a mini-dataset
