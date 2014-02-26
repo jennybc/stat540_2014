@@ -160,9 +160,9 @@ Fri Feb 14: feedback to groups re: initial project proposals. Each group will be
 
 lecture 12 | Analysis of RNA-Seq data (PP), 1 of 2 | Mon Feb 24 | [slides as PDF](pvt/lect12_RNA-seq-1.pdf)
 
-lecture 13 | Analysis of RNA-Seq data (PP), 2 of 2 | Wed Feb 26
+lecture 13 | Analysis of RNA-Seq data (PP), 2 of 2 | Wed Feb 26 | [slides as PDF](pvt/lect13_RNA-seq-2.pdf)
 
-seminar 07 | RNA-Seq analysis (LL) | Wed Feb 26
+seminar 07 | [RNA-Seq analysis](#seminar07) (SJ) | Wed Feb 26
 
 Thurs Feb 27: [Homework #1](homework/hw01_quality-exploration-DE.html) due. 
 
@@ -245,8 +245,9 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - [Fitting and interpretting linear models (low volume)](seminars/seminar05_lowVolumeLinearModelling.html)
   * seminar 06 Wed Feb 12 <a id="seminar06"></a>
     - [Fitting and interpretting linear models (high volume), limma package](seminars/seminar06_highVolumeLinearModelling.html)
-  * seminar 07 Wed Feb 26
-    - RNA-Seq data
+  * seminar 07 Wed Feb 26  RNA-Seq analysis <a id="seminar07"></a>
+    - *optional material* [Getting read counts](seminars/seminar07_RNA-seq-bam.html)
+    - [Using read counts for differential expression analysis](seminars/seminar07_RNA-seq.html)
   * seminar 08 Wed Mar 05
     - Methylation analysis
   * seminar 09 Wed Mar 12
