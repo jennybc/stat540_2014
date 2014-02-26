@@ -1,0 +1,51 @@
+Homework 1 Coaching
+========================================================
+
+> all previous installments could be copied from Google group and pasted here ...
+
+## Polish and submit
+
+At this point, you have technically completed this assignment. But here are some minor tweaks that can make a big difference in how awesome your product is.
+
+### Make it easy for people to access your work
+
+Reduce the friction for TAs and profs to get the hard-working source code (the R markdown) __and__ the front-facing report (HTML).
+
+  * Make sure all homework 1 work is contained in a homework 1 specific sub-directory of your private STAT 540 repository.
+  * Create a `README.md` in this subdirectory to serve as the landing page for your homework 1 submission. Whenever anyone visits the homework 1 subdirectory of your repo, this will be automatically rendered nicely! In particular, hyperlinks will work.
+  * With this `README.md` file, create annotated links to the documents TAs and profs will need to access.
+    - The most obvious document to link is your main R markdown document.
+    - You could also link to an HTML report on RPubs, but a GitHub-only solution is preferred. RPubs isn't really necessary once you've already got a hosted Git repository. Plus it's kinda nice to keep this private. See below.
+    - If you want to see an example of a `README.md` that links to and explains a bunch of files in the same repo + subdirectory, you can look at these examples from STAT 545A: [example 1](https://github.com/jennybc/STAT545A/tree/master/hw06_scaffolds/01_justR), [example 2](https://github.com/jennybc/STAT545A/tree/master/hw06_scaffolds/02_rAndMake), [example 3](https://github.com/jennybc/STAT545A/tree/master/hw06_scaffolds/03_knitWithoutRStudio).
+  * Make the nicely rendered report available via GitHub. There are two ways to do this and they are not mutually exclusive.
+    - I assume you've knit your R Markdown to HTML. If your source was called `foo.rmd` (which I hope it's not!), you've also got `foo.md` and `foo.html` sitting around as downstream products.
+    - Option 1: Commit the intermediate Markdown file and also any figure files, which by default will appear in a `figures/` sub-directory. Now, when a TA or prof visits the Markdown file on GitHub, the automagic rendering of Markdown into decent looking HTML will work for you!
+    - Option 2: Commit the final HTML report.
+    - Regardless, add a link to the Markdown or HTML version of your report to the annotated links you provide in your `README.md`.
+    - If you execute option 2, you will need to tweak the link to the HTML document. Navigate to the HTML file on GitHub. Click on "Raw" to get the raw version; the URL should look something like this: `https://raw.github.com/stat540-2014-bryan-jennifer-hw/hw01/stat540-2014-bryan-jennifer-hw01.html`. Copy that URL! Create a link to that in the usual Markdown way BUT prepend `http://htmlpreview.github.io/?` to the URL. So the URL in your link should look something like this: `http://htmlpreview.github.io/?https://raw.github.com/stat540-2014-bryan-jennifer-hw/hw01/stat540-2014-bryan-jennifer-hw01.html`. You can learn more about this preview facility [here](http://htmlpreview.github.io).
+
+### Make it easy for others to run your code
+
+  * In exactly one, very early R chunk, load any necessary packages, so your dependencies are obvious.
+  * In exactly one, very early R chunk, import anything coming from an external file. This will make it easy for someone to see which data files are required, edit to reflect their locals paths if necessary, etc. There are situations where you might not keep data in the repo itself.
+  * Pretend you are someone else. Clone a fresh copy of your own repo from GitHub, fire up a new RStudio session and try to knit your R markdown file. Does it "just work"? It should!
+  
+### Make pretty tables
+
+There are a few occasions where, instead of just printing an object with R, you could format the info in an attractive table. Some leads:
+
+  * Consider the `kable()` function from `knitr`. *via Rod Docking*
+  * [STAT 545A material on using custom CSS](http://www.stat.ubc.ca/~jenny/STAT545A/topic10_tablesCSS.html) also shows how to use the `xtable` package for making pretty HTML tables
+  
+### Improve your heatmap
+
+Use a non-obnoxious color scheme. Maybe even grayscale!
+
+Make really nice sample labels that convey covariate information.
+
+If the function you're using supports it, convey covarite information in the margins with color.
+
+### Improve your scatterplots
+
+If you didn't do it already, upgrade to a strategy that addresses overplotting.
+
