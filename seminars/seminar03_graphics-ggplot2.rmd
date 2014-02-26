@@ -1,7 +1,7 @@
 Introduction to R graphics - `ggplot2` version
 ======================================================================
 
-Contributors: Gloria Li
+Contributors: Gloria Li, Dean Attali (heatmap)
 
 ```{r include = FALSE}
 ## once I upgrade knitr, "no tidy" will be the default and I can delete this
@@ -140,7 +140,7 @@ str(nDat)
 Let's see what happens if we specify the color in geometries. 
 
 ```{r}
-(p <- ggplot(nDat, aes(crabHammer, geneExp)) + 
+(p <- ggplot(nDat, aes(crabHammer, geneExp)) +
    geom_point(color = probeset))
 ```
 
@@ -149,6 +149,9 @@ This is a common mistake beginners on `ggplot2` make, especially those who come 
 ```{r}
 (p <- ggplot(nDat, aes(crabHammer, geneExp, color = probeset)) + 
    geom_point())
+## or the next statement works too
+(p <- ggplot(nDat, aes(crabHammer, geneExp)) +
+   geom_point(aes(color = probeset)))
 ```
 
 Let's try adding a smoothing line now. 
@@ -382,6 +385,43 @@ Let's plot is with `stat_binhex`. This will take a little while.
 ```{r}
 (p <- plotmatrix(pairDat) + 
    stat_binhex())
+```
+
+## Heatmap
+
+> JB note: inserting code provided by student Dean Attali via [this Gist](https://gist.github.com/daattali/8609489)
+
+```{r}
+library(RColorBrewer)
+ 
+# set seed so that we have exactly reproducable results
+set.seed(1)
+ 
+# choose 50 probes out of the 30k to work with
+yo <- sample(1:nrow(prDat), size = 50)
+hDat <- prDat[yo, ]
+colnames(hDat) <- with(prDes, paste(devStage, gType, sidChar, sep = "_"))
+ 
+# transform the data to tall format
+prDatTall <- data.frame(sample = rep(colnames(hDat), each = nrow(hDat)),
+                        probe = rownames(hDat),
+                        expression = unlist(hDat))
+ 
+# create a blue -> purple palette
+jBuPuFun <- colorRampPalette(brewer.pal(n = 9, "BuPu"))
+paletteSize <- 256
+jBuPuPalette <- jBuPuFun(paletteSize)
+ 
+# heatmap!
+ggplot(prDatTall, aes(x = probe, y = sample, fill = expression)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
+  geom_tile() +
+  scale_fill_gradient2(low = jBuPuPalette[1],
+                       mid = jBuPuPalette[paletteSize/2],
+                       high = jBuPuPalette[paletteSize],
+                       midpoint = (max(prDatTall$expression) +
+                                     min(prDatTall$expression)) / 2,
+                       name = "Expression")
 ```
 
 ## Take-home problem

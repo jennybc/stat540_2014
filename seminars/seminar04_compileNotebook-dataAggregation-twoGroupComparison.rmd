@@ -39,12 +39,14 @@ For richer reports, you will eventually want to write in R markdown or LaTeX, in
 
 I encourage you to start experimenting with keeping code in a script and generating R-based reports programmatically in today's seminar.
 
-## Load the `photoRec` data and the `lattice` package
+## Load the `photoRec` data and some packages
 
 > Remember you may need to edit the file paths below, to reflect your working directory and local file storage choices.
 
 ```{r}
 library(lattice)
+library(ggplot2)
+library(plyr)
 prDat <- read.table("../examples/photoRec/data/GSE4051_data.tsv")
 str(prDat, max.level = 0)
 prDes <- readRDS("../examples/photoRec/data/GSE4051_design.rds")
@@ -67,10 +69,22 @@ Always explore the data before plunging into analysis! What are the sample means
 aggregate(gExp ~ gType, pDat, FUN = mean)
 ```
 
-Let's make a stripplot so we can sanity test our $t$ test result.
+Doing the same with a `plyr` function:
+
+```{r}
+ddply(pDat, ~ gType, summarize, gExp = mean(gExp))
+```
+
+Let's make a stripplot so we can sanity test our $t$ test result. Using `lattice`:
 
 ```{r}
 stripplot(gType ~ gExp, pDat)
+```
+
+And again with `ggplot2`:
+
+```{r}
+ggplot(pDat, aes(x = gExp, y = gType)) + geom_point()
 ```
 
 We will do a two-sample $t$ test comparing wild type to the Nrl knockouts.
@@ -139,7 +153,7 @@ colnames(kMat)[apply(kMat, 1, which.min)]
 Computing row- and column-wise sums and means is such an important special case that there are purpose-built and fast functions for this that I recommend you use when relevant.
 
 ```{r}
-rowSums(kMat) #see also rowSums, colMeans, colSums
+rowSums(kMat) #see also rowMeans, colMeans, colSums
 all.equal(rowSums(kMat), apply(kMat, 1, sum))
 colMeans(kMat)
 all.equal(colMeans(kMat), apply(kMat, 2, mean))
@@ -186,6 +200,16 @@ We are not limited to computing a single value for each group. Although it's sil
 aggregate(eggBomb ~ gType * devStage, kDat, FUN = range)
 ```
 
+Revisiting those tasks with `plyr`:
+
+```{r}
+ddply(kDat, ~ devStage, summarize, avg = mean(eggBomb))
+ddply(kDat, ~ gType * devStage, summarize, avg = mean(eggBomb))
+ddply(kDat, ~ gType * devStage, summarize,
+      min = min(eggBomb), max = max(eggBomb))
+```
+Note that `aggregate()` and `plyr` functions seem to differ in their convention about which categorical variable gets incremented first or fastest.
+
 ## Two sample tests -- a handful of genes
 
 Let's grab the data from 6 genes. I've picked them for you: 3 are interesting ('hits'), 3 are not. I also reshape the data to be tall and skinny, which is generally a good policy and allows us to keep learning more about data aggregation.
@@ -211,7 +235,7 @@ miniDat <- suppressWarnings(data.frame(prDes, miniDat))
 str(miniDat)
 ```
 
-Let's plot to make sure we have successfully gotten 3 clear 'hits' and 3 clear boring genes, as promised.
+Let's plot to make sure we have successfully gotten 3 clear 'hits' and 3 clear boring genes, as promised. First with `lattice`:
 
 ```{r}
 stripplot(gType ~ gExp | gene, miniDat,
@@ -219,6 +243,15 @@ stripplot(gType ~ gExp | gene, miniDat,
           group = gType, auto.key = TRUE)
 ```
 Smells "right": bottom row consists of 3 'hits', top row holds the boring genes.
+
+Making same plot with `ggplot2`:
+
+```{r}
+ggplot(miniDat, aes(x = gExp, y = gType, color = gType)) +
+  facet_wrap(~ gene, scales="free_x") +
+  geom_point(alpha = 0.7) +
+  theme(panel.grid.major.x = element_blank())
+```
 
 Let's use data aggregation techniques to conduct some two group comparisons for each of these 6 genes. Recall the syntax of the two-sample t-test for one gene:
 

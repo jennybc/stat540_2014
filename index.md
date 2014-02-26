@@ -78,7 +78,7 @@ Officially none BUT here in reality ...
 
 ### Evaluation
 
-* Homework. Two assignments worth 25 points each. Homework #1 will be assigned in early February and will be due in late February. Homework #2 will be assigned in early March and will be due in late March. *New for 2014: we may suggest/require that incremental progress be submitted along the way.*
+* Homework. Two assignments worth 25 points each. [Homework #1](homework/hw01_quality-exploration-DE.html) was assigned in early February and is due Thurs Feb 27. Homework #2 will be assigned in early March and will be due in late March.
 
 * [Group project](project/index.html). Groups formed and projects conceived during January/February. Primary deliverable is a poster, presented in last class meeting. Each student also produces a short report. 40 points. More more information, [go here](project/index.html).
 
@@ -138,7 +138,7 @@ lecture 10 | Large scale inference: Empirical Bayes, limma (JB) | Wed Feb 05  | 
 
 seminar 05 | [Fitting and interpretting linear models (low volume)](#seminar05) (SJ) | Wed Feb 05
 
-Fri Feb 07: [Homework #1 assignment](homework/hw01_quality-exploration-DE.html) is posted. Due Tues Feb 25.
+Fri Feb 07: [Homework #1 assignment](homework/hw01_quality-exploration-DE.html) is posted. Due Thurs Feb 27.
 
 ### Week 6
 
@@ -158,19 +158,19 @@ Fri Feb 14: feedback to groups re: initial project proposals. Each group will be
 
 ### Week 8
 
-lecture 12 | Analysis of RNA-Seq data (PP), 1 of 2 | Mon Feb 24
+lecture 12 | Analysis of RNA-Seq data (PP), 1 of 2 | Mon Feb 24 | [slides as PDF](pvt/lect12_RNA-seq-1.pdf)
 
-Tues Feb 25: Homework #1 due 
+lecture 13 | Analysis of RNA-Seq data (PP), 2 of 2 | Wed Feb 26 | [slides as PDF](pvt/lect13_RNA-seq-2.pdf)
 
-lecture 13 | Analysis of RNA-Seq data (PP), 2 of 2 | Wed Feb 26
+seminar 07 | [RNA-Seq analysis](#seminar07) (SJ) | Wed Feb 26
 
-seminar 07 | RNA-Seq analysis (LL) | Wed Feb 26
-
-Fri Feb 28: final project proposals due.
+Thurs Feb 27: [Homework #1](homework/hw01_quality-exploration-DE.html) due. 
 
 ### Week 9
 
-lecture 14 | Analysis of epigenetic data, focus on methylation (PP or designate) | Mon Mar 03
+lecture 14 | Analysis of epigenetic data, focus on methylation (Elodie Portales-Casamar) | Mon Mar 03
+ 
+Wed Mar 05: final project proposals due. 
  
 lecture 15 | Principal component analysis (PP) | Wed Mar 05
 
@@ -245,8 +245,9 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - [Fitting and interpretting linear models (low volume)](seminars/seminar05_lowVolumeLinearModelling.html)
   * seminar 06 Wed Feb 12 <a id="seminar06"></a>
     - [Fitting and interpretting linear models (high volume), limma package](seminars/seminar06_highVolumeLinearModelling.html)
-  * seminar 07 Wed Feb 26
-    - RNA-Seq data
+  * seminar 07 Wed Feb 26  RNA-Seq analysis <a id="seminar07"></a>
+    - *optional material* [Getting read counts](seminars/seminar07_RNA-seq-bam.html)
+    - [Using read counts for differential expression analysis](seminars/seminar07_RNA-seq.html)
   * seminar 08 Wed Mar 05
     - Methylation analysis
   * seminar 09 Wed Mar 12

@@ -59,9 +59,9 @@ Fri Jan 24 | Report project group membership.
 
 Fri Jan 31 | Initial project proposals due = a paragraph.
 
-Fri Feb 14 | Feedback to groups re: initial project proposals. Each group will be assigned an instructor or TA + instructor pair for extra support.
+Fri Feb 14 | Feedback to groups re: initial project proposals. Each group will be assigned an instructor or TA + instructor pair for extra support. This is available [here](../pvt/ProjectGroups.html) (*note: you will be prompted for the usual username and password*).
 
-Fri Feb 28 | Final project proposals due = a page.
+Wed Mar 05 | Final project proposals due = a page.
 
 Wed Mar 26 and Wed Apr 02 | No formal computing seminar. Use time to work with your group, get help from TAs or instructors.
 

@@ -16,7 +16,29 @@ Each student must submit their own work: no group efforts. It's fine to talk to 
 
 ## How to submit the work
 
-*to be written ... write it in R markdown, compile to markdown and HTML, put all that in private repo on Github, share links with TA*
++ Follow the instructions [from week 1](http://www.ugrad.stat.ubc.ca/~stat540/seminars/seminar90_getting-started.html) re: creating your private GitHub repository and making JB, SJ, and GL collaborators.
++ Write your homework in R Markdown (.rmd)
++ Compile your homework to markdown (.md) and HTML (.html)
++ Read and follow the [Polish and submit][polish] instructions
++ Add the R Markdown, Markdown and HTML to your private GitHub
+  repository named **stat540-2014-*lastname*-*firstname*-hw**
++ Do not add the data files GSE7191-data.txt and GSE7191-design.txt
++ Open your private repositry on GitHub in a web browser
++ On the web page just above the files, look for the text "latest
+  commit" followed by ten numbers and letters (called the revision SHA) and a clipboard icon
++ Click on the clipboard icon to copy the revision SHA to your clipboard
++ Create an issue in your private repository (click "Issues" and "New Issue") on GitHub named
+  "Mark homework 1 of *firstname* *lastname*"
++ In the description of the issue, tag both TAs (@gloriali and @sjackman) and paste the revision SHA
++ Click "Submit new issue"
++ You're done! Congratulations!
+
+[polish]: http://www.ugrad.stat.ubc.ca/~stat540/homework/hw01_coaching.html#polish-and-submit
+
+If you're concerned that something hasn't gone right with the
+submission, send Gloria glorialuolanli@gmail.com and Shaun
+sjackman@gmail.com an e-mail with your assignment attached.
+**Note**: this is plan B. Please submit your homework using GitHub.
 
 
 
@@ -51,7 +73,7 @@ Load the data. Smell test it. Fiddle with factor levels and do any other light c
 
 #### Q1b: What is the breakdown of samples for Genotype, BrainRegion, Sex, and DateRun?
 
-For starters, cross-tabulate Genotype and BrainRegion. Then do some cross-tabulation involving DateRun and, optionally, Sex to investigate if these "nuisance" factors are confounded with the experimental factors. Make sure you've included counts for all 4 individual factors somewhere, even if it's just in the margins of a cross-tabulation. How do you feel about the experimental design? Hint: `table()` and `addmargins()` will help.
+For starters, cross-tabulate Genotype and BrainRegion. Then do some cross tabulation involving DateRun and, optionally, Sex to investigate if these "nuisance" factors are confounded with the experimental factors. Make sure you've included counts for all 4 individual factors somewhere, even if it's just in the margins of a cross-tabulation. How do you feel about the experimental design? Hint: `table()` and `addmargins()` will help.
 
 
 
@@ -102,7 +124,7 @@ Here are the 2 plots:
   * The data as provided
   * The data after you apply quantile normalization.
 
-Hint: `normalize.quantiles()` in the Bioconductor package `preprocessCore` is helpful. So is `boxplot()`.
+Hint: `normalize.quantiles()` in the Bioconductor package `preprocessCore` is helpful. So are `graphics::boxplot()`, `lattice::bwplot()` and `ggplot2::geom_boxplot()`.
 
 
 
@@ -154,7 +176,7 @@ Display the expression data for the top 50 probes in a heat map. Order the probe
 
 #### Q4c: Count your hits.
 
-How many probes have unadjusted p-value < 10e-4? If we took the top 50 probes as our "hits", what is the (estimated) false discovery rate? How many of these hits do we expect to be false discoveries?
+How many probes have unadjusted p-value < 1e-3? If we took the top 50 probes as our "hits", what is the (estimated) false discovery rate? How many of these hits do we expect to be false discoveries?
 
 
 
@@ -169,7 +191,7 @@ What are the p-values associated with these probes? Comment on the plots.
 
 
 
-#### Q4e: Find probes where the expression in the S1P3 knockout is the same as that of the wild type.
+#### Q4e: Find probes where the expression in the S1P3 knockout is different from that of wild type.
 
 How many hits do you find if you control FDR at 0.10?
 
@@ -182,7 +204,7 @@ You should be using data with the worst outlier removed, after quantile normaliz
 
 #### Q5a: Fit a 3x2 full factorial model.
 
-Test for any effect of Genotype and/or BrainRegion, i.e. test your model against a model with just an intercept. How many probes have a BH-adjusted p-value, a.k.a. q-value, less than 10e-4?
+Test for any effect of Genotype and/or BrainRegion, i.e. test your model against a model with just an intercept. How many probes have a BH-adjusted p-value, a.k.a. q-value, less than 1e-3?
 
 
 
