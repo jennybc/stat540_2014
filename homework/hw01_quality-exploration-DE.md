@@ -14,6 +14,16 @@ The assignment has 25 points and represents 25% of your overall course mark. Ove
 
 Each student must submit their own work: no group efforts. It's fine to talk to fellow students and have discussion on the Google Group. If someone is really helpful, give them some credit. You have definitely crossed the line if there's any copying and pasting of code or wording. 
 
+## Late policy
+
+Late submission will cost 10% (2.5 points) per day or fraction thereof
+for five days, after which zero marks will be awarded.
+
+If you expect that you will be late on a deadline (in this course, and
+in life), contact us before missing the deadline, and submit whatever
+partial work you have. Letting a deadline fly past with no
+communication is neither conscientious nor polite.
+
 ## How to submit the work
 
 + Follow the instructions [from week 1](http://www.ugrad.stat.ubc.ca/~stat540/seminars/seminar90_getting-started.html) re: creating your private GitHub repository and making JB, SJ, and GL collaborators.
