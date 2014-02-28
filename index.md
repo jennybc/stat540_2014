@@ -168,7 +168,7 @@ Thurs Feb 27: [Homework #1](homework/hw01_quality-exploration-DE.html) due.
 
 ### Week 9
 
-lecture 14 | Analysis of epigenetic data, focus on methylation (Elodie Portales-Casamar) | Mon Mar 03
+lecture 14 | Analysis of epigenetic data, focus on methylation (Elodie Portales-Casamar) | Mon Mar 03 | [slides as PDF](pvt/lect14_methylation.pdf)
  
 Wed Mar 05: final project proposals due. 
  
