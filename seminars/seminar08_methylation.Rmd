@@ -97,12 +97,11 @@ plotNorm$Norm <- factor(plotNorm$Norm, levels = c("Before", "After"))
 ```
 
 ## M values
-As you can see, after normalization, beta values from different experiment have more similar distributions. However, this distribution is sort of a binary distribution between 0 and 1. This type of distribution does not perform well under linear regression models. A common solution is to apply a logit transformation on the data to convert it to a continuous variable that span $(-\infty, \infty)$, i.e. compute the M value. `logit` function in `gtools` package provides a simple way for this conversion. 
+As you can see, after normalization, beta values from different experiment have more similar distributions. However, this distribution is sort of a binary distribution between 0 and 1. This type of distribution does not perform well under linear regression models. A common solution is to apply a logit transformation on the data to convert it to a continuous variable that span $(-\infty, \infty)$, i.e. compute the M value. `beta2m` function in `wateRmelon` package provides a simple way for this conversion. 
 $$M = log({Beta\over 1-Beta})$$
 
 ```{r Beta2M}
-library(gtools)
-M.norm <- logit(beta.norm)
+M.norm <- beta2m(beta.norm)
 ```
 
 ## CpG Islands
@@ -154,14 +153,14 @@ str(design)
 (DesMat <- model.matrix(~Group, design))
 DMRfit <- lmFit(M.CGI, DesMat)
 DMRfitEb <- eBayes(DMRfit)
-cutoff <- 1e-2
+cutoff <- 0.01
 DMR <- topTable(DMRfitEb, coef = 'GroupALL', number = Inf, p.value = cutoff)
 head(DMR)   # top hits 
 ```
 
-So using a cutoff of BH adjusted p-value equals 0.01, we identified `r nrow(DMR)` CGIs that are differentially methylated between ALL and control group. Now we can make some plots to check these hits. 
+So using a cutoff of FDR = 0.01, we identified `r nrow(DMR)` CGIs that are differentially methylated between ALL and control group. Now we can make some plots to check these hits. 
 
-```{r plotHits, message=F}
+```{r plotHits, message=F, warning=F}
 # heatmap of beta values of top 100 hits 
 library(gplots)
 DMR100 <- topTable(DMRfitEb, coef = 'GroupALL', number = 100)
@@ -180,6 +179,7 @@ beta.DMR5probe.tall$Group <- factor(gsub("_[0-9]+", "", beta.DMR5probe.tall$Samp
 beta.DMR5probe.tall$CGI <- factor(cginame[as.character(beta.DMR5probe.tall$Probe_ID),]$cginame)
 (beta.DMR5.stripplot <- ggplot(data = beta.DMR5probe.tall, aes(x = Group, y = M, color = Group)) + 
    geom_point(position = position_jitter(width = 0.05), na.rm = T) + 
+   stat_summary(fun.y = mean, aes(group = 1), geom = "line", color = "black") + 
    facet_grid(. ~ CGI) + 
    ggtitle("Probe beta values within top 5 DM CGIs") + 
    xlab("Group") + 
