@@ -172,7 +172,7 @@ lecture 14 | Analysis of epigenetic data, focus on methylation (Elodie Portales-
  
 Wed Mar 05: final project proposals due. 
  
-lecture 15 | Principal component analysis (PP) | Wed Mar 05
+lecture 15 | Principal component analysis (PP) | Wed Mar 05 | [slides as PDF](pvt/lect15_PCA.pdf)
 
 seminar 08 | Methylation analysis (LL) | Wed Mar 05
 
