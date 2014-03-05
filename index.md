@@ -250,6 +250,7 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - [Using read counts for differential expression analysis](seminars/seminar07_RNA-seq.html)
   * seminar 08 Wed Mar 05 Methylation analysis <a id="seminar08"></a>
     - [Methylation analysis](seminars/seminar08_methylation.html)
+    - *NOTE:* As of 10:30am Wed Mar 05, seminar is not compiling completely with automated course website workflow. Troubleshooting ongoing. Just in case, here's a link to source: <https://github.com/jennybc/stat540_2014/blob/master/seminars/seminar08_methylation.Rmd>
   * seminar 09 Wed Mar 12
     - Clustering and PCA
   * seminar 10 Wed Mar 19
