@@ -78,7 +78,7 @@ Officially none BUT here in reality ...
 
 ### Evaluation
 
-* Homework. Two assignments worth 25 points each. [Homework #1](homework/hw01_quality-exploration-DE.html) was assigned in early February and is due Thurs Feb 27. Homework #2 will be assigned in early March and will be due in late March.
+* Homework. Two assignments worth 25 points each. [Homework #1](homework/hw01/hw01_quality-exploration-DE.html) was assigned in early February and is due Thurs Feb 27. Homework #2 will be assigned in early March and will be due in late March.
 
 * [Group project](project/index.html). Groups formed and projects conceived during January/February. Primary deliverable is a poster, presented in last class meeting. Each student also produces a short report. 40 points. More more information, [go here](project/index.html).
 
@@ -138,7 +138,7 @@ lecture 10 | Large scale inference: Empirical Bayes, limma (JB) | Wed Feb 05  | 
 
 seminar 05 | [Fitting and interpretting linear models (low volume)](#seminar05) (SJ) | Wed Feb 05
 
-Fri Feb 07: [Homework #1 assignment](homework/hw01_quality-exploration-DE.html) is posted. Due Thurs Feb 27.
+Fri Feb 07: [Homework #1 assignment](homework/hw01/hw01_quality-exploration-DE.html) is posted. Due Thurs Feb 27.
 
 ### Week 6
 
@@ -164,7 +164,7 @@ lecture 13 | Analysis of RNA-Seq data (PP), 2 of 2 | Wed Feb 26 | [slides as PDF
 
 seminar 07 | [RNA-Seq analysis](#seminar07) (SJ) | Wed Feb 26
 
-Thurs Feb 27: [Homework #1](homework/hw01_quality-exploration-DE.html) due. 
+Thurs Feb 27: [Homework #1](homework/hw01/hw01_quality-exploration-DE.html) due. 
 
 ### Week 9
 
