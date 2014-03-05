@@ -174,7 +174,7 @@ Wed Mar 05: final project proposals due.
  
 lecture 15 | Principal component analysis (PP) | Wed Mar 05 | [slides as PDF](pvt/lect15_PCA.pdf)
 
-seminar 08 | Methylation analysis (LL) | Wed Mar 05
+seminar 08 | [Methylation analysis](#seminar08) (LL) | Wed Mar 05
 
 Fri Mar 07: Homework #2 assigned 
 
@@ -248,8 +248,8 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
   * seminar 07 Wed Feb 26  RNA-Seq analysis <a id="seminar07"></a>
     - *optional material* [Getting read counts](seminars/seminar07_RNA-seq-bam.html)
     - [Using read counts for differential expression analysis](seminars/seminar07_RNA-seq.html)
-  * seminar 08 Wed Mar 05
-    - Methylation analysis
+  * seminar 08 Wed Mar 05 Methylation analysis <a id="seminar08"></a>
+    - [Methylation analysis](seminars/seminar08_methylation.html)
   * seminar 09 Wed Mar 12
     - Clustering and PCA
   * seminar 10 Wed Mar 19
