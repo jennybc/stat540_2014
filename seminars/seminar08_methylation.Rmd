@@ -3,7 +3,7 @@ DNA methylation analysis with Illumina's Infinium HumanMethylation450K array
 
 Contributors: Gloria Li
 
-> This seminar is inspired by a STAT 540 project in 2013: *Analysis of Gene Expression Omnibus Leukaemia Data from the Illumina HumanMethylation450 Array* by Alice Zhu, Rachel Edgar, Shaun Jackman and Nick Fishbane.    
+> This seminar is inspired by a STAT 540 project in 2013: *Analysis of Gene Expression Omnibus Leukaemia Data from the Illumina HumanMethylation450 Array* by Alice Zhu, Rachel Edgar, Shaun Jackman and Nick Fishbane. See their project website [here](https://sites.google.com/site/stat540diffmethleuk/).   
 
 The Illumina HumanMethylation450 Array is a microarray based high throughput platform for methylation profiling on 450,000 pre-selected probes for CpGs across the human genome. A great number of datasets have been made publicly available through Gene Expression Omnibus (GEO). Each dataset in GEO has a unique GSE ID that we can use to retrieve it from GEO. There are several Bioconductor packages that are very useful for obtaining data from GEO and microarray analysis. If you haven't done so yet, install and load these packages.   
 
@@ -24,16 +24,16 @@ In this seminar, we are going to perform differential methylation analysis for A
 
 First, let's retrieve our datasets from GEO with `getGEO` from `GEOquery` package. Warning: this may take several minutes!   
 
-```{r fetchGEO, message = F}
-system.time(GSE39141 <- getGEO('GSE39141'))
+```{r fetchGEO, message = F, eval = F}
+GSE39141 <- getGEO('GSE39141')
 show(GSE39141) ## 33 samples (29 ALL and 4 healthy B cells)
-system.time(GSE42865 <- getGEO('GSE42865')) # took ~2 mins for JB
+GSE42865 <- getGEO('GSE42865') # took ~2 mins for JB
 show(GSE42865) ## 16 samples (9 healthy cells B cells and 7 other cells)
 ```
 
 As you can see, the datasets we got are large lists including Beta values as well as metadata. We can extract this information separately. Then we can isolate a subset of GSE42865 containing only the healthy cells.    
 
-```{r extract}
+```{r extract, eval = F}
 # Extract expression matrices (turn into data frames at once) 
 ALL.dat <- as.data.frame(exprs(GSE39141[[1]]))
 CTRL.dat <- as.data.frame(exprs(GSE42865[[1]]))
@@ -57,10 +57,15 @@ names(ALL.dat) <- paste(ALL.meta$Group,
 names(CTRL.dat) <- paste('HBC', gsub("GSM", "", names(CTRL.dat)), sep = '_')
 ```
 
+To avoid re-downloading the data every time, let's save the data and metadata as an Rdata file. 
+```{r, eval = F}
+save(ALL.dat, CTRL.dat, ALL.meta, CTRL.meta, file = "../examples/methylation/methyl_ALL.Rdata")
+```
+
 Now, we can do some exploratory analysis of the data, for examples, looking at distribution of Beta values in each sample or each probe. Here is a density plot of average Beta values for probes in the two datasets. See if you get similar results. 
 > Hint: you can use `rowMeans` function to calculate the average Beta value for each probe. Don't forget to use `na.rm = T` to exclude NAs. 
 
-```{r exploratory, echo = F}
+```{r exploratory, echo = F, eval = F}
 # density plot
 library(ggplot2)
 dat.probeMeans <- c(rowMeans(ALL.dat, na.rm = T), rowMeans(CTRL.dat, na.rm = T)) 
@@ -68,20 +73,18 @@ plotDat <- data.frame(Beta = dat.probeMeans,
                       Dataset = rep(c('ALL', 'CTRL'), each = nrow(ALL.dat)))
 (probeAvg <- ggplot(data = plotDat, aes(x = Beta, col = Dataset)) +
    geom_density() + 
-   ggtitle("Density of Beta values for 2 arrays") + 
+   ggtitle("Average Beta value density of two experiments") + 
    xlab("Beta") + 
    ylab("Density") + 
    theme_bw()
 )
-## TO DO: better title
-## these are average beta values, right?
-## is it for 2 arrays or for two conditions or experiments or ???
 ```
+![density](figure/exploratory.png)        
 
 ## Normalization
 You can see the distribution of Beta values are not the same between different experiments. That is why it is important to normalize the data before proceed. The Bioconductor package `wateRmelon` offers 15 methods for 450K methylation array normalization. If you are interested in comparing these methods, check out [this paper](http://www.biomedcentral.com/1471-2164/14/293). For the sake of convenience, we will just use the simplest method, `betaqn`, which performs quantile normalization on the beta values.        
 
-```{r normalization}
+```{r normalization, eval = F}
 # combine data from two experiments into one matrix, each column represents beta
 # values of one sample
 beta.matrix <- as.matrix(cbind(ALL.dat, CTRL.dat))
@@ -90,11 +93,9 @@ str(beta.matrix, max.level = 0)
 # quantile normalization
 system.time(beta.norm <- betaqn(beta.matrix))
 ```
-```{r postNorm, echo = F}
-## TO DO: I don't like this hard-wiring of column numbers. There has to be a
-## better, more programmatic way to do this.
-dat.probeMeans <- c(rowMeans(beta.norm[,1:33], na.rm = TRUE),
-                    rowMeans(beta.norm[,34:42], na.rm = TRUE)) 
+```{r postNorm, echo = F, eval = F}
+dat.probeMeans <- c(rowMeans(beta.norm[, 1:ncol(ALL.dat)], na.rm = TRUE),
+                    rowMeans(beta.norm[, ncol(ALL.dat):ncol(beta.norm)], na.rm = TRUE)) 
 plotNorm <-
   rbind(data.frame(plotDat, Norm = "Before"),
         data.frame(Beta = dat.probeMeans,
@@ -110,19 +111,20 @@ plotNorm$Norm <- factor(plotNorm$Norm, levels = c("Before", "After"))
    theme_bw()
 )
 ```
+![postNorm](figure/postNorm.png)
 
 ## M values
 As you can see, after normalization, beta values from the different experiments have more similar distributions. However, this distribution is on the interval [0, 1], with two modes near the two extremes. This type of distribution is not very compatible with the typical assumptions of linear models. A common solution is to apply a logit transformation on the data to convert it to a continuous variable that spans $(-\infty, \infty)$, i.e. compute the M value. The `beta2m()` function in the `wateRmelon` package does this conversion. 
 $$M = log({Beta\over 1-Beta})$$
 
-```{r Beta2M}
+```{r Beta2M, eval = F}
 M.norm <- beta2m(beta.norm)
 ```
 
 ## CpG Islands
 Now we can go ahead with differential methylation analysis -- cases vs. controls or leukemia vs. healthy. You can perform this analysis on each probe, but in this seminar, we will aggregate the probes into CpG Islands (CGIs), i.e. the CpG dense regions of the genome, and then detect differentially methylated CGIs. The biological function of CGIs is better studied, so the interpretation of our results will be easier if we focus on CGIs. Conveniently, the Bioconductor package `IlluminaHumanMethylation450k.db` provides all sorts of annotation information for the 450K methylation array including the association of probes to CGIs. We will extract this information and use the mean of M values for all probes in a specific CGI to represent its methylation level. Check if you get the same boxplot for CGI M values.    
 
-```{r aggregate}
+```{r aggregate, eval = F}
 # Extracting probe ID to CpG islands association
 cginame <- as.data.frame(IlluminaHumanMethylation450kCPGINAME)
 names(cginame) <- c('Probe_ID', 'cginame')
@@ -143,8 +145,10 @@ M.CGI <- aggregate(M.inCGI, by = list(cginame$cginame), mean, na.rm = T)
 rownames(M.CGI) <- M.CGI[, "Group.1"]
 M.CGI <- subset(M.CGI, select = - Group.1)
 str(M.CGI, max.level = 0)
+save(beta.CGI, M.CGI, cginame, file = "../examples/methylation/methyl_CGI.Rdata")
 ```
 ```{r M.CGI.boxplot, echo=F, warning=F}
+load("../examples/methylation/methyl_CGI.Rdata")
 # check the distribution of CGI M values with boxplot
 library(reshape2)
 M.CGI.tall <- melt(t(M.CGI), value.name = 'M', varnames = c('Sample', 'CGI'))
@@ -177,26 +181,29 @@ head(DMR)   # top hits
 
 So using a cutoff of FDR = `r cutoff`, we identified `r nrow(DMR)` CGIs that are differentially methylated between ALL and control group. Now we can make some plots to check these hits. 
 
-```{r plotHits, message=F, warning=F}
-# heatmap of beta values of top 100 hits 
+First, heatmap of beta values of top 100 hits.    
+
+```{r heatmap, message=F, warning=F} 
 library(gplots)
 DMR100 <- topTable(DMRfitEb, coef = 'GroupALL', number = 100)
 DMR.CGI <- t(as.matrix(subset(beta.CGI,
                               rownames(beta.CGI) %in% rownames(DMR100))))
 str(DMR.CGI, max.level = 0)
-## TO DO: replace these hard-wired values for `times` below
-col <- c(rep("darkgoldenrod1", times = 29), rep("forestgreen", times = 13))
-## TO DO: we should be saving old pars and then restoring later
-par(mai = rep(0.5, 4))
+col <- c(rep("darkgoldenrod1", times = nrow(DMR.CGI))) 
+col[grepl("HBC", rownames(DMR.CGI))] <- "forestgreen"
+op <- par(mai = rep(0.5, 4))
 heatmap.2(DMR.CGI, col = redblue(256), RowSideColors = col,
           density.info = "none", trace = "none", Rowv = TRUE, Colv = TRUE,
           labCol = FALSE, labRow = FALSE, dendrogram="row",
-          margins = c(1, 5), keysize = 1)
-## JB gets Error in plot.new() : figure margins too large
+          margins = c(1, 5))
 legend("topright", c("ALL", "HBC"),
        col = c("darkgoldenrod1", "forestgreen"), pch = 15)
+par(op)
+```
 
-# stripplot of beta values of probes within top 5 CGI hits
+Next, stripplot of beta values of probes within top 5 CGI hits.   
+
+```{r stripplot, warning=F, message=F, eval=F}
 DMR5 <- topTable(DMRfitEb, coef = 'GroupALL', number = 5)
 beta.DMR5probe <-
   beta.inCGI[cginame[rownames(beta.inCGI),]$cginame %in% rownames(DMR5),]
@@ -215,8 +222,12 @@ beta.DMR5probe.tall$CGI <-
    xlab("Group") + 
    ylab("beta") + 
    theme_bw())
+```
+![stripplot](figure/plotHits2.png)
 
-# plot location of differential methylated probes along each chromosome
+Finally, plot location of differential methylated probes along each chromosome.   
+
+```{r coord, warning=F, message=F}
 # get the length of chromosome 1-22 and X
 chrlen <-
   unlist(as.list(IlluminaHumanMethylation450kCHRLENGTHS)[c(as.character(1:22),
