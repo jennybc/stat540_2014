@@ -62,7 +62,7 @@ To avoid re-downloading the data every time, let's save the data and metadata as
 save(ALL.dat, CTRL.dat, ALL.meta, CTRL.meta, file = "../examples/methylation/methyl_ALL.Rdata")
 ```
 
-Now, we can do some exploratory analysis of the data, for examples, looking at distribution of Beta values in each sample or each probe. Here is a density plot of average Beta values for probes in the two datasets. See if you get similar results. 
+Now, we can do some exploratory analysis of the data, for examples, looking at distribution of Beta values in each sample or each probe. Here is a density plot of average Beta values for probes in the two datasets. See if you get similar results.  
 > Hint: you can use `rowMeans` function to calculate the average Beta value for each probe. Don't forget to use `na.rm = T` to exclude NAs. 
 
 ```{r exploratory, echo = F, eval = F}
@@ -95,7 +95,7 @@ system.time(beta.norm <- betaqn(beta.matrix))
 ```
 ```{r postNorm, echo = F, eval = F}
 dat.probeMeans <- c(rowMeans(beta.norm[, 1:ncol(ALL.dat)], na.rm = TRUE),
-                    rowMeans(beta.norm[, ncol(ALL.dat):ncol(beta.norm)], na.rm = TRUE)) 
+                    rowMeans(beta.norm[, (ncol(ALL.dat)+1):ncol(beta.norm)], na.rm = TRUE)) 
 plotNorm <-
   rbind(data.frame(plotDat, Norm = "Before"),
         data.frame(Beta = dat.probeMeans,
