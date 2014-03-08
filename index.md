@@ -78,7 +78,7 @@ Officially none BUT here in reality ...
 
 ### Evaluation
 
-* Homework. Two assignments worth 25 points each. [Homework #1](homework/hw01/hw01_quality-exploration-DE.html) was assigned in early February and is due Thurs Feb 27. Homework #2 will be assigned in early March and will be due in late March.
+* Homework. Two assignments worth 25 points each. [Homework #1](homework/hw01/hw01_quality-exploration-DE.html) was due Thurs Feb 27. [Homework #2](homework/hw02/hw02_array-rna-seq-dea.html) is due Fri March 28.
 
 * [Group project](project/index.html). Groups formed and projects conceived during January/February. Primary deliverable is a poster, presented in last class meeting. Each student also produces a short report. 40 points. More more information, [go here](project/index.html).
 
@@ -176,7 +176,7 @@ lecture 15 | Principal component analysis (PP) | Wed Mar 05 | [slides as PDF](pv
 
 seminar 08 | [Methylation analysis](#seminar08) (LL) | Wed Mar 05
 
-Fri Mar 07: Homework #2 assigned 
+Fri Mar 07: [Homework #2](homework/hw02/hw02_array-rna-seq-dea.html) assigned 
 
 ### Week 10
 
@@ -202,7 +202,7 @@ lecture 21 | Enrichment analysis, gene networks, 2 of 2 (PP) | Wed Mar 26
 
 seminar 11 | TA office hours during seminar time ... group project work | Wed Mar 26
 
-Fi Mar 28: Homework #2 due.
+Fri Mar 28: [Homework #2](homework/hw02/hw02_array-rna-seq-dea.html) due.
 
 ### Week 13
 
@@ -250,7 +250,6 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - [Using read counts for differential expression analysis](seminars/seminar07_RNA-seq.html)
   * seminar 08 Wed Mar 05 Methylation analysis <a id="seminar08"></a>
     - [Methylation analysis](seminars/seminar08_methylation.html)
-    - *NOTE:* As of 10:30am Wed Mar 05, seminar is not compiling completely with automated course website workflow. Troubleshooting ongoing. Just in case, here's a link to source: <https://github.com/jennybc/stat540_2014/blob/master/seminars/seminar08_methylation.Rmd>
   * seminar 09 Wed Mar 12
     - Clustering and PCA
   * seminar 10 Wed Mar 19
