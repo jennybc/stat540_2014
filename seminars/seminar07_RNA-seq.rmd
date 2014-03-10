@@ -72,8 +72,8 @@ This DGELIst object has two components, one is a matrix call 'counts' storing th
 design <- model.matrix(~group)
 design
 dge.glm.com.disp <- estimateGLMCommonDisp(dge.glm,design, verbose=TRUE)
-dge.glm.trend.disp <- estimateGLMTrendedDisp(dge.glm.com.disp)
-dge.glm.tag.disp <- estimateGLMTagwiseDisp(dge.glm.trend.disp,design)
+dge.glm.trend.disp <- estimateGLMTrendedDisp(dge.glm.com.disp, design)
+dge.glm.tag.disp <- estimateGLMTagwiseDisp(dge.glm.trend.disp, design)
 #plot the tagwise dispersion against log2-CPM (counts per million)
 plotBCV(dge.glm.tag.disp)
 ```
