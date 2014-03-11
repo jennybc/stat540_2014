@@ -38,8 +38,12 @@ Finally, as an additional step to make visualization easier later, we'll rescale
 ```{r}
 sprDat <- t(scale(t(prDat))) 
 str(sprDat, max.level = 0)
+data.frame(orig = rowMeans(head(prDat)), postScale = rowMeans(head(sprDat)))
+data.frame(orig = apply(head(prDat), 1, var),
+           postScale = apply(head(sprDat), 1, var))
 ```
 
+The data for each row -- which is for one probeset -- now has mean 0 and variance 1.
         
 ## Sample Clustering
 
