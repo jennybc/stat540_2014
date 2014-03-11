@@ -365,7 +365,7 @@ str(devStageAvg)
 ```
 
 
-```{r eval=FALSE}
+```{r}
 heatmap(as.matrix(devStageAvg), Colv = NA, col = jGraysFun(256),
         hclustfun = function(x) hclust(x,method = 'average'),
         labCol = colnames(devStageAvg), labRow = NA, margin = c(8,1))
