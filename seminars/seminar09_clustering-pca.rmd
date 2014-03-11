@@ -132,9 +132,8 @@ Here we'll just do a clustering of samples using all genes (~30K).
 #Objects in columns
 
 set.seed(31)
-
-samplecenters <- 5
-pr.km <- kmeans(t(sprDat), centers = samplecenters, nstart =  50)
+k <- 5
+pr.km <- kmeans(t(sprDat), centers = k, nstart =  50)
 
 #We can look at the within sum of squares of each cluster
 pr.km$withinss
@@ -143,7 +142,7 @@ pr.km$withinss
 
 pr.kmTable <- data.frame(devStage = prDes$devStage, cluster = pr.km$cluster)
 prTable  <-  xtable(with(pr.kmTable, table(devStage,cluster)),
-                    caption='Number of samples from each develomental stage within each cluster')
+                    caption='Number of samples from each develomental stage within each k-means cluster')
 ```
 
 ```{r, results = 'asis'}
@@ -163,8 +162,16 @@ Helpful info and tips:
 K representative objects (= medoids) are chosen as cluster centers and objects are assigned to the center (= medoid = cluster) with which they have minimum dissimilarity (Kaufman and Rousseeuw, 1990). Nice features of PAM are: (a) it accepts a dissimilarity matrix (use `diss = TRUE`); (b) it is more robust to outliers as the centroids of the clusters are data objects; (c) one can determine the number of clusters by exploring the average silhouette value.
 
 ```{r}
-pr.pam <- pam(pr.dis, k = samplecenters)
-split(as.vector(unlist(prDes$devStage)), pr.pam$clustering)
+pr.pam <- pam(pr.dis, k = k)
+pr.pamTable <- data.frame(devStage = prDes$devStage,
+                          cluster = pr.pam$clustering)
+pamTable  <-  xtable(with(pr.pamTable, table(devStage, cluster)),
+                     caption='Number of samples from each develomental stage within each PAM cluster')
+```
+
+```{r, results = 'asis'}
+align(pamTable) <- "lccccc"
+print(pamTable, type = 'html', caption.placement = 'top')
 ```
 
 > Additional information on the PAM result is available through `summary(pr.pam)`
@@ -230,8 +237,8 @@ Let's visualize a cluster (remember the data were rescaled) using line plots. Th
 
 ```{r}
 set.seed(1234)
-genecenters <- 5
-kmeans.genes <- kmeans(topDat, centers = genecenters)
+k <- 5
+kmeans.genes <- kmeans(topDat, centers = k)
 
 # choose which cluster we want
 clusterNum <- 1 
