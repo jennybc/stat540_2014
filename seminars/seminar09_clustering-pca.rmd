@@ -401,7 +401,7 @@ par(op)
 
 Or we can compare all clusters' centers.
 ```{r}
-plot(clust.centers[clusterNum,], ylim = c(-4, 4), type = 'n',
+plot(clust.centers[clusterNum, ], ylim = c(-4, 4), type = 'n',
      xlab = "Develomental Stage", ylab = "Average expression",
      axes = FALSE, main = "Clusters centers") 
 axis(2)
@@ -449,14 +449,14 @@ pcs <- prcomp(sprDat, center = F, scale = F)
 plot(pcs) 
 
 # append the rotations for the first 10 PCs to the phenodata
-prDes<- cbind(prDes, pcs$rotation[prDes$sidNum, 1:10]) 
+prinComp <- cbind(prDes, pcs$rotation[prDes$sidNum, 1:10]) 
 
 # scatter plot showing us how the first few PCs relate to covariates
-plot(prDes[ ,c("sidNum", "devStage", "gType", "PC1", "PC2", "PC3")],
-     pch=19, cex=0.8) 
+plot(prinComp[ ,c("sidNum", "devStage", "gType", "PC1", "PC2", "PC3")],
+     pch = 19, cex = 0.8) 
 
 # plot data on first two PCs, colored by development stage
-plot(prDes[ ,c("PC1","PC2")], bg = prDes$devStage, pch=21, cex=1.5)
+plot(prinComp[ ,c("PC1","PC2")], bg = prDes$devStage, pch = 21, cex = 1.5)
 legend(list(x = 0.2, y = 0.3), as.character(levels(prDes$devStage)),
        pch = 21, pt.bg = c(1,2,3,4,5))
 ```
