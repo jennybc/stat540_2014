@@ -247,11 +247,11 @@ kmeans.genes <- kmeans(topDat, centers = k)
 clusterNum <- 1 
 
 # Set up the axes without plotting; ylim set based on trial run.
-plot(kmeans.genes$centers[clusterNum,], ylim = c(-4,4), type = 'n',
+plot(kmeans.genes$centers[clusterNum, ], ylim = c(-4, 4), type = 'n',
      xlab = "Samples", ylab = "Relative expression" ) 
 
 # Plot the expression of all the genes in the selected cluster in grey. 
-matlines(y = t(topDat[kmeans.genes$cluster == clusterNum,]), col='grey') 
+matlines(y = t(topDat[kmeans.genes$cluster == clusterNum, ]), col = 'grey') 
 
 # Add the cluster center. This is last so it isn't underneath the members
 points(kmeans.genes$centers[clusterNum, ], type = 'l') 
@@ -399,8 +399,6 @@ par(op)
 
 Or we can compare all clusters' centers.
 ```{r}
-op <- par(mfrow = c(1, 1))
-
 plot(clust.centers[clusterNum,], ylim = c(-4, 4), type = 'n',
      xlab = "Develomental Stage", ylab = "Average expression",
      axes = FALSE, main = "Clusters centers") 
@@ -411,7 +409,7 @@ for(clusterNum in 1:4) {
   points(clust.centers[clusterNum,], type = 'l', col = clusterNum, lwd=2) 
   points(clust.centers[clusterNum,] , col = clusterNum, pch = 20)
   }
-par(op)
+
 ```
 
 We can look at 3-dimensions of the data and illustrate clusters determined by kmeans. The most interesting analysis is to follow with a biological interpretation of the clusters. For that, smaller clusters may be easier to interpret.
