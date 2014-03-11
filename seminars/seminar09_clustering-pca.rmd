@@ -7,11 +7,11 @@ Contributor: Gabriela Cohen Freue
 
 In this seminar we'll explore clustering genes and samples using the photoreceptor time series with the two genotypes. It is interesting to compare the results of different clustering algorithms, and to see the effect of filtering and/or definitions of attributes on the resulting clusters.  
 
-## Data Preparation
+## Load data and packages
 
 Load the `photoRec` data. Remember, for more information on the `photoRec` dataset, go [here](https://github.com/jennybc/stat540_2014/tree/master/examples/photoRec). 
 
-Install required packages if you haven't done so before. This seminar will require `pvclust`, `xtable`, `limma`, `lattice`, `cluster`, and `RColorBrewer`.
+Install required packages if you haven't done so before. This seminar will require `pvclust`, `xtable`, `limma`, `lattice`, `cluster`, `RColorBrewer`, and `plyr`.
 
 > Remember you may need to edit the file paths below, to reflect your working directory and local file storage choices.
 
@@ -22,6 +22,7 @@ library(pvclust)
 library(xtable)
 library(limma)
 library(lattice)
+library(plyr)
 ```
 
 ```{r}
@@ -344,32 +345,34 @@ plot(topTime.t2, col = geneTime.km$cluster, xlab = "trend", ylab = "shape")
 ```
 
 ```{r}
-oDat <-
-  with(prDes,
-       data.frame(sidNum, devStage, gType,
-                  probeset = factor(rep(rownames(topDat), each = ncol(topDat))),
-                  geneExp = as.vector(unlist(t(topDat)))))
-
-devStageAvg <- with(oDat, tapply(geneExp, list(probeset, devStage), mean))
+annoTopDat <- stack(as.data.frame(topDat)) # stack probe data tall and skinny
+annoTopDat$probeset <- rownames(topDat) # add probeset ID as variable
+## get info on gType and devStage, then average over reps within devStage
+annoTopDat <- merge(annoTopDat, prDes, by.x = "ind", by.y = "sidChar")
+devStageAvg <- ddply(annoTopDat, ~ probeset, function(x) {
+  avgByDevStage <- aggregate(values ~ devStage, x, mean)$values
+  names(avgByDevStage) <- levels(x$devStage)
+  avgByDevStage
+  })
+## put probset info back into rownames
+rownames(devStageAvg) <- devStageAvg$probeset
+devStageAvg$probeset <- NULL
+str(devStageAvg)
 ```
 
 
-```{r,eval=FALSE}
-heatmap(as.matrix(devStageAvg), Rowv = NULL, Colv = NA, col = jGraysFun(256),
+```{r eval=FALSE}
+heatmap(as.matrix(devStageAvg), Colv = NA, col = jGraysFun(256),
         hclustfun = function(x) hclust(x,method = 'average'),
-        distfun = function(x) dist(x,method = 'euclidean'),
         labCol = colnames(devStageAvg), labRow = NA, margin = c(8,1))
 ```
 
 We can look at the average expression of genes within a cluster for each developmental stage.
 
 ```{r}
-geneDS.km <- kmeans(devStageAvg, centers = 4, nstart = 50)
-
-# Reorder columns of devStageAvg first
-devStageAvg <- devStageAvg[ , levels(prDes$devStage)]
+k <- 4
+geneDS.km <- kmeans(devStageAvg, centers = k, nstart = 50)
 clust.centers <- geneDS.km$centers
-clust.centers <-clust.centers[ , levels(prDes$devStage)]
 
 #Look at all clusters
 op <- par(mfrow = c(2, 2))
