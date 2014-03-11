@@ -187,6 +187,8 @@ par(op)
 
 > Exercise: draw a plot with number of clusters in the x-axis and the average silhouette widths in the y-axis. Use the information obtained to determine if 5 was the best choice for the number of clusters.
 
+> Exercise: For a common choice of $k$, compare the clustering across different methods, e.g. hierarchical (pruned to specific $k$, obviously), k-means, PAM. You will re-discover the "label switching problem" for yourself. How does that manifest itself? How concordant are the clusterings for different methods?
+
 ## Gene clustering
 
 A different view at the data can be obtained from clustering genes instead of samples. Since clustering genes is slow when you have a lot of genes, for the sake of time we will work with a smaller subset of genes. 
