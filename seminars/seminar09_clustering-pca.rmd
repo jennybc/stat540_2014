@@ -100,12 +100,12 @@ __Exercise__: Play with the options of the heatmap function and compare the diff
 ```{r}
 jGraysFun <- colorRampPalette(brewer.pal(n = 9, "Greys"))
 gTypeCols <- brewer.pal(11, "RdGy")[c(4,7)]
-heatmap(as.matrix(sprDat), Rowv = NA, Colv = NULL, col = jGraysFun(256),
+heatmap(as.matrix(sprDat), Rowv = NA, col = jGraysFun(256),
         hclustfun = function(x) hclust(x, method = 'ward'),
         distfun = function(x) dist(x, method = 'euclidean'),
-        scale = "none", labCol = prDes$grp, labRow = NA, margin = c(8,1),
+        scale = "none", labCol = prDes$grp, labRow = NA, margins = c(8,1),
         ColSideColor = gTypeCols[unclass(prDes$gType)])
-legend("topright", levels(prDes$gType),
+legend("topright", legend = levels(prDes$gType),
        col = gTypeCols, lty = 1, lwd = 5, cex = 0.5)
 ```
 
@@ -190,7 +190,6 @@ In many cases, analysts use cluster analysis to illustrate the results of a diff
 
 In [Seminar 6: Fitting and interpretting linear models (high volume)](seminar06_highVolumeLinearModelling.html), you've learned how to use `limma` to fit a common linear model to a very large number of genes and thus identify genes that show differential expression over the course of development.  
 
-
 ```{r echo=FALSE}
 cutoff <-  1e-05
 DesMat <- model.matrix(~ devStage, prDes)
@@ -256,9 +255,9 @@ points(kmeans.genes$centers[clusterNum, ],  col = prDes$devStage, pch = 20)
 #### Or, probably more commonly used, we can see both dendrograms using heatmaps (through hierarchical clustering): :
 
 ```{r}
-heatmap(as.matrix(topDat), Rowv = NULL, Colv = NULL, col = jGraysFun(256),
+devStageCols <- brewer.pal(11, "RdGy")[c(2,4,7,9,11)]
+heatmap(as.matrix(topDat), col = jGraysFun(256),
         hclustfun = function(x) hclust(x, method = 'average'),
-        distfun = function(x) dist(x, method = 'euclidean'),
         labCol = prDes$grp, labRow = NA, margin = c(8,1), scale = "none",
         ColSideColor = devStageCols[unclass(prDes$devStage)])
 legend("topleft", levels(prDes$devStage), col = devStageCols,
