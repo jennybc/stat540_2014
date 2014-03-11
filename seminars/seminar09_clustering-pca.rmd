@@ -438,7 +438,8 @@ plot(pcs)
 prDes<- cbind(prDes, pcs$rotation[prDes$sidNum, 1:10]) 
 
 # scatter plot showing us how the first few PCs relate to covariates
-plot(prDes[ ,1:6], pch = 19, cex = 0.8) 
+plot(prDes[ ,c("sidNum", "devStage", "gType", "PC1", "PC2", "PC3")],
+     pch=19, cex=0.8) 
 
 # plot data on first two PCs, colored by development stage
 plot(prDes[ ,c("PC1","PC2")], bg = prDes$devStage, pch=21, cex=1.5)
