@@ -15,7 +15,7 @@ Install required packages if you haven't done so before. This seminar will requi
 
 > Remember you may need to edit the file paths below, to reflect your working directory and local file storage choices.
 
-```{r include = FALSE}
+```{r}
 library(RColorBrewer)
 library(cluster)
 library(pvclust)
