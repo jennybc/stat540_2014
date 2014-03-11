@@ -69,24 +69,21 @@ pr.hc.a <- hclust(pr.dis, method = 'average')
 pr.hc.w <- hclust(pr.dis, method = 'ward')
 
 # plot them
-par(mar = c(0,4,4,2))
-par(mfrow = c(2,2))
+op <- par(mar = c(0,4,4,2), mfrow = c(2,2))
 
 plot(pr.hc.s, labels = FALSE, main = "Single", xlab = "")
-
 plot(pr.hc.c, labels = FALSE, main = "Complete", xlab = "")
-
 plot(pr.hc.a, labels = FALSE, main = "Average", xlab = "")
-
 plot(pr.hc.w, labels = FALSE, main = "Ward", xlab = "")
 
+par(op)
+
 # identify 10 clusters
-
-par(mfrow = c(1,1))
-
+op <- par(mar = c(1,4,4,1))
 plot(pr.hc.w, labels = prDes$grp, cex = 0.6, 
      main = "Ward showing 10 clusters")
 rect.hclust(pr.hc.w, k = 10)
+par(op)
 ```
 
 When you call `heatmap()`, it automatically performs hierarchical clustering for you and it reorders the rows and/or columns of the data accordingly. Both the reordering and the dendrograms can be suppressed it with `Rowv = NA` and/or `Colv = NA`. 
@@ -367,7 +364,7 @@ clust.centers <- geneDS.km$centers
 clust.centers <-clust.centers[ , levels(prDes$devStage)]
 
 #Look at all clusters
-par(mfrow=c(2,2))
+op <- par(mfrow = c(2, 2))
 for(clusterNum in 1:4) {
   # Set up the axes without plotting; ylim set based on trial run.
   plot(clust.centers[clusterNum,], ylim = c(-4,4), type='n',
@@ -386,11 +383,12 @@ for(clusterNum in 1:4) {
   # Optional: points to show development stages.
   points(clust.centers[clusterNum, ],  pch = 20)
   } 
+par(op)
 ```
 
 Or we can compare all clusters' centers.
 ```{r}
-par(mfrow = c(1,1))
+op <- par(mfrow = c(1, 1))
 
 plot(clust.centers[clusterNum,], ylim = c(-4, 4), type = 'n',
      xlab = "Develomental Stage", ylab = "Average expression",
@@ -402,6 +400,7 @@ for(clusterNum in 1:4) {
   points(clust.centers[clusterNum,], type = 'l', col = clusterNum, lwd=2) 
   points(clust.centers[clusterNum,] , col = clusterNum, pch = 20)
   }
+par(op)
 ```
 
 We can look at 3-dimensions of the data and illustrate clusters determined by kmeans. The most interesting analysis is to follow with a biological interpretation of the clusters. For that, smaller clusters may be easier to interpret.
