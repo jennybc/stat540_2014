@@ -180,9 +180,9 @@ Fri Mar 07: [Homework #2](homework/hw02/hw02_array-rna-seq-dea.html) assigned
 
 ### Week 10
 
-lecture 16 | Cluster analysis (GC-F) | Mon Mar 10
+lecture 16 | Cluster analysis (GC-F) | Mon Mar 10 | [slides as PDF](pvt/lect16_cluster-analysis.pdf)
 
-lecture 17 | Classification (GC-F) | Wed Mar 12
+lecture 17 | Classification (GC-F) | Wed Mar 12 | [slides as PDF](pvt/lect17_supervised-learning.pdf)
 
 seminar 09 | [Clustering and PCA](#seminar09) (LL) | Wed Mar 12
 
