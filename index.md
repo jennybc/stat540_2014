@@ -184,7 +184,7 @@ lecture 16 | Cluster analysis (GC-F) | Mon Mar 10
 
 lecture 17 | Classification (GC-F) | Wed Mar 12
 
-seminar 09 | Clustering and PCA (LL) | Wed Mar 12
+seminar 09 | [Clustering and PCA](#seminar09) (LL) | Wed Mar 12
 
 ### Week 11
 
@@ -250,7 +250,7 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - [Using read counts for differential expression analysis](seminars/seminar07_RNA-seq.html)
   * seminar 08 Wed Mar 05 Methylation analysis <a id="seminar08"></a>
     - [Methylation analysis](seminars/seminar08_methylation.html)
-  * seminar 09 Wed Mar 12
-    - Clustering and PCA
+  * seminar 09 Wed Mar 12 <a id="seminar09"></a>
+    - [Clustering and PCA](seminars/seminar09_clustering-pca.html)
   * seminar 10 Wed Mar 19
     - Supervised learning, cross validation, variable selection
