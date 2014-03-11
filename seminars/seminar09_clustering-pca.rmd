@@ -40,10 +40,11 @@ Finally, as an additional step to make visualization easier later, we'll rescale
 
 ```{r}
 sprDat <- t(scale(t(prDat)))
-str(sprDat, max.level = 0)
-data.frame(orig = rowMeans(head(prDat)), postScale = rowMeans(head(sprDat)))
-data.frame(orig = apply(head(prDat), 1, var),
-           postScale = apply(head(sprDat), 1, var))
+str(sprDat, max.level = 0, give.attr = FALSE)
+round(data.frame(avgBefore = rowMeans(head(prDat)),
+                 avgAfter = rowMeans(head(sprDat)),
+                 varBefore = apply(head(prDat), 1, var),
+                 varAfter = apply(head(sprDat), 1, var)), 2)
 ```
 
 The data for each row -- which is for one probeset -- now has mean 0 and variance 1.
