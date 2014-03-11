@@ -1,6 +1,10 @@
 Seminar 9: Cluster Analysis and PCA
 ==========================================
 
+```{r include = FALSE}
+opts_chunk$set(tidy = FALSE)
+```
+
 Contributor: Gabriela Cohen Freue
 
 ## Introduction
@@ -11,7 +15,7 @@ In this seminar we'll explore clustering genes and samples using the photorecept
 
 Load the `photoRec` data. Remember, for more information on the `photoRec` dataset, go [here](https://github.com/jennybc/stat540_2014/tree/master/examples/photoRec). 
 
-Install required packages if you haven't done so before. This seminar will require `pvclust`, `xtable`, `limma`, `lattice`, `cluster`, `RColorBrewer`, and `plyr`.
+Install required packages if you haven't done so before. This seminar will require `pvclust`, `xtable`, `limma`, `cluster`, `RColorBrewer`, and `plyr`.
 
 > Remember you may need to edit the file paths below, to reflect your working directory and local file storage choices.
 
@@ -21,7 +25,6 @@ library(cluster)
 library(pvclust)
 library(xtable)
 library(limma)
-library(lattice)
 library(plyr)
 ```
 
