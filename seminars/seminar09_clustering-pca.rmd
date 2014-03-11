@@ -107,18 +107,16 @@ jGraysFun <- colorRampPalette(brewer.pal(n = 9, "Greys"))
 gTypeCols <- brewer.pal(11, "RdGy")[c(4,7)]
 heatmap(as.matrix(sprDat), Rowv = NA, col = jGraysFun(256),
         hclustfun = function(x) hclust(x, method = 'ward'),
-        distfun = function(x) dist(x, method = 'euclidean'),
         scale = "none", labCol = prDes$grp, labRow = NA, margins = c(8,1),
         ColSideColor = gTypeCols[unclass(prDes$gType)])
 legend("topright", legend = levels(prDes$gType),
        col = gTypeCols, lty = 1, lwd = 5, cex = 0.5)
 ```
 
-```{r,echo=FALSE,eval=FALSE}
+```{r echo = FALSE, eval = FALSE}
 devStageCols <- brewer.pal(11, "RdGy")[c(2,4,7,9,11)]
-heatmap(as.matrix(sprDat), Rowv = NA, Colv = NULL, col = jGraysFun(256),
+heatmap(as.matrix(sprDat), Rowv = NA, col = jGraysFun(256),
         hclustfun = function(x) hclust(x, method = 'ward'),
-        distfun = function(x) dist(x, method = 'euclidean'),
         scale = "none", labCol = prDes$grp, labRow = NA, margin = c(8,1),
         ColSideColor = devStageCols[unclass(prDes$devStage)])
 ```
