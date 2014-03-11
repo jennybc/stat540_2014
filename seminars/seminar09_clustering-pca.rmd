@@ -11,13 +11,12 @@ In this seminar we'll explore clustering genes and samples using the photorecept
 
 Load the `photoRec` data. Remember, for more information on the `photoRec` dataset, go [here](https://github.com/jennybc/stat540_2014/tree/master/examples/photoRec). 
 
-Install required packages if you haven't done so before. This seminar will require `pvclust`, `xtable`, `car`, `limma`, `lattice`, `cluster`, and `RColorBrewer`.
+Install required packages if you haven't done so before. This seminar will require `pvclust`, `xtable`, `limma`, `lattice`, `cluster`, and `RColorBrewer`.
 
 > Remember you may need to edit the file paths below, to reflect your working directory and local file storage choices.
 
 ```{r include = FALSE}
 library(RColorBrewer)
-library(car)
 library(cluster)
 library(pvclust)
 library(xtable)
@@ -36,7 +35,7 @@ str(prDes)
 Finally, as an additional step to make visualization easier later, we'll rescale the rows, since we're not interested in absolute differences in expression between genes at the moment. Note that although one can do this step within the `heatmap()` function, it will not be available for other functions we will use. We can always go back to the original data if we need to.
 
 ```{r}
-sprDat <- t(scale(t(prDat))) 
+sprDat <- t(scale(t(prDat)))
 str(sprDat, max.level = 0)
 data.frame(orig = rowMeans(head(prDat)), postScale = rowMeans(head(sprDat)))
 data.frame(orig = apply(head(prDat), 1, var),
@@ -59,11 +58,11 @@ However, for most expression data applications, we suggest you should standardiz
 # compute pairwise distances
 pr.dis <- dist(t(sprDat), method = 'euclidean')
 
-#Generate new names of the type gType_devStage
-pr.nms <- with(prDes, paste(gType, devStage, sep="_"))
+# create a new factor representing the interaction of gType and devStage
+prDes$grp <- with(prDes, interaction(gType, devStage))
+summary(prDes$grp)
 
-# compute hierarchical clustering using different
-# linkage types
+# compute hierarchical clustering using different linkage types
 pr.hc.s <- hclust(pr.dis, method = 'single')
 pr.hc.c <- hclust(pr.dis, method = 'complete')
 pr.hc.a <- hclust(pr.dis, method = 'average')
@@ -85,7 +84,8 @@ plot(pr.hc.w, labels = FALSE, main = "Ward", xlab = "")
 
 par(mfrow = c(1,1))
 
-plot(pr.hc.w, labels = pr.nms, cex = 0.6, main = "Ward showing 10 clusters")
+plot(pr.hc.w, labels = prDes$grp, cex = 0.6, 
+     main = "Ward showing 10 clusters")
 rect.hclust(pr.hc.w, k = 10)
 ```
 
@@ -106,7 +106,7 @@ gTypeCols <- brewer.pal(11, "RdGy")[c(4,7)]
 heatmap(as.matrix(sprDat), Rowv = NA, Colv = NULL, col = jGraysFun(256),
         hclustfun = function(x) hclust(x, method = 'ward'),
         distfun = function(x) dist(x, method = 'euclidean'),
-        scale = "none", labCol = pr.nms, labRow = NA, margin = c(8,1),
+        scale = "none", labCol = prDes$grp, labRow = NA, margin = c(8,1),
         ColSideColor = gTypeCols[unclass(prDes$gType)])
 legend("topright", levels(prDes$gType),
        col = gTypeCols, lty = 1, lwd = 5, cex = 0.5)
@@ -117,7 +117,7 @@ devStageCols <- brewer.pal(11, "RdGy")[c(2,4,7,9,11)]
 heatmap(as.matrix(sprDat), Rowv = NA, Colv = NULL, col = jGraysFun(256),
         hclustfun = function(x) hclust(x, method = 'ward'),
         distfun = function(x) dist(x, method = 'euclidean'),
-        scale = "none", labCol = pr.nms, labRow = NA, margin = c(8,1),
+        scale = "none", labCol = prDes$grp, labRow = NA, margin = c(8,1),
         ColSideColor = devStageCols[unclass(prDes$devStage)])
 ```
 
@@ -262,12 +262,11 @@ points(kmeans.genes$centers[clusterNum, ],  col = prDes$devStage, pch = 20)
 heatmap(as.matrix(topDat), Rowv = NULL, Colv = NULL, col = jGraysFun(256),
         hclustfun = function(x) hclust(x, method = 'average'),
         distfun = function(x) dist(x, method = 'euclidean'),
-        labCol = pr.nms,labRow = NA, margin = c(8,1), scale = "none",
+        labCol = prDes$grp, labRow = NA, margin = c(8,1), scale = "none",
         ColSideColor = devStageCols[unclass(prDes$devStage)])
 legend("topleft", levels(prDes$devStage), col = devStageCols,
-       lty = 1, lwd = 5, cex = 0.5)      
+       lty = 1, lwd = 5, cex = 0.5)
 ```
-
 
 ### Redefining the attributes
 
@@ -285,6 +284,7 @@ Thus, we can define a new attributes for each gene, i.e., $$Att_g=(\mu_{g,E16},\
 # Not very interesting results. I will omit this example from lecture and
 # seminar. As develomental stage is a time variable, another interesting model
 # for these data is:
+library(car) # for recode()
 
 prDes$age <-
     recode(prDes$devStage,
@@ -422,7 +422,7 @@ An important issue for clustering is the question of certainty of the cluster me
 
 ```{r}
 pvc <- pvclust(topDat, nboot = 100)
-plot(pvc, labels = pr.nms, cex = 0.6)
+plot(pvc, labels = prDes$grp, cex = 0.6)
 pvrect(pvc, alpha = 0.95) 
 ```
 
