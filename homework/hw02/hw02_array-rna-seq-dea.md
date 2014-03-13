@@ -130,7 +130,7 @@ We have aligned the RNA-Seq library using the [Stampy](http://www.well.ox.ac.uk/
 
 ### a) (1pt) Load RNA Count Data and Sanity Check
 
-Load the count data using `read.table()`; you will need to pass the arguments `header = TRUE` and `row.names = 1`. 
+Load the count data using `read.table`; you will need to pass the arguments `header=TRUE` and `row.names=1`. 
 
 i) What are dimensions of the dataset? In addition to reporting number of rows and columns, make it clear what rows and columns represent. What is the difference between the rows of this dataset versus rows of the array data in question 1a?
 
@@ -194,9 +194,9 @@ i)  `DESeq` also needs to estimate the dispersion. Use `estimateSizeFactors` and
 
 
 
-ii)  Use the negative binomial test of `DESeq`, i.e. use the `nbinomTest()` function, to identify differentially expressed genes between conditions. Note that the output of this function does not return results ordered by p-values or logged fold-changes. You can manually reorder the results if you want (not required for this homework).
+ii)  Use the negative binomial test of `DESeq`, i.e. use the `nbinomTest` function, to identify differentially expressed genes between conditions. Note that the output of this function does not return results ordered by p-values or logged fold-changes. You can manually reorder the results if you want (not required for this homework).
 
-Package these results in a data.frame called `deseq.results` with four columns:
+Package these results in a data.frame called 'deseq.results' with four columns:
 
 * gene.id - The id of the gene which reads were aligned to.
 
@@ -319,14 +319,15 @@ iii) There are two genes identified by `edgeR` and `voom+limma` but not by `DESe
 
 
 
-```r
-# These are two genes identified by the three methods
-(genes.all <- c("YIL057C", "YMR175W"))
 
-all.counts <- counts[genes.all, ]
-allDat <- data.frame(gene.id = factor(rep(rownames(all.counts), ncol(all.counts))), 
-    cond = factor(rep(groups, each = nrow(all.counts))), log.count = log2(unlist(all.counts)))
-stripplot(gene.id ~ log.count, allDat, groups = cond, auto.key = TRUE)
+
+
+```r
+featureMe <- c("YDR384C", "YDR345C")
+(featureCounts <- counts[featureMe, ])
+featureDat <- data.frame(gene.id = factor(rep(rownames(featureCounts), ncol(featureCounts))), 
+    cond = factor(rep(groups, each = nrow(featureCounts))), log.count = log2(unlist(featureCounts)))
+stripplot(gene.id ~ log.count, featureDat, groups = cond, auto.key = TRUE, jitter = TRUE)
 
 # Using the example created before to illustrate the `setdiff` function
 setdiff(method1.de.genes, method2.de.genes)  #'C' is present in Method1 but not in Method2
