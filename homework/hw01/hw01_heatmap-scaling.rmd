@@ -1,0 +1,195 @@
+Heatmap questions
+========================================================
+
+```{r include = FALSE}
+## I format my code intentionally!
+## do not re-format it for me!
+opts_chunk$set(tidy = FALSE)
+```
+
+### Preliminaries
+
+Load packages.
+
+```{r}
+library(car) ## I like the recode() function from this package
+library(RColorBrewer)
+library(ggplot2)
+```
+
+Load data and design. Recode and change level order for `Genotype`. Upgrade/create variables pertaining to the date.
+
+```{r}
+s1pDat <- read.delim("../../examples/mouseBrain/data/GSE7191-data.txt",
+                     row.names = 1)
+s1pDes <- read.delim("../../examples/mouseBrain/data/GSE7191-design.txt")
+s1pDes$Genotype <- recode(s1pDes$Genotype, recodes = "'Wild_type'='wt'",
+                          levels = c("wt", "S1P2_KO", "S1P3_KO"))
+s1pDes$Date <- as.Date(s1pDes$DateRun, "%m/%d/%y")
+s1pDes$DateRun <- factor(s1pDes$Date)
+s1pDes$dayCode <- sapply(unclass(s1pDes$DateRun), function(i) {
+  foo <- rep("-", nlevels(s1pDes$DateRun) * 2)
+  foo[(i * 2 - 1):(i * 2)] <- i
+  paste(foo, collapse = "")
+  })
+s1pDes$dayCode <- paste(s1pDes$dayCode, colnames(s1pDat))
+s1pDes$sid <- rownames(s1pDes)
+
+str(s1pDat, list.len = 6) # 12422 obs. of  50 variables
+str(s1pDes) # 50 obs. of  7 variables
+(n <- nrow(s1pDes))
+```
+
+Set up for mapping quantitative info into grayscale. Set up color schemes for date, genotype, brain region, and sex.
+
+```{r}
+jGraysFun <- colorRampPalette(rev(brewer.pal(n = 9, "Greys")))
+jBluesFun <- colorRampPalette(brewer.pal(n = 9, "Blues")[1:6])
+descols <- with(s1pDes,
+                list(DateRun = brewer.pal(nlevels(DateRun), "Purples"),
+                     Genotype = brewer.pal(nlevels(Genotype), "Dark2"),
+                     BrainRegion = brewer.pal(11, "RdGy")[c(4, 7)],
+                     Sex = brewer.pal(n = 9, "Set1")[seq_len(nlevels(Sex))]))
+```
+
+### Correlation matrix heatmapping via `heatmap()`
+
+Create ordering vectors.
+
+```{r }
+dbgs <- with(s1pDes, order(Date, BrainRegion, Genotype, Sex))
+bgds <- with(s1pDes, order(BrainRegion, Genotype, Date, Sex))
+bgsd <- with(s1pDes, order(BrainRegion, Genotype, Sex, Date))
+sbgd <- with(s1pDes, order(Sex, BrainRegion, Genotype, Date))
+bsgd <- with(s1pDes, order(BrainRegion, Sex, Genotype, Date))
+```
+
+Define a wrapper function around `heatmap()`. *Code hidden*.
+```{r include = FALSE}
+makeCorHeatmap <-
+  function(datmat, desmat, descols, ordvect = seq_len(nrow(desmat)),
+           Rowv = NA, Colv = NA, symm = TRUE, revC = TRUE,
+           col = jGraysFun(256), margins = c(10, 10),
+           ColSideFactor = NULL, RowSideFactor = NULL,
+           labRow = NULL, labCol = NULL,
+           ...) {
+    createMarginColors <- function(factName) {
+      if(is.null(factName)) {
+        return(rep("white", nrow(desmat)))
+        } else {
+          jCols <- descols[[factName]]
+          return(jCols[unclass(desmat[[factName]][ordvect])])
+          }
+      }
+    RowSideColors <- createMarginColors(RowSideFactor)
+    ColSideColors <- createMarginColors(ColSideFactor)
+    createLabels <- function(jLabels) {
+      if(is.null(jLabels)) {
+        jLabels <- rep("", nrow(desmat))
+        }
+        return(jLabels[ordvect])
+      }
+    labRow <- createLabels(labRow)
+    labCol <- createLabels(labCol)
+    heatmap(cor(datmat[ , ordvect]),
+            Rowv = Rowv, Colv = Colv, symm = symm, revC = revC,
+            col = col, margins = margins,
+            ColSideColors = ColSideColors, RowSideColors = RowSideColors,
+            labRow = labRow, labCol = labCol, ...)
+    }
+```
+
+Make heatmaps of the sample-to-sample correlation matrix with various sample sort orders.
+
+```{r echo = FALSE, fig.show='hold', out.width='50%'}
+makeCorHeatmap(s1pDat, s1pDes, descols, ordvect = dbgs,
+               RowSideFactor = "DateRun", labRow = s1pDes$dayCode,
+               ColSideFactor = "BrainRegion", labCol = s1pDes$BrainRegion,
+               main = "sort: date, brain region, genotype, sex")
+
+makeCorHeatmap(s1pDat, s1pDes, descols, ordvect = bgsd,
+               RowSideFactor = "BrainRegion", labRow = s1pDes$BrainRegion,
+               ColSideFactor = "Genotype", labCol = s1pDes$Genotype,
+               main = "sort: brain region, genotype, sex, date")
+
+makeCorHeatmap(s1pDat, s1pDes, descols, ordvect = bsgd,
+               RowSideFactor = "BrainRegion", labRow = s1pDes$BrainRegion,
+               ColSideFactor = "Sex", labCol = s1pDes$Sex,
+               main = "sort: brain region, sex, genotype, date")
+
+makeCorHeatmap(s1pDat, s1pDes, descols, ordvect = sbgd,
+               RowSideFactor = "Sex", labRow = s1pDes$Sex,
+               ColSideFactor = "BrainRegion", labCol = s1pDes$BrainRegion,
+               main = "sort: sex, brain region, genotype, date")
+```
+
+Sorting on date is interesting only insofar as we are happy to see no dramatic date effect. Brain region is clearly the most important predictor. And HELLO OUTLIER SAMPLE, GSM172976.
+
+### Shaun's question about scaling and color mapping
+
+When pre-testing HW01, Shaun wasn't happy that the outlier used up so much of the "color space". The comparatively more subtle message about brain region was obscured:
+
+> The outlier is still visible without scaling, but the effect of BrainRegion is not as evident without scaling. Is there a way of scaling simultaneously and symmetrically in both directions, so that the matrix is still symmetric?
+
+To answer the question re: scaling ... I don't see why, in general, it would be possible to scale simultaneously and symmetrically in both directions. So my gut instinct answer to that is NO.
+
+When `symm = TRUE`, `heatmap()` sets `scale = "none"` by default. I think that's reasonable. All the correlations, by definition, live between -1 and 1; in practice, they will often live between 0 and 1 or in an even smaller interval with upper bound of 1. Scaling is done to handle datasets where individual rows or columns can have wildly different absolute magnitudes, which isn't a huge problem with correlations. 
+
+> After a little more investigation, I found that the existence of the outlier in the data is limiting the dynamic range of the colours in the heatmap. After removing the outlier, the effect of BrainRegion is again evident, even without scaling.
+
+Right, this is more about the mapping of colors to correlations than scaling.
+
+The `image()` function, around which `heatmap()` is a wrapper, defaults to this: associate the observed minimum and maximum with the two extremes of the color scale. Therefore the freakishly low correlations exhibited by the outlier sample effectively cause smaller differences -- such as the the distinction between correlations within and between brain regions -- to be visually underwhelming.
+
+Here's a slopegraph showing, for each sample, a line segment connecting its second lowest correlation and its second highest. The outlier GSM172976 just screams out here. Alongside I repeat one of the heatmaps seen earlier.
+
+```{r echo = FALSE, fig.show='hold', out.width='50%'}
+jCor <- cor(s1pDat)
+foo <- apply(jCor, 1, function(x) {
+  jOrd <- order(x)
+  x[c(jOrd[2], jOrd[length(x) - 1])]
+})
+foo <- data.frame(cor = as.vector(foo),
+                  what = factor(c("2nd lowest", "2nd highest"),
+                                levels = c("2nd lowest", "2nd highest")),
+                  sid = rep(colnames(foo), each = 2))
+p <- ggplot(foo, aes(x = what, y = cor, group = sid))
+p + geom_line()
+
+outlier <- as.character(foo$sid[which.min(foo$cor)])
+foo[foo$sid == outlier, ]
+#          cor       what       sid
+#  99 0.9531159 2nd lowest GSM172976
+#100 0.9832074 2nd highest GSM172976
+
+makeCorHeatmap(s1pDat, s1pDes, descols, ordvect = bgsd,
+               RowSideFactor = "BrainRegion", labRow = s1pDes$BrainRegion,
+               ColSideFactor = "Genotype", labCol = s1pDes$Genotype,
+               main = "sort: brain region, genotype, sex, date",
+               col = jGraysFun(256))
+```
+
+How do we change the color mapping in light of this?
+
+`heatmap()` will pass unresolved arguments through to `image()`. The most important arguments for controlling the color mapping are `zlim`, `col`, and `breaks`. To focus the colorspace on the correlations we care about we need to seize control. `zlim` is a rather crude control: you give the min and max values that should be mapped to a color. Colors outside that range seem to treated as if they were NAs, in which case they appear as the plot's background color, accessed via `par("bg")`, which is usually white. After experimenting with `zlim`, I opted for the finer control offered by `col` and `breaks`. You can give a vector of breakpoints via `breaks` of length $p$ and a vector of colors via `col` of length $p - 1$. I derived the inner breakpoints from quantiles of the sample-to-sample correlations *excluding the outlier*. Here's a new heatmap using `breaks` and using a different, reversed color palette, where extremely low correlations fade to white.
+
+```{r}
+jCorNoOutlier <- cor(s1pDat[names(s1pDat) != outlier])
+jBreaks <- c(-1, 
+             quantile(jCorNoOutlier[upper.tri(jCorNoOutlier)],
+                      probs = seq(0, 1, length = 255)), # 256 colors hard-wired
+             1)
+
+makeCorHeatmap(s1pDat, s1pDes, descols, ordvect = bgds,
+               RowSideFactor = "BrainRegion", labRow = s1pDes$BrainRegion,
+               ColSideFactor = "Genotype", labCol = s1pDes$Genotype,
+               main = "sort: brain region, genotype, date, sex",
+               breaks = jBreaks, col = jBluesFun(256))
+```
+Now the brain region effects are much clearer!
+
+
+
+
+
+
