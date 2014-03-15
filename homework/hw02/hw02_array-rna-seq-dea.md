@@ -366,8 +366,8 @@ iii) We provide a data set with array expression and count data for 5 interestin
 
 The data set is on GitHub and in the course webpage:
 
-  * <blah blah>
-  * <blah blah>
+  * <https://raw.github.com/jennybc/stat540_2014/master/examples/yeastPlatforms/data/featGenesData-q3-DPUT.txt>
+  * <http://www.ugrad.stat.ubc.ca/~stat540/examples/yeastPlatforms/data/featGenesData-q3-DPUT.txt>
   
 Load it with a line like this:  
 ```
