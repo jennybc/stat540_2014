@@ -148,7 +148,7 @@ Now you will use `edgeR` to identify differentially expressed genes between the 
 
 i)  Recall that `edgeR` needs to estimate the dispersion parameter in the negative binomial model using an empirical Bayes method. Estimate the dispersion parameters using `estimateGLMCommonDisp`, `estimateGLMTrendedDisp` and `estimateGLMTagwiseDisp`. Plot the tagwise dispersion against log2-CPM (counts per million).  
 
-> Unlike in seminar 7, you need to pass the design matrix to `estimateGLMTrendedDisp`.
+> Seminar 7 was now corrected so that the design matrix is used as an argument of `estimateGLMTrendedDisp`.
 
 
 
@@ -339,4 +339,44 @@ setdiff(method1.de.genes, method2.de.genes)  #'C' is present in Method1 but not 
 
 ## Q3) Compare DEA results between RNA-Seq and array
 
-Coming shortly. It is the last question.
+In question 1, you performed a DEA of array data using `limma`. In question 2a, you performed a DEA of RNA-Seq data using `edgeR`, among other methods. In this question you will compare the results of those two analyses. 
+
+> Remember that you've packaged your results and saved them using `write.table()`. If the data.frames containing the results of these analyses are no longer in your workspace, load them using `read.table()`.
+
+i) Use a Venn diagram to display the overlap and non-overlap of the __genes__ identified as differentially expressed at an FDR of 1e-5 by these analyses.
+
+> Note that the number of __probes__ that you identified as differentially expressed at an FDR of 1e-5 in question 1c(iii) may be different from the number of __genes__ identified as differentially expressed at the same FDR! Why? The use of the argument `force.unique` of `venn.diagram()` is crucial here.
+
+
+
+
+ii) As expected, more genes were identified as differentially expressed using RNA-Seq data. In this question, you will examine the difference between the q-values from both analyses by overlaying density plots of the q-values from each analysis.
+
+  * To respond to this question, make two plots. One plot that includes the densities of q-values of the genes analyzed by both platforms (i.e., genes shared by both data frames), and another plot that includes the densities of q-values of ALL genes analyzed by at least one of the platforms.
+  
+Make some observations about the strengths of these two platforms.
+  
+
+
+
+
+
+
+iii) We provide a data set with array expression and count data for 5 interesting genes; below is also code to load it and a figure depicting it. Consult the DEA results from your previous analyses for these genes. For each gene, state its status with respect to these analyses, i.e. where it falls in those Venn diagrams. Comment on the results and plots.
+
+The data set is on GitHub and in the course webpage:
+
+  * <blah blah>
+  * <blah blah>
+  
+Load it with a line like this:  
+```
+jDat <- dget("featGenesData-q3-DPUT.txt")
+```
+
+
+
+
+![plot of chunk unnamed-chunk-39](figure/unnamed-chunk-39.png) 
+
+
