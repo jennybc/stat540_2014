@@ -25,7 +25,7 @@ In this seminar, we will work with a dataset that has both a training and a test
 
 There are many packages for performing supervised learning in R, each of which may implement one or more algorithms. There have also been at least two major efforts to unify these libraries under a common framework to make them easier to use: `MLInterfaces` and `CMA`. Although these may be useful and save you a lot of time in your analysis, it is important that you understand what these packages are doing and what they are *not* doing. Thus, I will not use these packages in this Seminar but I encourage you to reproduce the analysis using at least one of them! (I recommend `CMA`).
 
-Install the following packages from Bioconductor: `CMA`, `ROCR`, `GEOquery`, and from CRAN: `car`, `e1071` (for SVM), and `glmnet`.
+Install the following packages from Bioconductor: `CMA` and `GEOquery`, and from CRAN: `ROCR`, `car`, `e1071` (for SVM), and `glmnet`.
 
 ```{r, eval=FALSE}
 source('http://bioconductor.org/biocLite.R')
@@ -50,7 +50,7 @@ library(lattice)
 
 ## Data Set
 
-This seminar is based on a dataset that comes from a paper by [Smeets et al. 2010](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE23177), who studied Affymetrix expression profiles from primary breast tumors. Smeets group was interested in whether tumors which had spread to lymph nodes (LN positive, generally a bad sign) have different gene expression profiles than LN negative tumors. If so, a gene expression signature can be use to predict tumor class. 
+This seminar is based on a dataset that comes from a paper by [Smeets et al. 2010](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE23177), who studied Affymetrix expression profiles from primary breast tumors. Smeets group was interested in whether whether tumors which had spread to lymph nodes (LN positive, generally a bad sign) have different gene expression profiles than LN negative tumors. If so, a gene expression signature can be use to predict tumor class. 
 
 Their data set contains 24236 genes on 116 samples. The status of the lymph node is known for each sample, with 59 LN positive and 57 LN negative. Samples were divided into two parts: 96 samples (48 LN positive and 48 LN negative) were used as a "training" set and 20 samples (11 LN positive and 9 LN negative) were used as a "test" set.  There is also a quantitative measure, "LnRatio", the fraction of affected lymph nodes, presumably reflecting "how bad" the LnStatus is. Thus, we can use this dataset to illustrate classification and regularization methods! This seminar will focus on the first task, i.e., classification. In the past, Paul selected this dataset to illustrate the challenges of supervised learning tasks!
 
@@ -62,24 +62,27 @@ First, let's retrieve our datasets from GEO with `getGEO` from `GEOquery` packag
 
 
 ```{r fetchGEO, message = F}
-if(file.exists("class_LNstatus.Rdata")){ # if previously downloaded
+if(file.exists("class_LNstatus.Rdata")) { # if previously downloaded
   load("class_LNstatus.Rdata")
 } else { # if downloading for the first time
-  datgeo<-getGEO('GSE23177', GSEMatrix=T) # takes a several mins!; returns a list
-  dat<-datgeo[[1]]   #Note that dat is an ExpressionSets
+  # takes a several mins!; returns a list
+  datgeo <- getGEO('GSE23177', GSEMatrix = TRUE) 
+  dat <- datgeo[[1]]   #Note that dat is an ExpressionSets
   
   str(pData(dat), max.level = 0)
   
   # extract only those variables of interest 
-  pData(dat) <- subset(pData(dat), select = c("characteristics_ch1.2",
-                                            "characteristics_ch1.3","characteristics_ch1"))
+  pData(dat) <-
+    subset(pData(dat),
+           select = c("characteristics_ch1.2",
+                      "characteristics_ch1.3","characteristics_ch1"))
   names(pData(dat))<-c("LnStatus", "LnRatio", "Set")
 
   #Note: LNRatio will not be used in this Seminar. However, you can use it to try some of the regularization techniques learned in class
   
   # split the ExpressionSet into training and test sets. 
-  train.es <- dat[,dat$Set=="patient type: training set"]
-  test.es<-dat[,dat$Set!="patient type: training set"]
+  train.es <- dat[, dat$Set == "patient type: training set"]
+  test.es <- dat[ , dat$Set != "patient type: training set"]
 
   #Re-label factor
   pData(train.es)$LnStatus <-
@@ -89,11 +92,9 @@ if(file.exists("class_LNstatus.Rdata")){ # if previously downloaded
       recode(pData(test.es)$LnStatus, "levels(pData(test.es)$LnStatus)[1]='neg'; else='pos'",
              levels = c('neg', 'pos'))
 
-
   # create data matrices with expression values (probesets in rows). Some of the functions we will use do not take ExpressionSets as objects
-  trainDat<-exprs(train.es)
-  testDat<-exprs(test.es)
-
+  trainDat <- exprs(train.es)
+  testDat <- exprs(test.es)
 
   # Redefine the quantitative variable LnRatio to make it a numeric variable.
   ntrain <- dim(pData(train.es))[1]
@@ -166,9 +167,9 @@ We will first identify the best set of features that we will use to train the mo
 This is not the only way to create splits of the training data to run a cross-validation. Note that if the samples can not be evenly divided into the nfolds you specified, then you need to complete the matrices below with NAs and call for entries different from NA at those folds.
 
 ```{r, eval=FALSE}
-nfold<-6
+nfold <- 6
 
-tabTrain<-table(train.es$LnStatus)
+tabTrain <- table(train.es$LnStatus)
 
 indlist <- sapply(names(tabTrain), function(z) which(train.es$LnStatus == z), simplify = FALSE)
 
@@ -176,14 +177,14 @@ set.seed(1234)
 
 #Each row contains 8 pos and 8 negative samples. 
 
-fold.pos<-matrix(sample(indlist[["pos"]]),nrow=nfold)
-fold.neg<-matrix(sample(indlist[["neg"]]),nrow=nfold)
+fold.pos <- matrix(sample(indlist[["pos"]]),nrow=nfold)
+fold.neg <- matrix(sample(indlist[["neg"]]),nrow=nfold)
 ```
 
 *Note*: with `CMA` you can use the command `GenerateLearningsets` to split the training data into folds. However, it does not show you how the data was split. Thus, you either use CMA for all or you write your own script. 
 
 ```{r,eval=F}
-splits<-GenerateLearningsets(y = train.es$LnStatus, method="CV", fold=6, strat= TRUE)
+splits <- GenerateLearningsets(y = train.es$LnStatus, method="CV", fold=6, strat= TRUE)
 ```
 
 ### Loop for feature selection and modeling
@@ -196,7 +197,7 @@ In this example, I will compare 7 different models: kNN for k={1,5,10,15}, LDA, 
 
 #Define here the constants that you will not evaluate. For example, I will use the top-50 limma genes
 
-ngenes<-50
+ngenes <- 50
 nmethod <- 7 #number of methods you plan to compare. 
 
 #Define here an output objects to store results
@@ -273,6 +274,7 @@ for(i in 1:nfold){
    
   pr.err[i,"SVM"] <- mean( pr.svm != testclass.fold )
   } #end of CV loop
+## JB: I get "There were 12 warnings"
 ```
 
 ### Error Rates
