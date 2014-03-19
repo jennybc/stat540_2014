@@ -1,6 +1,7 @@
-% Seminar 10: Classification and Regularization
-% Gabriela Cohen Freue
-% 2013-03-13
+Supervised learning, classification, cross validation, variable selection
+=========================================================================
+
+Contributor: Gabriela Cohen Freue
 
 # Introduction
 
@@ -151,7 +152,7 @@ stripplot(gExp ~ LnStatus | gene+Set, plotDat,
 
 ```
 
-# PART I: Classification 
+# Classification
 
 The prediction of a discrete response is usually refer to as *classification*. A response taking values over a finite set of labels is essentially the same thing as a factor. We will use the dataset from Smeets et al. to find the *best-trained* classifier and use it to predict the `LnStatus` of the 20 samples in the test set, i.e., classify those as "lymph node positive" or "negative".
 
