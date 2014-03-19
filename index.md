@@ -188,11 +188,11 @@ seminar 09 | [Clustering and PCA](#seminar09) (LL) | Wed Mar 12
 
 ### Week 11
 
-lecture 18 | Model and variable selection: cross validation and regularization (GC-F) | Mon Mar 17
+lecture 18 | Model and variable selection: cross validation and regularization (GC-F) | Mon Mar 17 | [slides as PDF](pvt/lect18_cross-validation.pdf)
 
 lecture 19 | Regularization cont'd, Proteomics and missingness (GC-F) | Wed Mar 19
 
-seminar 10 | Supervised learning, cross validation, variable selection (SJ) | Wed Mar 19
+seminar 10 | [Supervised learning, cross validation, variable selection](#seminar10) (SJ) | Wed Mar 19
 
 ### Week 12
 
@@ -252,5 +252,5 @@ We will borrow some material from [STAT 545A Exploratory Analysis](http://www.st
     - [Methylation analysis](seminars/seminar08_methylation.html)
   * seminar 09 Wed Mar 12 <a id="seminar09"></a>
     - [Clustering and PCA](seminars/seminar09_clustering-pca.html)
-  * seminar 10 Wed Mar 19
-    - Supervised learning, cross validation, variable selection
+  * seminar 10 Wed Mar 19 <a id="seminar10"></a>
+    - [Supervised learning, cross validation, variable selection](seminars/seminar10_classification.html)
