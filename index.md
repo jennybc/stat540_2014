@@ -190,7 +190,7 @@ seminar 09 | [Clustering and PCA](#seminar09) (LL) | Wed Mar 12
 
 lecture 18 | Model and variable selection: cross validation and regularization (GC-F) | Mon Mar 17 | [slides as PDF](pvt/lect18_cross-validation.pdf)
 
-lecture 19 | Regularization cont'd, Proteomics and missingness (GC-F) | Wed Mar 19
+lecture 19 | Regularization cont'd, Proteomics and missingness (GC-F) | Wed Mar 19 | slides as PDF: [variable selection](pvt/lect19_I-vble-selection.pdf), [proteomics and missing values](pvt/lect19_II-proteomics-missingValues.pdf)
 
 seminar 10 | [Supervised learning, cross validation, variable selection](#seminar10) (SJ) | Wed Mar 19
 
