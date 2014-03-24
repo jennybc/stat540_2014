@@ -21,9 +21,7 @@ If you expect that you will be late on the deadline, contact us before missing i
 
 ## How to submit the work
 
-+ We will soon provide specific guidelines on how to submit homework 2.
-+ In the meantime, write your homework in R Markdown (.rmd)
-+ Once you finish your homework, you will add the R Markdown, Markdown and HTML to your private GitHub as you did for homework 1.
+See the [homework submission instructions](../hw_submission-instructions.html).
 
 
 

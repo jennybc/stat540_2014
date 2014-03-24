@@ -26,29 +26,7 @@ communication is neither conscientious nor polite.
 
 ## How to submit the work
 
-+ Follow the instructions [from week 1](http://www.ugrad.stat.ubc.ca/~stat540/seminars/seminar90_getting-started.html) re: creating your private GitHub repository and making JB, SJ, and GL collaborators.
-+ Write your homework in R Markdown (.rmd)
-+ Compile your homework to markdown (.md) and HTML (.html)
-+ Read and follow the [Polish and submit][polish] instructions
-+ Add the R Markdown, Markdown and HTML to your private GitHub
-  repository named **stat540-2014-*lastname*-*firstname*-hw**
-+ Do not add the data files GSE7191-data.txt and GSE7191-design.txt
-+ Open your private repositry on GitHub in a web browser
-+ On the web page just above the files, look for the text "latest
-  commit" followed by ten numbers and letters (called the revision SHA) and a clipboard icon
-+ Click on the clipboard icon to copy the revision SHA to your clipboard
-+ Create an issue in your private repository (click "Issues" and "New Issue") on GitHub named
-  "Mark homework 1 of *firstname* *lastname*"
-+ In the description of the issue, tag both TAs (@gloriali and @sjackman) and paste the revision SHA
-+ Click "Submit new issue"
-+ You're done! Congratulations!
-
-[polish]: http://www.ugrad.stat.ubc.ca/~stat540/homework/hw01_coaching.html#polish-and-submit
-
-If you're concerned that something hasn't gone right with the
-submission, send Gloria glorialuolanli@gmail.com and Shaun
-sjackman@gmail.com an e-mail with your assignment attached.
-**Note**: this is plan B. Please submit your homework using GitHub.
+See the [homework submission instructions](../hw_submission-instructions.html).
 
 
 
