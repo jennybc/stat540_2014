@@ -16,10 +16,10 @@ STAT 540 Homework Submission Instructions
 
   * We're talking about the repo `stat540-2014-lastname-firstname-hw` now.
   * Make a top-level directory for each assignment, e.g. `hw01` and `hw02`
-    - We truly mean a [directory or "folder"](http://en.wikipedia.org/wiki/Directory_(computing)) -- NOT a [Git branch](http://git-scm.com/book/en/Git-Branching) or anything fancy like that!
+    - We truly mean a [directory or "folder"](http://en.wikipedia.org/wiki/Directory_(computing)) -- NOT a [Git branch](http://git-scm.com/book/en/Git-Branching) or anything fancy like that! On your local computer, go to the directory where this Git repository lives. Make the 2 directories here. FYI, since Git tracks *files*, you might not see evidence of the `hw02` directory on, e.g. GitHub, until there are some files in it.
   * Make a top-level `README.md` that includes, at the very least, something like "This is Jenny Bryan's private repository for STAT540 homework."
     - GitHub automatically renders all Markdown files into (pseudo-)HTML when you visit them in a browser. Whenever a *directory* in a repo is visited, if it contains a Markdown file called `README.md`, it will automatically be rendered, effectively serving as a landing or home page.
-  * It is also nice to include a `README.md` in each of the lower-level assignment directories, for all the same reasons. See below.
+  * It is also nice to include a `README.md` inside each of the assignment directories, for all the same reasons. See below.
 
 ## R Markdown
 
