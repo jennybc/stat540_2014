@@ -124,7 +124,7 @@ iv. Save your results for later with `write.table()`.
 
 ## Q2) RNA-Seq Analysis
 
-We have aligned the RNA-Seq library using the [Stampy](http://www.well.ox.ac.uk/project-stampy) aligner and generated count data. The data file is available [here](../../examples/yeastPlatforms/data/stampy.counts.tsv). In this question you will use this data to do a differential expression analysis using different packages from Bioconductor.
+We have aligned the RNA-Seq library using the [Stampy](http://www.well.ox.ac.uk/project-stampy) aligner and generated count data. The data file is available as [stampy.counts.tsv](../../examples/yeastPlatforms/data/stampy.counts.tsv). In this question you will use this data to do a differential expression analysis using different packages from Bioconductor.
 
 ### a) (1pt) Load RNA Count Data and Sanity Check
 
@@ -270,6 +270,13 @@ i) In previous questions, we noticed that different methods identified different
 
 ```r
 library(VennDiagram)
+```
+
+```
+## Loading required package: grid
+```
+
+```r
 
 # Fake some gene names for 4 different methods.  Note that in this example,
 # I'm comparing 4 different sets so that you can see how to handle more
@@ -300,6 +307,8 @@ venn.plot <- venn.diagram(de.genes, filename = NULL, fill = c("red", "blue",
 grid.draw(venn.plot)
 ```
 
+![plot of chunk vennDiagram](figure/vennDiagram.png) 
+
 
 
 
@@ -320,15 +329,37 @@ iii) There are two genes identified by `edgeR` and `voom+limma` but not by `DESe
 
 
 
+
+
+
 ```r
+library(lattice)
 featureMe <- c("YDR384C", "YDR345C")
 (featureCounts <- counts[featureMe, ])
+```
+
+```
+##           b1   b2   b3   c1   c2   c3
+## YDR384C  176  243  182 3332 3778 4531
+## YDR345C 6155 8629 6357  322  345  462
+```
+
+```r
 featureDat <- data.frame(gene.id = factor(rep(rownames(featureCounts), ncol(featureCounts))), 
     cond = factor(rep(groups, each = nrow(featureCounts))), log.count = log2(unlist(featureCounts)))
 stripplot(gene.id ~ log.count, featureDat, groups = cond, auto.key = TRUE, jitter = TRUE)
+```
+
+![plot of chunk two-de-gene-demo](figure/two-de-gene-demo.png) 
+
+```r
 
 # Using the example created before to illustrate the `setdiff` function
 setdiff(method1.de.genes, method2.de.genes)  #'C' is present in Method1 but not in Method2
+```
+
+```
+## [1] "C"
 ```
 
 
@@ -375,6 +406,6 @@ jDat <- dget("featGenesData-q3-DPUT.txt")
 
 
 
-![plot of chunk unnamed-chunk-39](figure/unnamed-chunk-39.png) 
+![plot of chunk stripplot-five-interesting-genes](figure/stripplot-five-interesting-genes.png) 
 
 
