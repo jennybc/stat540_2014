@@ -23,6 +23,10 @@ If you expect that you will be late on the deadline, contact us before missing i
 
 See the [homework submission instructions](../hw_submission-instructions.html).
 
+## Coaching
+
+Some helpful tips can be found in [this coaching document](hw02_coaching.html).
+
 
 
 
