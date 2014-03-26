@@ -36,6 +36,11 @@ This is just [Seminar 7](http://www.ugrad.stat.ubc.ca/~stat540/seminars/seminar0
 ### Q2b) Edge R
 In an early version of Seminar 7, the design matrix was not passed as an argument of `estimateGLMTrendedDisp`. Note that the design is needed in all functions estimating the dispersion. This was corrected in Seminar 7 and the current version contains the correct analysis.
 
+### Q2d) Voom+LIMMA
+In Seminar 7, the argument "coef" was not passed to `topTable`. As a result, the hypothesis that both coefficients of the design matrix (intercept and treatment effect in this case) are equal to zero is tested. Note that, in general, this is not the hypothesis you want to test! We will correct this in Seminar 7.
+
+If you are looking for DE genes, and you are using a "reference + treatment effects" parametrization, you want to test if the "treatment effect" coefficient is equal to zero. Within `limma`, you explicitly need to specify which coefficient you want to test using the `topTable` function and the argument `coef`. You can find a discussion and correct examples on this topic in Lecture 10 and Seminar 6. 
+
 ### Q2e) Comparison of DEA
 ii) The hint of the Venn Diagrams says: 
 
