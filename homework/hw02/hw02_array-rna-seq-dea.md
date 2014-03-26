@@ -269,7 +269,7 @@ Now that we have the results of the differential expression analysis performed b
 
 i) In previous questions, we noticed that different methods identified different differentially expressed genes. Create a Venn diagram showing all genes identified as differentially expressed by `edgeR`, `DESeq`, and `voom+limma`. Check your if your answers to questions 2c-iv, and 2d-iv are correct.
 
-> The Venn diagram can be drawn using the `VennDiagram` package. It's a little obtuse if you want to plot to screen (or embed image using knitr), but the following code should get you started. Also be aware there is an argument called `force.unique`, which defaults to TRUE, that determines how elements that appear more than once in a set are handled when forming the Venn counts. Since multiple probes in the array data can map to the same gene, you will obtain different answers depending on the value of this parameter.
+> The Venn diagram can be drawn using the `VennDiagram` package. It's a little obtuse if you want to plot to screen (or embed image using knitr), but the following code should get you started. Also be aware there is an argument called `force.unique`, which defaults to TRUE, that determines how elements that appear more than once in a set are handled when forming the Venn counts (in particular useful in question 3). 
 
 
 ```r
@@ -372,18 +372,18 @@ setdiff(method1.de.genes, method2.de.genes)  #'C' is present in Method1 but not 
 
 ## Q3) Compare DEA results between RNA-Seq and array
 
-In question 1, you performed a DEA of array data using `limma`. In question 2a, you performed a DEA of RNA-Seq data using `edgeR`, among other methods. In this question you will compare the results of those two analyses. 
+In question 1, you performed a DEA of array data using `limma`. In question 2, you used different methods to perform DEA of RNA-Seq data. In particular, in this question, you will focus on the DEA using `edgeR` (question 2b) to compare the results of RNA-Seq DEA with those of the array DEA . 
 
 > Remember that you've packaged your results and saved them using `write.table()`. If the data.frames containing the results of these analyses are no longer in your workspace, load them using `read.table()`.
 
-i) Use a Venn diagram to display the overlap and non-overlap of the __genes__ identified as differentially expressed at an FDR of 1e-5 by these analyses.
+i) Use a Venn diagram to display the overlap and non-overlap of the __genes__ identified as differentially expressed at an FDR of 1e-5 by these analyses (i.e., array vs `edgeR` differentially expressed genes).
 
 > Note that the number of __probes__ that you identified as differentially expressed at an FDR of 1e-5 in question 1c(iii) may be different from the number of __genes__ identified as differentially expressed at the same FDR! Why? The use of the argument `force.unique` of `venn.diagram()` is crucial here.
 
 
 
 
-ii) As expected, more genes were identified as differentially expressed using RNA-Seq data. In this question, you will examine the difference between the q-values from both analyses by overlaying density plots of the q-values from each analysis.
+ii) As expected, more genes were identified as differentially expressed using RNA-Seq data. In this question, you will examine the difference between the q-values from both analyses (i.e., array and `edgeR`) by overlaying density plots of the q-values from each analysis.
 
   * To respond to this question, make two plots. One plot that includes the densities of q-values of the genes analyzed by both platforms (i.e., genes shared by both data frames), and another plot that includes the densities of q-values of ALL genes analyzed by at least one of the platforms.
   
@@ -395,7 +395,7 @@ Make some observations about the strengths of these two platforms.
 
 
 
-iii) We provide a data set with array expression and count data for 5 interesting genes; below is also code to load it and a figure depicting it. Consult the DEA results from your previous analyses for these genes. For each gene, state its status with respect to these analyses, i.e. where it falls in those Venn diagrams. Comment on the results and plots.
+iii) We provide a data set with array expression and count data for 5 interesting genes; below is also code to load it and a figure depicting it. Consult the array and the `edgeR` DEA results from your previous analyses for these genes. For each gene, state its status with respect to these analyses, i.e. where it falls in those Venn diagrams. Comment on the results and plots.
 
 The data set is on GitHub and in the course webpage:
 
