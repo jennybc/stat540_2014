@@ -198,7 +198,7 @@ seminar 10 | [Supervised learning, cross validation, variable selection](#semina
 
 lecture 20 | Analysis of gene function, 1 of 2: Gene set analysis (PP) | Mon Mar 24 | [slides as PDF](pvt/lect20_gene-set-analysis.pdf)
 
-lecture 21 | Analysis of gene function, 2 of 2 (PP) | Wed Mar 26
+lecture 21 | Analysis of gene function, 2 of 2 (PP) | Wed Mar 26 | [slides as PDF](pvt/lect21_gene-networks.pdf)
 
 seminar 11 | TA office hours during seminar time ... group project work | Wed Mar 26
 
