@@ -37,9 +37,9 @@ This is just [Seminar 7](http://www.ugrad.stat.ubc.ca/~stat540/seminars/seminar0
 In an early version of Seminar 7, the design matrix was not passed as an argument of `estimateGLMTrendedDisp`. Note that the design is needed in all functions estimating the dispersion. This was corrected in Seminar 7 and the current version contains the correct analysis.
 
 ### Q2d) Voom+LIMMA
-In Seminar 7, the argument "coef" was not passed to `topTable`. As a result, the hypothesis that both coefficients of the design matrix (intercept and treatment effect in this case) are equal to zero is tested. Note that, in general, this is not the hypothesis you want to test! We will correct this in Seminar 7.
+In [Seminar 7](../../seminars/seminar07_RNA-seq.html), the argument `coef` was not passed to `topTable()`. As a result, the hypothesis that both parameters of the model (intercept and treatment effect, in this case) are equal to zero is tested. Note that, in general, this is not the hypothesis you want to test! We will correct this in Seminar 7.
 
-If you are looking for DE genes, and you are using a "reference + treatment effects" parametrization, you want to test if the "treatment effect" coefficient is equal to zero. Within `limma`, you explicitly need to specify which coefficient you want to test using the `topTable` function and the argument `coef`. You can find a discussion and correct examples on this topic in Lecture 10 and Seminar 6. 
+If you are looking for DE genes, and you are using a "reference + treatment effects" parametrization, you want to test if the "treatment effect" coefficient is equal to zero. Within `limma`, you explicitly need to specify which coefficient you want to test using the `coef` argument of the `topTable()` function. You can find a discussion and correct examples on this topic in Lecture 10 and [Seminar 6](../../seminars/seminar06_highVolumeLinearModelling.html#fit-a-linear-model-explain-gene-expression-in-the-wild-type-mice-as-a-function-of-developmental-stage-one-way-anova). 
 
 ### Q2e) Comparison of DEA
 ii) The hint of the Venn Diagrams says: 
