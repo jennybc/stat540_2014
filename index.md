@@ -78,7 +78,7 @@ Officially none BUT here in reality ...
 
 ### Evaluation
 
-* Homework. Two assignments worth 25 points each. [Homework #1](homework/hw01/hw01_quality-exploration-DE.html) was due Thurs Feb 27. [Homework #2](homework/hw02/hw02_array-rna-seq-dea.html) is due Fri March 28. Instructions for [how to submit homework](homework/hw_submission-instructions.html).
+* Homework. Two assignments worth 25 points each. [Homework #1](homework/hw01/hw01_quality-exploration-DE.html) was due Thurs Feb 27. [Homework #2](homework/hw02/hw02_array-rna-seq-dea.html) was due Fri March 28. Instructions for [how to submit homework](homework/hw_submission-instructions.html).
 
 * [Group project](project/index.html). Groups formed and projects conceived during January/February. Primary deliverable is a poster, presented in last class meeting. Each student also produces a short report. 40 points. More more information, [go here](project/index.html).
 
@@ -206,7 +206,7 @@ Fri Mar 28: [Homework #2](homework/hw02/hw02_array-rna-seq-dea.html) due.
 
 ### Week 13
 
-lecture 22 | Resampling and the bootstrap (JB)| Mon Mar 31
+lecture 22 | Resampling and the bootstrap (JB)| Mon Mar 31 | [slides as PDF](pvt/lect22_resampling.pdf)
 
 lecture 23 | Guest lecture by STAT540 alum [Dr. Sohrab Shah](http://compbio.bccrc.ca/people/dr-sohrab-shah/) | Wed Apr 02
 
