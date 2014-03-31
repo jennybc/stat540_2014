@@ -428,3 +428,6 @@ ggplot(prDatTall, aes(x = probe, y = sample, fill = expression)) +
 
 The full `photoRec` dataset has 39 samples and 29,949 probesets. Choose 2 ... or 20 ... or 200 random probesets/genes and look for gene expression differences between the two genotypes, wild type versus knockout. Make use of the graphing techniques discussed this week such as scatter plots, box plot, etc. Share questions, success, failure on the Google group.
 
+## Added 2014-03-31
+
+Via Dean Attali: [Extra! Extra! Get Your gridExtra!](http://www.imachordata.com/extra-extra-get-your-gridextra/) blog post on using `gridExtra` to assemble multiple `ggplot2` plots on one "page"
