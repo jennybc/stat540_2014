@@ -206,7 +206,7 @@ Package these results in a data.frame called 'deseq.results' with four columns:
 
 * q.value - The BH corrected p-value, aka the q-value.
 
-* log.fc - The log fold change which is the column called "logFC" in the `edgeR` results table.
+* log.fc - The log fold change which is the column called "log2FoldChange" in the `DESeq` results table.
 
 Save your results for later with `write.table()` in file called `stampy.deseq.results.tsv`.
 
