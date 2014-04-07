@@ -71,7 +71,7 @@ Fri Apr 11 | All the digital group and individual stuff due.
 
 ## Evaluation
 
-Project mark worth 40% of course mark. The 40 points break out like so (why does the list look like a blockquote?):
+Project mark worth 40% of course mark. The 40 points break out like so:
 
   * 20 points: Overall mark, i.e. all group members get same mark. Clarity of the problem statement, data description, and the analytical approach.  Suitability of the methodology, quality of the execution. Quality of presentation. Based on poster and digital supplement.
   * 5 points: Group formation on time, initial project proposal, final project proposal.
@@ -86,6 +86,17 @@ Mark-a-poster worksheet used in 2012 and 2013. Students will mark posters of ~2 
 Jenny's post mortem notes from 2012. [PDF](jennyPostMortem2012.pdf)
 
 ## Student work from past runs of course
+
+January - April 2014 posters
+
+  1. Investigating the role of Notch transcription factor in Leukaemia. Chen Di Gravio Jamieson-Lane Kucuk Mancarci Salehi.
+  2. Early human caregiving experiences and individual DNA methylation patterns. Baik de Goede Erdelyi Gladish Islam Pilsworth.
+  3. Using RNA-Seq data to predict large-scale copy-number alterations in AML.  Bayly Chong Docking Dorri Hindalong Johnston.
+  4. Analysis of Methyl-Seq data from normal (myo), pre-cancerous (tert transduced), and malignant (MCF10a) breast cancer cell lines. Acton Attali Ezzat Zadeh Hor Lorzadeh Mingay.
+  5. Environmental metagenomic microbiology. Chu Durno Hammett Ievdokymenko Lever Nguyen.
+  6. Gene expression profiling in Parkinson's Disease and Alzheimer's Disease. Gao Lubieniecki Ma Wang Zhang Zhu.
+  7. Investigating the relationship between epigenetic markers and gene expression. Brown Cen Hofmann Lee Lim.
+  8. Expression Profiling in Inflammatory Bowel Disease. AlOmeir Sun Wafa Zhang.
 
 January - April 2013 posters
 
