@@ -93,7 +93,7 @@ January - April 2014 posters
   1. Investigating the role of Notch transcription factor in Leukaemia. Chen Di Gravio Jamieson-Lane Kucuk Mancarci Salehi.
   2. Caregiver contact time and sex effects on methylation status in infants. Baik de Goede Erdelyi Gladish Islam Pilsworth.
   3. Using RNA-Seq data to predict large-scale copy-number alterations in AML.  Bayly Chong Docking Dorri Hindalong Johnston.
-  4. Analysis of Methyl-Seq data from normal (myo), pre-cancerous (tert transduced), and malignant (MCF10a) breast cancer cell lines. Acton Attali Ezzat Zadeh Hor Lorzadeh Mingay.
+  4. Comprehensive Methylome Analysis of Breast Cancer Cell Lines. Acton Attali Ezzat Zadeh Hor Lorzadeh Mingay.
   5. Environmental metagenomic microbiology. Chu Durno Hammett Ievdokymenko Lever Nguyen.
   6. Gene expression profiling in Parkinson's Disease and Alzheimer's Disease. Gao Lubieniecki Ma Wang Zhang Zhu.
   7. Investigating the relationship between epigenetic markers and gene expression. Brown Cen Hofmann Lee Lim.
