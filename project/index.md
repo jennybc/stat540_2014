@@ -35,13 +35,13 @@ Groups should have 4 to 6 members. We strongly encourage that groups be diverse 
 
 ### Final deliverables
 
-  * A poster, to be hosted and exhibited in our poster session on Wed Apr 09 from 9:30 am to 12 pm in Room 101, aka the multi-purpose room, on ground floor of the [Michael Smith Building](http://www.maps.ubc.ca/PROD/index_detail.php?locat1=083). Group-level deliverable. NOTE: you will secure your material to the the poster board with use push pins.  We don't have exact physical dimensions but they are "typical" and there are plenty of them.
+  * A poster, to be hosted and exhibited in our poster session on Wed Apr 09 from 9:30 am to 12 pm in Room 101, aka the multi-purpose room, on ground floor of the [Michael Smith Building](http://www.maps.ubc.ca/PROD/index_detail.php?locat1=083). Group-level deliverable. NOTE: you will secure your material to standard conference-type poster boards with push pins.
 
   * A digital supplement, to be made available to the TAs/instructors, at the very least.  This should contain the materials (or associated live links) an instructor would need to evaluate your work and that a group member would need to reproduce/reuse/extend the work. Group-level deliverable. The path of least resistance is to use a GitHub repository. Email the TAs with the location of the digital supplement (or open an issue and tag them). Content should include (but is not limited to!):
 
 	  - a PDF of the poster
 	  - important files, such as "inputs" (e.g. the dataset(s) you analyzed) and "outputs" (e.g. plain text files of your key statistical results or PDFs of your main figures); if you started with a publicly available file, you can link to it; if you started with private data, please do your best to describe 
-    - the R code for the analysis, i.e. the thing that turns the inputs into outputs; can be pure R scripts or R Markdown; as you've probably learned, compiling to Markdown and commiting is very helpful for the *consumer*
+    - the R code for the analysis, i.e. the thing that turns the inputs into outputs; can be pure R scripts or R Markdown; as you've probably learned, compiling R or R Markdown source to Markdown and committing is very helpful for the *consumer*
     - a link-y version of your bibliography (for example, live Pubmed or DOI links)
     - a big picture overview of the analysis; [this flow chart](https://github.com/sjackman/stat540-project) is one nice way to present this, but a good `README.md` can also do the job
 
@@ -53,7 +53,7 @@ Groups should have 4 to 6 members. We strongly encourage that groups be diverse 
     - Scientific reflections.  E.g., what worked well / poorly? what seems worth following up vs. a dead end? what was most difficult or most rewarding?
     - Submit this via your private GitHub repository, the one you used for homework. Create a new directory called `project` and, within it, store your report as `README.md`. Open an issue and tag the TAs as you did for homework submission.
     
-  * Thoughtful assessment of two other posters, using a rubric.  Individual deliverable. To be completed in real time at the poster session.
+  * Thoughtful assessment of three other posters, using a rubric.  Individual deliverable. To be completed in real time at the poster session.
 
 ## 2014 Dates 
 
