@@ -94,7 +94,7 @@ January - April 2014 posters
   2. Caregiver contact time and sex effects on methylation status in infants. Baik de Goede Erdelyi Gladish Islam Pilsworth.
   3. Using RNA-Seq data to predict large-scale copy-number alterations in AML.  Bayly Chong Docking Dorri Hindalong Johnston.
   4. Comprehensive Methylome Analysis of Breast Cancer Cell Lines. Acton Attali Ezzat Zadeh Hor Lorzadeh Mingay.
-  5. Environmental metagenomic microbiology. Chu Durno Hammett Ievdokymenko Lever Nguyen.
+  5. Metagenomic analysis of differential gene abundance across ocean, soil, and oil sands. Chu Durno Hammett Ievdokymenko Lever Nguyen.
   6. Gene expression profiling in Parkinson's Disease and Alzheimer's Disease. Gao Lubieniecki Ma Wang Zhang Zhu.
   7. Investigating the relationship between epigenetic markers and gene expression. Brown Cen Hofmann Lee Lim.
   8. Expression Profiling in Inflammatory Bowel Disease. AlOmeir Sun Wafa Zhang.
