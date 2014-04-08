@@ -90,7 +90,7 @@ Jenny's post mortem notes from 2012. [PDF](jennyPostMortem2012.pdf)
 
 January - April 2014 posters
 
-  1. Investigating the role of Notch transcription factor in Leukaemia. Chen Di Gravio Jamieson-Lane Kucuk Mancarci Salehi.
+  1. Comparative Analysis of Cancer Cell Lines with RUNX and NOTCH1 Inactivation/Inhibition/Knockdown. Chen Di Gravio Jamieson-Lane Kucuk Mancarci Salehi.
   2. Caregiver contact time and sex effects on methylation status in infants. Baik de Goede Erdelyi Gladish Islam Pilsworth.
   3. Using RNA-Seq data to predict large-scale copy-number alterations in AML.  Bayly Chong Docking Dorri Hindalong Johnston.
   4. Comprehensive Methylome Analysis of Breast Cancer Cell Lines. Acton Attali Ezzat Zadeh Hor Lorzadeh Mingay.
