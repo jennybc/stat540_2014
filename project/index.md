@@ -93,7 +93,7 @@ January - April 2014 posters
   2. Caregiver contact time and sex effects on methylation status in infants. Baik de Goede Erdelyi Gladish Islam Pilsworth. [PDF](previousStudentWork/2014-04/poster_caregiving-sex-methylation.pdf)
   3. Using RNA-Seq data to predict large-scale copy-number alterations in AML.  Bayly Chong Docking Dorri Hindalong Johnston. [PDF](previousStudentWork/2014-04/poster_rnaseq-acute-myeloid-leukemia.pdf) | [github](https://github.com/rdocking/stat540-group-project-aml-cnv)
   4. Comprehensive Methylome Analysis of Breast Cancer Cell Lines. Acton Attali Ezzat Zadeh Hor Lorzadeh Mingay. [PDF](previousStudentWork/2014-04/poster_breast-cancer-cell-lines-methylome.pdf)
-  5. Metagenomic analysis of differential gene abundance across ocean, soil, and oil sands. Chu Durno Hammett Ievdokymenko Lever Nguyen.
+  5. Metagenomic analysis of differential gene abundance across ocean, soil, and oil sands. Chu Durno Hammett Ievdokymenko Lever Nguyen. [PDF](previousStudentWork/2014-04/poster_ocean-soil-oil-sands-metagenomics.pdf)
   6. Gene expression profiling in Parkinson's Disease and Alzheimer's Disease. Gao Lubieniecki Ma Wang Zhang Zhu. [PDF](previousStudentWork/2014-04/poster_alzheimers-parkinsons.pdf)
   7. An exploration of DNA methylation in Stem vs. Somatic cells, and how it relates to gene expression. Brown Cen Hofmann Lee Lim. [PDF](previousStudentWork/2014-04/poster_stem-vs-somatic-methylation.pdf) | [github](https://github.com/scottdbrown/stat540-tissueSpecificMethylation)
   8. Expression Profiling in Inflammatory Bowel Disease. AlOmeir Sun Wafa Zhang. [PDF](previousStudentWork/2014-04/poster_expression-profiling-ibd.pdf) | [github](https://github.com/omaromeir/stat540-2014-project  )
